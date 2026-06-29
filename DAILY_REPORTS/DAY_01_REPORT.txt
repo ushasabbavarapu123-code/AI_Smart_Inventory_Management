@@ -1,0 +1,38 @@
+Project Name: AI Smart Inventory Management & Demand Forecasting
+Day Number: Day 1
+Phase: Phase 0 – Setup, Onboarding & Agent Alignment
+Objective: Initialize the dual-codebase workspace, establish agent integration guidelines, and configure environment boundaries.
+
+Activities Performed:
+- Initialized local Git repository
+- Created standard folder structures (app, analytics, data, docs, DAILY_REPORTS)
+- Created app/package.json and app/src/server.js to start Express backend
+- Configured app/.env with standard port and environment settings
+- Created Python virtual environment in analytics/venv
+- Created analytics/requirements.txt and installed dependencies (pandas, numpy, scikit-learn, matplotlib, plotly, statsmodels, xgboost, requests)
+- Configured root-level .gitignore to ignore node_modules, Python virtual environments, and SQLite databases
+- Verified backend server startup and health check API successfully
+- Verified Python data science library installations successfully
+
+Deliverables Completed:
+- Initialized Git Repository
+- Dual-codebase Directory Layout
+- Node.js Express skeleton app and dependencies installed
+- Active Python virtual environment and core packages installed
+- Environment verification scripts run successfully
+- Structured .gitignore and README.md
+
+Challenges Faced:
+- Encountered Windows long path limitations during the full Python jupyter/notebook package installation.
+- Running pip.exe directly inside virtual environment scripts was blocked by the host's Application Control Policy.
+
+Solutions Implemented:
+- Simplified requirements.txt by removing heavy jupyter/notebook/ipywidgets packages since Python script execution is run directly from the CLI or IDE and does not require local jupyter package trees.
+- Invoked pip module directly using the python executable ("python -m pip install ...") to execute successfully without triggering binary execution blocks.
+
+Learning Outcomes:
+- Resolved Windows-specific AppLocker/Application Control Policy execution blocks by invoking commands as interpreter modules.
+- Managed Windows file path length limits by trimming optional dev dependencies.
+
+Current Project Status: Day 1 setup completed. Repository and dependencies ready.
+Plan for Tomorrow: Define the business questions, system specification, database schema design, and KPIs (Phase 1 - Day 2).

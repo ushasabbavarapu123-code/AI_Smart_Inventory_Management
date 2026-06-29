@@ -1,0 +1,26 @@
+Day 1
+
+Subject:
+Internship Progress Update – Day 1
+
+Email:
+
+Dear Sir,
+
+I hope you are doing well.
+
+Today I completed the following internship activities:
+
+• Initialized Git repository and standard folder structure
+• Configured package.json and set up a Node.js Express server template
+• Configured a Python virtual environment and installed analytical dependencies
+• Verified Node.js backend and Python data science packages successfully
+
+The assigned tasks were completed successfully according to the internship roadmap.
+
+I will continue with the next scheduled phase tomorrow.
+
+Thank you.
+
+Regards,
+Indu Varshini
