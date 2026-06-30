@@ -52,7 +52,7 @@ Implement backend routes, models, and controllers for core CRUD APIs.
 - [ ] Implement central error handling middleware
 - [ ] Verify API endpoints using Postman/curl and verify database mutations
 - [ ] Update `PROJECT_TRACKER.md`
-- [ ] Generate `DAILY_REPORTS/DAY_04_REPORT.md`
+- [ ] Generate `DAILY_REPORTS/DAY_04_REPORT.txt`
 - [ ] Commit to Git
 
 ---
@@ -74,7 +74,7 @@ At the end of Day 4, the following must exist:
 - Core backend models (`product.model.js`, `inventory.model.js`, `supplier.model.js`)
 - Core controllers and routes fully registered
 - Validation and error handler middlewares
-- `DAILY_REPORTS/DAY_04_REPORT.md`
+- `DAILY_REPORTS/DAY_04_REPORT.txt`
 
 ---
 
@@ -96,7 +96,7 @@ Before marking Day 4 complete:
 After completing all verification items:
 
 1. Update `PROJECT_TRACKER.md`
-2. Generate `DAY_04_REPORT.md` in DAILY_REPORTS/
+2. Generate `DAY_04_REPORT.txt` in DAILY_REPORTS/
 3. Append a Day 4 email draft to `DAILY_REPORTS/email_drafts/DAILY_EMAIL_DRAFTS.txt`
 4. Update this file to Day 5
 5. Commit changes to Git
@@ -120,10 +120,11 @@ Do not continue automatically.
 - [x] Verify all tables exist and rows are inserted
 - [x] Test Node.js DB connection and basic SELECT query
 - [x] Update `app/src/server.js` to initialize DB on startup
-- [x] Generate `DAILY_REPORTS/DAY_03_REPORT.md`
+- [x] Generate `DAILY_REPORTS/DAY_03_REPORT.txt`
 - [x] Append Day 3 email to `DAILY_REPORTS/email_drafts/DAILY_EMAIL_DRAFTS.txt`
 - [x] Update PROJECT_TRACKER.md
 - [x] Commit to Git
+
 
 ---
 
