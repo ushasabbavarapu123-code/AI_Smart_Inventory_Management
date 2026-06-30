@@ -6,19 +6,19 @@
 
 **Current Sprint:** Sprint 2
 
-**Current Phase:** Phase 2 – App Development, Database & Core APIs
+**Current Phase:** Phase 3 – Data Extraction, Cleaning & Pipeline Engineering
 
-**Current Day:** Day 5
+**Current Day:** Day 6
 
 **Roadmap Version:** Data Analytics Python Project Roadmap v1.0
 
-**Last Updated:** 2026-06-30 17:35
+**Last Updated:** 2026-06-30 18:00
 
 ---
 
 # CURRENT OBJECTIVE
 
-Complete the backend layer of the application by integrating JWT-based authentication, implementing remaining Sales and Forecasting API endpoints, writing automated Jest unit tests, creating api documentation, and verifying overall system readiness.
+Design and execute the Python data pipeline to extract raw transaction logs from the SQLite database, clean anomalies (handling missing values, type corrections, outlier pruning), perform core feature engineering (historical lags, rolling windows), export the cleaned dataset for model consumption, and create the Data Dictionary.
 
 Only complete the activities assigned for the current day.
 
@@ -30,62 +30,61 @@ Do NOT implement any work scheduled for future days.
 
 ## Phase
 
-Phase 2 – App Development, Database & Core APIs (Day 5)
+Phase 3 – Data Extraction, Cleaning & Pipeline Engineering (Day 6)
 
 ---
 
 ## Objective
 
-Complete backend development, JWT authentication, sales and forecasting routes, API documentation, and automated tests.
+Establish Python database connectors, extract operational tables into pandas DataFrames, and develop cleaning workflows to standardize data types, handle missing records, and resolve anomalies.
 
 ---
 
 ## Today's Key Activities
 
-- [ ] Implement full JWT authentication in `app/middleware/auth.js`
-- [ ] Create sales and forecasting routes, models, and controllers
-- [ ] Implement advanced query filters (category, stock status, date ranges) for GET endpoints
-- [ ] Write automated Jest unit tests for database model CRUD operations
-- [ ] Write automated integration tests for Express routes and authentication gates
-- [ ] Generate comprehensive API documentation
+- [ ] Connect Python modules to the SQLite database
+- [ ] Query and extract Products, Inventory, Sales, and Suppliers tables into Pandas
+- [ ] Implement null value imputation and duplicate removal policies
+- [ ] Correct data types (date strings to datetimes, numeric castings)
+- [ ] Identify and handle outliers (negative values, extreme sales volumes)
+- [ ] Define feature engineering requirements (lagged demand, rolling statistics)
+- [ ] Draft a comprehensive Data Dictionary documentation
 - [ ] Update `PROJECT_TRACKER.md`
-- [ ] Generate `DAILY_REPORTS/DAY_05_REPORT.txt`
+- [ ] Generate `DAILY_REPORTS/DAY_06_REPORT.txt`
 - [ ] Commit to Git
 
 ---
 
 # REQUIRED INPUTS
 
-Before starting Day 5, verify that:
+Before starting Day 6, verify that:
 
-- Day 4 CRUD APIs for products, inventory, and suppliers are fully functional
-- Database contains seeded records and local server starts without exceptions
-- Git is up to date with Day 4 commit
+- Day 5 Backend API completion is fully verified (all 12 Jest/Supertest integration tests pass)
+- Local sqlite3 database contains seeded Operational records
+- Git repository contains all Day 5 commits
 
 ---
 
 # EXPECTED DELIVERABLES
 
-At the end of Day 5, the following must exist:
+At the end of Day 6, the following must exist:
 
-- Sales and Forecasting CRUD endpoints and models
-- Production-ready JWT authentication middleware
-- Automated Jest test suite covering core operations
-- Comprehensive API documentation
-- `DAILY_REPORTS/DAY_05_REPORT.txt`
+- Python extraction and cleaning scripts / notebook drafts
+- Initial data dictionary documentation
+- Updated `PROJECT_TRACKER.md`
+- `DAILY_REPORTS/DAY_06_REPORT.txt`
 
 ---
 
 # VERIFICATION CHECKLIST
 
-Before marking Day 5 complete:
+Before marking Day 6 complete:
 
-- [ ] Express server launches cleanly with all middleware
-- [ ] JWT authentication successfully issues, verifies, and rejects token claims
-- [ ] Sales endpoints return transaction records, filtered by date range or customer type
-- [ ] Forecasting endpoints return predicted values for inventory demand
-- [ ] Running `npm test` successfully executes the automated test suites
-- [ ] No database integrity constraint violations occur on operations
+- [ ] Python connector retrieves sample rows from the products, sales, and inventory tables
+- [ ] Extraction script successfully loads tabular data into pandas DataFrame objects
+- [ ] Null values and duplicates are resolved according to project rules
+- [ ] Output clean data structures preserve columns and integrity
+- [ ] Data dictionary accurately describes data columns and types
 
 ---
 
@@ -94,9 +93,9 @@ Before marking Day 5 complete:
 After completing all verification items:
 
 1. Update `PROJECT_TRACKER.md`
-2. Generate `DAY_05_REPORT.txt` in DAILY_REPORTS/
-3. Append a Day 5 email draft to `DAILY_REPORTS/email_drafts/DAILY_EMAIL_DRAFTS.txt`
-4. Update this file to Day 6
+2. Generate `DAY_06_REPORT.txt` in DAILY_REPORTS/
+3. Append a Day 6 email draft to `DAILY_REPORTS/email_drafts/DAILY_EMAIL_DRAFTS.txt`
+4. Update this file to Day 7
 5. Commit changes to Git
 6. STOP and wait for user approval
 
@@ -106,22 +105,21 @@ Do not continue automatically.
 
 # PREVIOUS DAY (COMPLETED)
 
-**Phase:** Phase 2 – App Development, Database & Core APIs (Day 4)
+**Phase:** Phase 2 – App Development, Database & Core APIs (Day 5)
 
 **Current Status:** COMPLETED
 
-- [x] Create `app/src/models/product.model.js` – CRUD operations for products
-- [x] Create `app/src/models/inventory.model.js` – CRUD and stock level operations
-- [x] Create `app/src/models/supplier.model.js` – CRUD operations for suppliers
-- [x] Create Express controller modules for Products, Inventory, and Suppliers
-- [x] Mount Express routers for products, inventory, and suppliers in `server.js`
-- [x] Create custom validation middleware for product, supplier, and inventory update request bodies
-- [x] Create central error handling middleware in `app/middleware/errorHandler.js`
-- [x] Verified all API endpoints using automated PowerShell/curl scripts
-- [x] Generate `DAILY_REPORTS/DAY_04_REPORT.txt`
-- [x] Append Day 4 email to `DAILY_REPORTS/email_drafts/DAILY_EMAIL_DRAFTS.txt`
+- [x] Implement full JWT authentication middleware
+- [x] Create Sales routes, controllers, and models with transactional inventory decrement
+- [x] Create Purchase Orders routes, controllers, and models with status-based inventory increment
+- [x] Implement Python forecasting script forecast.py (ARIMA + Moving Average fallback) and integrate as Node child process
+- [x] Implement Dashboard summary API calculating operational metrics
+- [x] Write automated Jest/Supertest suite with 12/12 passing integration tests
+- [x] Replace ESM uuid package with native Node crypto.randomUUID()
 - [x] Update `PROJECT_TRACKER.md`
-- [x] Commit to Git
+- [x] Generate `DAILY_REPORTS/DAY_05_REPORT.txt`
+- [x] Append Day 5 email draft to `DAILY_EMAIL_DRAFTS.txt`
+- [x] Commit all changes to Git
 
 ---
 

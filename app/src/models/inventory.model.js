@@ -1,7 +1,8 @@
 // app/src/models/inventory.model.js
 
 const { getDatabase } = require('../database');
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
+const uuidv4 = () => crypto.randomUUID();
 
 function run(db, sql, params = []) {
   return new Promise((resolve, reject) => {

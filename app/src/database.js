@@ -193,8 +193,27 @@ function getDatabase() {
   return db;
 }
 
+function closeDatabase() {
+  return new Promise((resolve, reject) => {
+    if (db) {
+      db.close((err) => {
+        if (err) {
+          console.error('Error closing database:', err.message);
+          return reject(err);
+        }
+        console.log('Database connection closed.');
+        db = null;
+        resolve();
+      });
+    } else {
+      resolve();
+    }
+  });
+}
+
 module.exports = {
   initDatabase,
   getDatabase,
+  closeDatabase,
   dbPath
 };

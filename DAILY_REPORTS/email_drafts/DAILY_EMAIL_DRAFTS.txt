@@ -129,3 +129,33 @@ Thank you.
 Regards,
 Usha
 
+================================================================
+
+Day 5
+
+Subject:
+Internship Progress Update – Day 5
+
+Email:
+
+Dear Sir,
+
+I hope you are doing well.
+
+Today I completed the following internship activities:
+
+• Implemented route mappings, validations, and controller operations for Purchase Orders and Sales endpoints, with automatic inventory mutations (stock decrement on sales, increment on received purchase orders) running inside database transactions.
+• Created the Python forecasting pipeline (forecast.py) executing ARIMA model calculations and trend-adjusted moving average fallbacks to output inventory demand predictions.
+• Built the Node.js forecast trigger model, controller, and routes spawning python.exe as a child process to request and log product forecasts.
+• Developed the Dashboard controller and route to run analytical database queries returning high-level inventory, sales, and supplier KPI metrics.
+• Created a fully automated integration test suite utilizing Jest and Supertest (12/12 passing integration tests) covering JWT authentication gates, sales decrement logic, purchase order stock increment flow, Python forecasting triggers, and dashboard calculations.
+• Replaced the third-party uuid dependency with Node's built-in crypto module to eliminate ES Module execution conflicts during automated test runs.
+
+All deliverables for Day 5 (and Phase 2 - App Development, Database & Core APIs) have been successfully completed, verified, and committed to the repository.
+
+I will continue with Day 6 (Phase 3 – Data Extraction, Cleaning & Pipeline Engineering) when permitted.
+
+Thank you.
+
+Regards,
+Usha

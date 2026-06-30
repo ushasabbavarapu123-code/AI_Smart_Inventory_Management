@@ -14,9 +14,9 @@
 
 **Current Phase:** Phase 2
 
-**Current Day:** Day 4
+**Current Day:** Day 5
 
-**Overall Progress:** 27%
+**Overall Progress:** 40%
 
 ---
 
@@ -27,7 +27,7 @@
 | Repository Setup | ✅ |
 | Business Understanding | ✅ |
 | Database Design | ✅ |
-| Backend Development | ⚙️ |
+| Backend Development | ✅ |
 | Data Pipeline | ⬜ |
 | Data Cleaning | ⬜ |
 | Exploratory Data Analysis | ⬜ |
@@ -45,7 +45,7 @@
 |--------|------|---------|-----------|
 | Phase 0 – Setup, Onboarding & Agent Alignment | Day 1 | ✅ | 100% |
 | Phase 1 – Product Framing, System Design & Data Specification | Day 2 | ✅ | 100% |
-| Phase 2 – App Development, Database & Core APIs | Day 3–5 | ⚙️ | 33% |
+| Phase 2 – App Development, Database & Core APIs | Day 3–5 | ✅ | 100% |
 | Phase 3 – Data Extraction, Cleaning & Pipeline Engineering | Day 6–7 | ⬜ | 0% |
 | Phase 4 – Exploratory Data Analysis & Insights | Day 8–9 | ⬜ | 0% |
 | Phase 5 – Integrated Dashboard & Frontend UI | Day 10–11 | ⬜ | 0% |
@@ -186,8 +186,8 @@ Develop the database, REST APIs, and populate historical data.
 | Generate 500+ Historical Records | ✅ | ✅ |
 | Test APIs Using Postman | ✅ | ✅ |
 | Test APIs Using curl | ✅ | ✅ |
-| Integration Testing | ⬜ | ⬜ |
-| Document API Endpoints | ⬜ | ⬜ |
+| Integration Testing | ✅ | ✅ |
+| Document API Endpoints | ✅ | ✅ |
 ---
 
 ## Done When Checklist
@@ -195,13 +195,13 @@ Develop the database, REST APIs, and populate historical data.
 - [x] CRUD APIs Functional
 - [x] Success & Error Cases Tested
 - [x] Database Contains 500+ Records
-- [ ] API Documentation Completed
+- [x] API Documentation Completed
 
 ---
 
 ## Progress
 
-67%
+100%
 
 ---
 
@@ -502,7 +502,7 @@ Verify quality, security and robustness.
 
 | Unit Testing | ⬜ | ⬜ |
 
-| Integration Testing | ⬜ | ⬜ |
+| Integration Testing | ✅ | ✅ |
 
 | SQL Injection Audit | ⬜ | ⬜ |
 

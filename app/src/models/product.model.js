@@ -1,7 +1,8 @@
 // app/src/models/product.model.js
 
 const { getDatabase } = require('../database');
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
+const uuidv4 = () => crypto.randomUUID();
 
 // Helper to run SQL with Promise
 function run(db, sql, params = []) {
