@@ -187,7 +187,7 @@ Develop the database, REST APIs, and populate historical data.
 | Test APIs Using Postman | ✅ | ✅ |
 | Test APIs Using curl | ✅ | ✅ |
 | Integration Testing | ✅ | ✅ |
-| Document API Endpoints | ✅ | ✅ |
+| API endpoints documented in README | ✅ | ✅ |
 ---
 
 ## Done When Checklist
