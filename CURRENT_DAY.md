@@ -8,18 +8,17 @@
 
 **Current Phase:** Phase 2 – App Development, Database & Core APIs
 
-**Current Day:** Day 3
+**Current Day:** Day 4
 
 **Roadmap Version:** Data Analytics Python Project Roadmap v1.0
 
-**Last Updated:** 2026-06-29 23:00
+**Last Updated:** 2026-06-30 17:30
 
 ---
 
 # CURRENT OBJECTIVE
 
-Implement the SQLite database schema, migration script, and seed data for all 7 tables
-designed on Day 2. Verify all tables are created and queryable from Node.js.
+Develop the core REST API endpoints for Products, Suppliers, and Inventory operations. Integrate inputs validation, JWT authentication, and proper error handling middlewares.
 
 Only complete the activities assigned for the current day.
 
@@ -31,67 +30,64 @@ Do NOT implement any work scheduled for future days.
 
 ## Phase
 
-Phase 2 – App Development, Database & Core APIs
+Phase 2 – App Development, Database & Core APIs (Day 4)
 
 ---
 
 ## Objective
 
-Build the database layer. Create the SQLite schema migration script that initializes
-all 7 tables defined in the Day 2 Database Design Document. Populate with seed data.
+Implement backend routes, models, and controllers for core CRUD APIs.
 
 ---
 
 ## Today's Key Activities
 
-- [ ] Create `app/src/database.js` – SQLite connection and schema initialization
-- [ ] Write schema migration: CREATE TABLE for all 7 tables with FKs and indexes
-- [ ] Enable WAL mode and foreign key enforcement in SQLite
-- [ ] Create `analytics/scripts/seed_data.py` – Python seed data generator
-- [ ] Generate 50 products, 10 suppliers, 5 users, 500+ sales records
-- [ ] Verify all tables exist and rows are inserted
-- [ ] Test Node.js DB connection and basic SELECT query
-- [ ] Update `app/src/server.js` to initialize DB on startup
-- [ ] Generate `DAILY_REPORTS/DAY_03_REPORT.txt`
-- [ ] Append Day 3 email to `DAILY_REPORTS/email_drafts/DAILY_EMAIL_DRAFTS.txt`
-- [ ] Update PROJECT_TRACKER.md
-- [ ] Update CURRENT_DAY.md to Day 4
+- [ ] Create `app/src/models/product.model.js` - CRUD operations for products
+- [ ] Create `app/src/models/inventory.model.js` - CRUD and transaction history for inventory
+- [ ] Create `app/src/models/supplier.model.js` - CRUD operations for suppliers
+- [ ] Create `app/src/controllers/` for products, inventory, and suppliers
+- [ ] Create Express routes under `app/src/routes/` and mount them in `server.js`
+- [ ] Implement query filters (category, stock status) for GET endpoints
+- [ ] Implement JSON validation middleware for POST/PUT requests
+- [ ] Implement central error handling middleware
+- [ ] Verify API endpoints using Postman/curl and verify database mutations
+- [ ] Update `PROJECT_TRACKER.md`
+- [ ] Generate `DAILY_REPORTS/DAY_04_REPORT.md`
 - [ ] Commit to Git
 
 ---
 
 # REQUIRED INPUTS
 
-Before starting Day 3, verify that:
+Before starting Day 4, verify that:
 
-- Day 2 all 5 docs/ files exist and are complete
-- Git is up to date with Day 2 commit
-- Node.js backend (app/) is functional
-- Python virtual environment (analytics/venv/) is active
+- Day 3 Database schema migrations and seeding have run successfully
+- `data/inventory.db` contains 50 products, 10 suppliers, 901 sales, etc.
+- Git is up to date with Day 3 commit
 
 ---
 
 # EXPECTED DELIVERABLES
 
-At the end of Day 3, the following must exist:
+At the end of Day 4, the following must exist:
 
-- `app/src/database.js` – DB connection and schema init
-- `data/inventory.db` – SQLite database file (created on first run)
-- `analytics/scripts/seed_data.py` – Seed data generator
-- Verified populated tables with sample records
-- `DAILY_REPORTS/DAY_03_REPORT.txt`
+- Core backend models (`product.model.js`, `inventory.model.js`, `supplier.model.js`)
+- Core controllers and routes fully registered
+- Validation and error handler middlewares
+- `DAILY_REPORTS/DAY_04_REPORT.md`
 
 ---
 
 # VERIFICATION CHECKLIST
 
-Before marking Day 3 complete:
+Before marking Day 4 complete:
 
-- [ ] database.js created and initializes DB without errors
-- [ ] All 7 tables exist in inventory.db (confirmed via .tables or node script)
-- [ ] Seed data inserted and verified (SELECT COUNT(*) > 0 for each table)
-- [ ] Node.js server still starts without errors after DB integration
-- [ ] Day 3 report written
+- [ ] Node.js backend starts without errors
+- [ ] GET /api/products returns seeded list (optionally filtered)
+- [ ] GET /api/inventory returns current stock levels
+- [ ] POST /api/products creates new product and registers in inventory with 0 quantity
+- [ ] POST validation rejects invalid payloads with 400 Bad Request
+- [ ] All database mutations are tracked in `audit_logs`
 
 ---
 
@@ -100,9 +96,9 @@ Before marking Day 3 complete:
 After completing all verification items:
 
 1. Update `PROJECT_TRACKER.md`
-2. Generate `DAY_03_REPORT.txt` in DAILY_REPORTS/ using the plain text format
-3. Append a Day 3 email draft to `DAILY_REPORTS/email_drafts/DAILY_EMAIL_DRAFTS.txt`
-4. Update this file to Day 4
+2. Generate `DAY_04_REPORT.md` in DAILY_REPORTS/
+3. Append a Day 4 email draft to `DAILY_REPORTS/email_drafts/DAILY_EMAIL_DRAFTS.txt`
+4. Update this file to Day 5
 5. Commit changes to Git
 6. STOP and wait for user approval
 
@@ -110,13 +106,24 @@ Do not continue automatically.
 
 ---
 
-# NEXT DAY (LOCKED)
+# PREVIOUS DAY (COMPLETED)
 
-**Phase:** Phase 2 – App Development, Database & Core APIs (Day 4)
+**Phase:** Phase 2 – App Development, Database & Core APIs (Day 3)
 
-**Current Status:** LOCKED
+**Current Status:** COMPLETED
 
-Do not begin Day 4 until Day 3 is fully completed and verified.
+- [x] Create `app/src/database.js` – SQLite connection and schema initialization
+- [x] Write schema migration: CREATE TABLE for all 8 tables with FKs and indexes
+- [x] Enable WAL mode and foreign key enforcement in SQLite
+- [x] Create `analytics/scripts/seed_data.py` – Python seed data generator
+- [x] Generate 50 products, 10 suppliers, 5 users, 901 sales records
+- [x] Verify all tables exist and rows are inserted
+- [x] Test Node.js DB connection and basic SELECT query
+- [x] Update `app/src/server.js` to initialize DB on startup
+- [x] Generate `DAILY_REPORTS/DAY_03_REPORT.md`
+- [x] Append Day 3 email to `DAILY_REPORTS/email_drafts/DAILY_EMAIL_DRAFTS.txt`
+- [x] Update PROJECT_TRACKER.md
+- [x] Commit to Git
 
 ---
 
@@ -143,3 +150,4 @@ Never implement future phases.
 Never modify completed work unless instructed.
 
 This file is the single source of truth for determining the current development stage.
+

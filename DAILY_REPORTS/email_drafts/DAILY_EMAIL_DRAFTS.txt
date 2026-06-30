@@ -67,3 +67,34 @@ Thank you.
 
 Regards,
 Usha
+
+================================================================
+
+Day 3
+
+Subject:
+Internship Progress Update – Day 3
+
+Email:
+
+Dear Sir,
+
+I hope you are doing well.
+
+Today I completed the following internship activities:
+
+• Implemented the Node.js connection module with SQLite support, enabling WAL mode and foreign key constraint enforcement for optimum security and concurrency.
+• Created the full schema migrations script in Javascript to initialize all 8 tables and 14 indexes.
+• Developed a Python script to seed the database with realistic operational data including 5 users, 10 suppliers, 50 products, 50 inventory records, 100 purchase orders, and 901 sales transactions spread across 12 months.
+• Verified connection and table integrity using automated Node.js and Python test scripts.
+• Integrated the database initialization workflow synchronously into the backend Express server.
+
+All deliverables for Day 3 have been completed, verified, and committed to the repository.
+
+I will continue with Day 4 (Phase 2 – REST API Development for Inventory Operations) when permitted.
+
+Thank you.
+
+Regards,
+Usha
+

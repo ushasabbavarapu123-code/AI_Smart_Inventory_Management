@@ -1,0 +1,5 @@
+# Ignore database files but track this directory
+*.db
+*.db-wal
+*.db-shm
+*.sqlite3
