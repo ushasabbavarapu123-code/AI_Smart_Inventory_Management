@@ -14,9 +14,9 @@
 
 **Current Phase:** Phase 2
 
-**Current Day:** Day 3
+**Current Day:** Day 4
 
-**Overall Progress:** 20%
+**Overall Progress:** 27%
 
 ---
 
@@ -179,21 +179,21 @@ Develop the database, REST APIs, and populate historical data.
 | Activity | Status | Verified |
 |----------|---------|-----------|
 | Create Database Migration Scripts | ✅ | ✅ |
-| Initialize Database Models | ⬜ | ⬜ |
-| Develop CRUD REST APIs | ⬜ | ⬜ |
-| Secure API Endpoints | ⬜ | ⬜ |
+| Initialize Database Models | ✅ | ✅ |
+| Develop CRUD REST APIs | ✅ | ✅ |
+| Secure API Endpoints | ✅ | ✅ |
 | Create Database Seed Script | ✅ | ✅ |
 | Generate 500+ Historical Records | ✅ | ✅ |
-| Test APIs Using Postman | ⬜ | ⬜ |
-| Test APIs Using curl | ⬜ | ⬜ |
+| Test APIs Using Postman | ✅ | ✅ |
+| Test APIs Using curl | ✅ | ✅ |
 | Integration Testing | ⬜ | ⬜ |
 | Document API Endpoints | ⬜ | ⬜ |
 ---
 
 ## Done When Checklist
 
-- [ ] CRUD APIs Functional
-- [ ] Success & Error Cases Tested
+- [x] CRUD APIs Functional
+- [x] Success & Error Cases Tested
 - [x] Database Contains 500+ Records
 - [ ] API Documentation Completed
 
@@ -201,7 +201,7 @@ Develop the database, REST APIs, and populate historical data.
 
 ## Progress
 
-33%
+67%
 
 ---
 
@@ -732,11 +732,11 @@ Deliver the final presentation and live demonstration.
 
 \# OVERALL PROJECT STATUS
 
-Overall Completion: **20%**
+Overall Completion: **27%**
 
 Current Phase: **Phase 2**
 
-Current Day: **Day 3**
+Current Day: **Day 4**
 
 Current Sprint: **Sprint 2**
 

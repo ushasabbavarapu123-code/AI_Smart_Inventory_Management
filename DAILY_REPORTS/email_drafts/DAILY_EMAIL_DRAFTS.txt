@@ -98,3 +98,34 @@ Thank you.
 Regards,
 Usha
 
+================================================================
+
+Day 4
+
+Subject:
+Internship Progress Update – Day 4
+
+Email:
+
+Dear Sir,
+
+I hope you are doing well.
+
+Today I completed the following internship activities:
+
+• Implemented database CRUD model operations for Products, Inventory, and Suppliers using sqlite3.
+• Created controller modules to encapsulate the business logic and route handlers for each entity.
+• Configured Express routers and mounted endpoints under /api/products, /api/inventory, and /api/suppliers.
+• Developed custom validation middleware to validate request payloads (validateProduct, validateSupplier, validateInventoryUpdate) returning proper HTTP 400 Bad Request responses.
+• Implemented a central error handling middleware to gracefully format and return all server exceptions.
+• Verified all routes with automated PowerShell/curl tests, ensuring proper database mutations and data constraint verification.
+
+All deliverables for Day 4 have been completed, verified, and committed to the repository.
+
+I will continue with Day 5 (Phase 2 – Sales and Forecasting Endpoints, and Automated Tests) when permitted.
+
+Thank you.
+
+Regards,
+Usha
+
