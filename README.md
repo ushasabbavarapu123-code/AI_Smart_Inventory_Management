@@ -202,44 +202,29 @@ The project aims to:
 
 
 
-\# 📂 Repository Structure
-
-
+# 📂 Repository Structure
 
 ```text
-
-AI\_Smart\_Inventory\_Management/
-
-
-
-├── backend/
-
-├── frontend/
-
-├── analytics/
-
-├── database/
-
-├── docs/
-
-├── DAILY\_REPORTS/
-
-
-
-├── PROJECT\_GUIDE.md
-
-├── PROJECT\_TRACKER.md
-
-├── CURRENT\_DAY.md
-
-├── DAILY\_REPORT\_TEMPLATE.md
-
+AI_Smart_Inventory_Management/
+├── app/                  # Express.js backend & frontend assets
+│   ├── src/              # Source code (controllers, models, routes, middleware)
+│   ├── public/           # Static HTML/CSS/JS frontend views
+│   ├── tests/            # Automated integration tests (Jest/Supertest)
+│   └── package.json      # Node.js configurations and dependencies
+├── analytics/            # Python data science & machine learning
+│   ├── scripts/          # Forecast, seeding, and database verification scripts
+│   ├── notebooks/        # Jupyter notebooks for EDA and modeling
+│   └── requirements.txt  # Python dependencies
+├── data/                 # SQLite database storage directory
+│   └── inventory.db      # Active database file
+├── docs/                 # System design, database design, API specification
+├── DAILY_REPORTS/        # Daily status reports & verification logs
+├── PROJECT_GUIDE.md      # Rules, roadmap, and guidelines master
+├── PROJECT_TRACKER.md    # Progress tracking spreadsheet/markdown
+├── CURRENT_DAY.md        # Automation control block for current day
+├── DAILY_REPORT_TEMPLATE.md
 ├── README.md
-
-
-
 └── .gitignore
-
 ```
 
 
@@ -347,84 +332,57 @@ cd AI\_Smart\_Inventory\_Management
 ```
 
 
-
-\---
-
-
-
-\## Backend Setup
-
-
-
-```bash
-
-cd backend
-
-npm install
-
-npm start
-
+cd AI_Smart_Inventory_Management
 ```
 
+---
 
-
-\---
-
-
-
-\## Python Analytics Setup
-
-
+## Backend Setup
 
 ```bash
+cd app
+npm install
+npm start
+```
 
+---
+
+## Python Analytics Setup
+
+```bash
 cd analytics
-
 python -m venv venv
 
+# Windows (Command Prompt or PowerShell)
+venv\Scripts\activate
 
-
-\# Windows
-
-venv\\Scripts\\activate
-
-
-
-\# macOS/Linux
-
+# macOS/Linux
 source venv/bin/activate
-
-
 
 pip install -r requirements.txt
 
+---
+
+## Database Setup
+
+The SQLite database schema and indexes are automatically initialized when the backend server runs for the first time.
+
+To generate 1,000+ rows of historical sales, products, suppliers, and transaction records:
+```bash
+cd analytics
+# Make sure your virtual environment is active
+python scripts/seed_data.py
 ```
 
+To verify the database structure and counts:
+```bash
+cd app
+node src/verify_db.js
+```
 
+---
 
-\---
-
-
-
-\## Database Setup
-
-
-
-\- Create SQLite database
-
-\- Run migration scripts
-
-\- Execute seed scripts
-
-\- Verify sample data
-
-
-
-\---
-
-
-
-\# 📈 Project Workflow
+# 📈 Project Workflow
 
 
 
@@ -516,31 +474,18 @@ By the end of the project, the repository should contain:
 
 
 
-\# 🔮 Future Enhancements
-
-
+# 🔮 Future Enhancements
 
 Potential future improvements include:
 
-
-
-\- User Authentication
-
-\- Role-Based Access Control
-
-\- Email Notifications
-
-\- Cloud Deployment
-
-\- Docker Containerization
-
-\- CI/CD Pipeline
-
-\- Real-Time Analytics
-
-\- AI Chat Assistant
-
-\- Mobile Application
+- Role-Based Access Control (RBAC)
+- Email Notifications
+- Cloud Deployment (AWS/Heroku/Render)
+- Docker Containerization
+- CI/CD Pipeline (GitHub Actions)
+- Real-Time Inventory Analytics
+- AI-Driven Chat Assistant for Stock Queries
+- Mobile Application (React Native)
 
 
 
@@ -614,9 +559,7 @@ Data Analytics • AI • Full Stack Development
 
 
 
-\---
+---
 
-
-
-\*\*Status:\*\* 🚧 Ready to Start Day 1
+**Status:** 🚀 Phase 2 Complete (Days 1-5 verified) | Day 6 (Data Extraction) In Progress
 
