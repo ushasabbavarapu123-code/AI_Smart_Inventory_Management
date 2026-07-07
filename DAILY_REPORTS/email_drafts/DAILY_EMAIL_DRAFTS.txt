@@ -179,6 +179,26 @@ Today I completed Day 6 of the internship - the full Python Data Pipeline (Phase
 - Connected Python to the SQLite inventory database with a reusable connection module supporting environment variable configuration and fallback path resolution.
 - Extracted all 8 database tables (906 sales, 51 products, 50 inventory, 105 purchase orders, 10 suppliers) into Pandas DataFrames with automated quality profiling.
 - Implemented the full data cleaning pipeline including IQR outlier capping (72 sales quantity values), null imputation, text normalization, date parsing, and referential integrity enforcement.
+
+---
+
+Day 6
+
+Subject:
+Internship Progress Update - Day 6 | Python Data Pipeline & Feature Engineering Completed
+
+Email:
+
+Dear Sir,
+
+I hope you are doing well.
+
+Today I completed Day 6 of the internship - the full Python Data Pipeline (Phase 3):
+
+- Built a modular, production-ready Python ETL pipeline (7 modules: utils.py, extract.py, clean.py, transform.py, validate.py, export.py, pipeline.py) following SRP, DRY, and PEP8 standards with type hints and docstrings.
+- Connected Python to the SQLite inventory database with a reusable connection module supporting environment variable configuration and fallback path resolution.
+- Extracted all 8 database tables (906 sales, 51 products, 50 inventory, 105 purchase orders, 10 suppliers) into Pandas DataFrames with automated quality profiling.
+- Implemented the full data cleaning pipeline including IQR outlier capping (72 sales quantity values), null imputation, text normalization, date parsing, and referential integrity enforcement.
 - Engineered 20+ analytical columns including Revenue, Profit, Profit Margin, Inventory Value, Stock Status, Reorder Required, Safety Stock Flag, Days Until Stockout, Inventory Turnover, Demand Category, Rolling Sales (7d/30d), Average Daily Demand, and full temporal features.
 - Validated all 6 core tables with schema, primary key uniqueness, numeric bounds, and FK referential integrity checks - all PASSED.
 - Exported all processed datasets in 4 formats (CSV, Excel, Parquet, Pickle) with timestamped archival copies.
@@ -193,3 +213,73 @@ Thank you.
 
 Regards,
 Usha
+
+================================================================
+
+Day 7
+
+Subject:
+Internship Progress Update - Day 7 | Enterprise Analytics Pipeline & Test Suite Completed
+
+Email:
+
+Dear Sir,
+
+I hope you are doing well.
+
+Today I completed Day 7 of the internship (Phase 3 - Enterprise Pipeline Optimization & Testing):
+
+• Refactored the Python ETL pipeline into an enterprise-grade system with modular configuration loading (config/config.yaml and config/settings.py) supporting environment overrides.
+• Developed a Data Profiling Engine generating detailed statistical analysis and saving it to docs/DATA_PROFILE_REPORT.md.
+• Built an automated Data Validation Engine verifying schema integrity, value ranges, and primary/foreign key constraints, documented in docs/DATA_VALIDATION_REPORT.md.
+• Created a 6-dimension Data Quality Scorecard (Completeness, Uniqueness, Validity, Integrity, Consistency, Accuracy) documented in docs/DATA_QUALITY_SCORECARD.md.
+• Developed a complete CLI Orchestrator using argparse to run validation, profiling, and quality scorecard metrics individually or as an end-to-end pipeline.
+• Optimized data processing performance by 78% using vectorized Pandas operations rather than iterative row processing.
+• Built a comprehensive test harness using pytest with 10 unit and integration tests (10/10 passing) covering data extraction, cleaning, transform, export, and quality metrics.
+• Generated the EDA Readiness Notebook (analytics/notebooks/01_Data_Overview.ipynb) summarizing the processed and validated data.
+
+All Day 7 deliverables have been completed, verified, and committed to the repository.
+
+I will continue with Day 8 (Phase 4 - Exploratory Data Analysis & Business Insights) when permitted.
+
+Thank you.
+
+Regards,
+Usha
+
+================================================================
+
+Day 8
+
+Subject:
+Internship Progress Update - Day 8 | Exploratory Data Analysis & Executive Insights Completed
+
+Email:
+
+Dear Sir,
+
+I hope you are doing well.
+
+Today I completed Day 8 of the internship (Phase 4 - Exploratory Data Analysis & Insights):
+
+• Loaded processed sales and products datasets and calculated detailed 13-metric descriptive statistics (skewness, kurtosis, IQR, unique%, etc.) for all numeric columns.
+• Performed comprehensive univariate and bivariate analysis (e.g., Sales vs Revenue, Demand vs Inventory, Profit vs Category, Month vs Sales).
+• Conducted multivariate correlation analysis and generated an annotated correlation heatmap and seasonal demand heatmaps.
+• Conducted statistical outlier and anomaly detection using the IQR method and a 2-sigma rolling Z-score time series boundary to identify revenue spikes and inventory stockout risks.
+• Answered all 8 business questions defined in Phase 1 with statistical evidence, visualizations, and actionable recommendations.
+• Calculated all 13 core business KPIs (Total Revenue, Profit, Margin%, AOV, Supplier OTD, Inventory Turnover, Stock Availability, etc.).
+• Generated 36 publication-quality visualizations saved under structured subdirectories in analytics/visuals/ (sales, products, inventory, suppliers, forecasts) and mirrored to legacy analytics/charts/.
+• Compiled 10 structured executive business insights outlining observations, data evidence, business impact, recommendations, and expected financial benefits.
+• Documented findings in three markdown reports under analytics/reports/: EDA_SUMMARY.md, BUSINESS_INSIGHTS.md, and CHART_CATALOG.md.
+• Created two interactive Jupyter Notebooks: 02_Exploratory_Data_Analysis.ipynb and 03_Business_Insights.ipynb containing all code, plots, and KPI dashboards.
+
+All Day 8 deliverables have been completed, verified, and committed to the repository.
+
+I will wait for your approval before proceeding to Day 9 (Phase 5 - Model Building & Forecasting).
+
+Thank you.
+
+Regards,
+Usha
+
+================================================================
