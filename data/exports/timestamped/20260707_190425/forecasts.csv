@@ -1,0 +1,2 @@
+forecast_id,product_id,forecast_date,predicted_qty,confidence_low,confidence_high,model_used,generated_at
+6f7defb2-0a1c-4c6e-a8d8-3e68f1c5b6e4,decd0138-4c04-4f18-8d2d-c85371011a15,2026-07-30 00:00:00,11,0,138,ARIMA,2026-06-30 13:04:09

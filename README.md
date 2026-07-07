@@ -1023,6 +1023,217 @@ app/
 
 ---
 
+# 🔬 Phase 3 – Data Pipeline Architecture
+
+## Overview
+
+Day 6–7 introduced a fully automated, configuration-driven, enterprise-grade ETL pipeline (`pipeline/`) built with Python + Pandas. It extracts raw data from SQLite, cleans it, performs feature engineering, validates data quality, generates professional reports, and exports analytics-ready datasets in multiple formats.
+
+---
+
+## Pipeline Architecture
+
+```text
+pipeline/
+├── pipeline.py         # CLI orchestrator — single-entry point for full run
+├── extract.py          # Connects to SQLite and loads all 8 tables into DataFrames
+├── clean.py            # Data quality profiling, null imputation, outlier capping (IQR)
+├── transform.py        # Feature engineering — 20+ derived columns
+├── validate.py         # Schema validation, FK checks, business rule assertions
+├── export.py           # Multi-format export (CSV, XLSX, Parquet, Pickle)
+├── data_profile.py     # Structural profiling report generator
+├── quality.py          # Data quality scorecard (6 dimensions, weighted score)
+└── utils.py            # Logging, settings accessor, helpers
+
+config/
+├── config.yaml         # Default pipeline configuration (all options)
+└── settings.py         # Pydantic settings engine — reads YAML + env overrides
+
+tests/
+├── conftest.py         # Shared pytest fixtures (temp DB, mock settings)
+├── test_extract.py     # Extraction unit tests
+├── test_clean.py       # Cleaning and profiling unit tests
+├── test_transform.py   # Feature engineering unit tests
+├── test_validate.py    # Validation suite unit tests
+├── test_export.py      # Export format tests
+└── test_pipeline.py    # End-to-end integration test
+```
+
+---
+
+## Data Flow
+
+```text
+[SQLite: inventory.db]
+        │
+        ▼
+  extract.py  → raw DataFrames (8 tables)
+        │
+        ▼
+  clean.py    → profiling → null imputation → outlier capping → data type correction
+        │
+        ▼
+  transform.py → feature engineering → derived metrics → processed DataFrames
+        │
+        ▼
+  validate.py → schema checks → business rules → FK integrity → validation report
+        │
+        ▼
+  export.py   → CSV, XLSX, Parquet, Pickle → data/exports/
+        │
+        ▼
+  pipeline.py → DATA_DICTIONARY.md, DATA_CLEANING_REPORT.md, DATA_PROFILE_REPORT.md,
+                DATA_VALIDATION_REPORT.md, DATA_QUALITY_SCORECARD.md → docs/
+```
+
+---
+
+## CLI Commands
+
+All commands are run from the project root with the Python virtual environment active:
+
+```bash
+# Activate Python virtual environment (Windows)
+analytics\venv\Scripts\activate
+
+# Full pipeline run (recommended)
+python pipeline/pipeline.py
+
+# Run with data profiling report
+python pipeline/pipeline.py --profile
+
+# Run with validation report
+python pipeline/pipeline.py --validate
+
+# Run with profiling AND validation
+python pipeline/pipeline.py --profile --validate
+
+# Run only cleaning step (skip transform, export)
+python pipeline/pipeline.py --clean-only
+
+# Export in specific formats
+python pipeline/pipeline.py --export csv xlsx
+
+# Use a custom config file
+python pipeline/pipeline.py --config config/config.yaml
+
+# Verbose debug logging
+python pipeline/pipeline.py --verbose
+
+# Combined options
+python pipeline/pipeline.py --profile --validate --export csv parquet --verbose
+```
+
+---
+
+## Configuration Options (`config/config.yaml`)
+
+The pipeline is configured entirely through `config/config.yaml`. Any field can also be overridden with environment variables.
+
+```yaml
+database:
+  db_path: "./data/inventory.db"           # SQLite database path
+  timeout_seconds: 30
+
+export:
+  export_dir: "./data/exports"             # Output folder for exported datasets
+  export_formats: ["csv", "xlsx", "parquet", "pickle"]
+  save_timestamped_archive: true           # Keep versioned archive copies
+
+pipeline:
+  outlier_multiplier: 1.5                  # IQR multiplier for outlier capping
+  enable_profiling: false                  # Auto-generate DATA_PROFILE_REPORT.md
+  enable_validation: false                 # Auto-generate DATA_VALIDATION_REPORT.md
+  enable_quality_scorecard: true           # Auto-generate DATA_QUALITY_SCORECARD.md
+
+logging:
+  log_level: "INFO"                        # DEBUG | INFO | WARNING | ERROR
+  log_dir: "./logs"
+  log_file: "pipeline.log"
+```
+
+**Environment variable overrides** (prefix `INVENTORY_`):
+```bash
+export INVENTORY_DB_PATH="/path/to/custom.db"
+export INVENTORY_EXPORT_DIR="/path/to/outputs"
+export INVENTORY_LOG_LEVEL="DEBUG"
+```
+
+---
+
+## Engineered Features (20+ Columns)
+
+| Table | Feature Column | Description |
+|-------|---------------|-------------|
+| Products | `revenue_potential` | `unit_cost × reorder_point` |
+| Products | `demand_category` | High / Medium / Low based on avg daily demand |
+| Products | `avg_daily_demand` | Rolling historical average |
+| Sales | `revenue` | `quantity × unit_price` |
+| Sales | `profit` | `revenue − (quantity × unit_cost)` |
+| Sales | `profit_margin_pct` | `profit / revenue × 100` |
+| Sales | `week`, `month`, `quarter`, `year` | Calendar decomposition |
+| Sales | `day_of_week`, `is_weekend`, `season` | Temporal pattern features |
+| Sales | `rolling_sales_7d`, `rolling_sales_30d` | Rolling demand windows |
+| Inventory | `inventory_value` | `quantity × unit_cost` |
+| Inventory | `stock_status` | Critical / Low / Adequate / Excess |
+| Inventory | `reorder_required` | Boolean flag for replenishment |
+| Inventory | `days_until_stockout` | Estimated days remaining at avg demand |
+| Inventory | `inventory_turnover` | Sales velocity vs stock held |
+| Purchase Orders | `total_order_value` | `quantity × unit_cost` |
+| Purchase Orders | `on_time_delivery` | Boolean — actual ≤ expected delivery |
+| Purchase Orders | `lead_time_actual` | Days from order to actual delivery |
+| Suppliers | `avg_lead_time`, `min_lead_time`, `max_lead_time` | Lead time statistics |
+| Suppliers | `on_time_rate` | % of on-time deliveries |
+| Suppliers | `total_order_value` | Cumulative spend per supplier |
+
+---
+
+## Generated Documents (`docs/`)
+
+| Document | Description |
+|----------|-------------|
+| `DATA_DICTIONARY.md` | Column-by-column definitions, types, constraints for all 8 tables |
+| `DATA_CLEANING_REPORT.md` | Null rates, imputation decisions, outlier counts, cleaning steps |
+| `DATA_PROFILE_REPORT.md` | Row counts, dtype profiles, uniqueness, completeness per column |
+| `DATA_VALIDATION_REPORT.md` | Schema compliance, FK integrity, business rule check results |
+| `DATA_QUALITY_SCORECARD.md` | 6-dimension quality score (Completeness, Uniqueness, Accuracy...) |
+| `performance_comparison.md` | Before/after optimization timing comparison |
+
+---
+
+## Running Tests
+
+```bash
+# Run full test suite (10 tests)
+analytics\venv\Scripts\pytest tests\ -v
+
+# Run individual test modules
+analytics\venv\Scripts\pytest tests\test_extract.py -v
+analytics\venv\Scripts\pytest tests\test_clean.py -v
+analytics\venv\Scripts\pytest tests\test_transform.py -v
+analytics\venv\Scripts\pytest tests\test_validate.py -v
+analytics\venv\Scripts\pytest tests\test_export.py -v
+analytics\venv\Scripts\pytest tests\test_pipeline.py -v
+```
+
+**Expected result:** `10 passed` ✅
+
+---
+
+## Troubleshooting
+
+| Problem | Cause | Fix |
+|---------|-------|-----|
+| `ModuleNotFoundError: No module named 'pipeline'` | Running pytest from wrong directory | Run from project root: `analytics\venv\Scripts\pytest tests\` |
+| `FileNotFoundError: inventory.db` | DB path mismatch in config | Set `INVENTORY_DB_PATH` env var or update `config.yaml` |
+| `KeyError: 'user_id'` in clean.py | `audit_logs` table missing `user_id` column | Re-run seed script or apply migration: `ALTER TABLE audit_logs ADD COLUMN user_id TEXT` |
+| `AttributeError: .dt accessor` | Datetime columns not parsed | Ensure `pd.to_datetime()` is called before `.dt.strftime()` — already fixed in `transform.py` |
+| `ImportError: cannot import name ... from 'profile'` | Naming conflict with Python built-in `profile` module | Use `data_profile.py` instead of `profile.py` |
+| Pipeline runs but exports empty | `export_dir` pointing to wrong path | Check `settings.export_dir` in logs, verify against `config.yaml` |
+| Slow pipeline execution | Large dataset + apply() loops | Use `--verbose` flag to identify slow steps; vectorized ops already applied |
+
+---
+
 # 📈 Project Workflow
 
 Every development session follows the same process:
@@ -1112,4 +1323,4 @@ Data Analytics • AI • Full Stack Development
 
 ---
 
-**Status:** 🚀 Phase 2 Complete (Days 1-5 verified) | Day 6 (Data Extraction) In Progress
+**Status:** 🚀 Phase 3 Complete (Days 1–7 verified) | Day 8 (Exploratory Data Analysis) Next

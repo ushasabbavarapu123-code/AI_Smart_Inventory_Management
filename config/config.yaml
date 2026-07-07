@@ -1,0 +1,32 @@
+# AI Smart Inventory Pipeline Configuration
+
+database:
+  path: "data/inventory.db"
+
+export:
+  directory: "data/exports"
+  formats:
+    - "csv"
+    - "xlsx"
+    - "parquet"
+    - "pkl"
+  save_timestamped_archive: true
+
+logging:
+  level: "INFO"
+  log_to_console: true
+  log_to_file: true
+  log_file_path: "logs/pipeline.log"
+
+feature_flags:
+  run_profiling: true
+  run_validation: true
+  generate_quality_scorecard: true
+  generate_data_dictionary: true
+  clean_only: false
+
+pipeline_options:
+  outlier_iqr_multiplier: 1.5
+  default_supplier_lead_time: 7
+  default_supplier_rating: 3.0
+  max_days_until_stockout: 999.0

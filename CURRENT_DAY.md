@@ -6,19 +6,19 @@
 
 **Current Sprint:** Sprint 2
 
-**Current Phase:** Phase 3 – Data Extraction, Cleaning & Pipeline Engineering
+**Current Phase:** Phase 5 – Model Building & Forecasting
 
-**Current Day:** Day 7
+**Current Day:** Day 9
 
 **Roadmap Version:** Data Analytics Python Project Roadmap v1.0
 
-**Last Updated:** 2026-07-07 18:47
+**Last Updated:** 2026-07-07 19:25
 
 ---
 
 # CURRENT OBJECTIVE
 
-Continue building the Python data analytics pipeline. Day 7 focuses on Exploratory Data Analysis (EDA) — analyzing the cleaned and feature-engineered datasets to generate business insights, trend analyses, and visualizations using Matplotlib and Plotly.
+Develop and train baseline and advanced Machine Learning models to predict future demand and recommend safety stock levels.
 
 Only complete the activities assigned for the current day.
 
@@ -30,67 +30,68 @@ Do NOT implement any work scheduled for future days.
 
 ## Phase
 
-Phase 3 – Data Extraction, Cleaning & Pipeline Engineering (Day 7)
+Phase 5 – Model Building & Forecasting (Day 9)
 
 ---
 
 ## Objective
 
-Perform Exploratory Data Analysis on the cleaned datasets. Produce charts, insights, and a structured EDA notebook covering sales trends, inventory health, supplier performance, and product-level analytics.
+Build demand forecasting models using historical sales data. Develop baseline forecasting (e.g., Simple Moving Average) and machine learning models (e.g., ARIMA or Random Forest Regressor). Evaluate model performance, select the champion model, and generate 30-day future demand predictions.
 
 ---
 
 ## Today's Key Activities
 
-- [ ] Load processed CSVs from data/processed/
-- [ ] Perform univariate and bivariate statistical analysis
-- [ ] Create Sales Trend visualizations (daily, monthly, quarterly)
-- [ ] Create Product Performance charts (top/bottom products)
-- [ ] Create Inventory Health charts (stock status distribution)
-- [ ] Create Supplier Performance analysis
-- [ ] Create Demand Category distribution analysis
-- [ ] Create Profit Margin analysis by category
-- [ ] Generate minimum 5 Business Insights from the data
-- [ ] Save all charts to analytics/notebooks/ or dedicated charts/ folder
+- [ ] Load processed sales and product datasets
+- [ ] Split data into training and validation sets (temporal split)
+- [ ] Develop Baseline Model (e.g., 30-day Simple Moving Average)
+- [ ] Develop Advanced Time Series or Regression Model (e.g., ARIMA, Prophet, or Random Forest/XGBoost with lag features)
+- [ ] Evaluate models using Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE)
+- [ ] Select Champion Model based on validation metrics
+- [ ] Generate 30-day future demand forecasts per product SKU
+- [ ] Calculate safety stock and recommended reorder points using model predictions
+- [ ] Save predicted demand outputs to SQLite database (`forecasts` table)
+- [ ] Export forecasts to processed CSV (`forecasts_processed.csv`)
+- [ ] Create Model Training and Forecasting script `analytics/scripts/train_forecast.py`
+- [ ] Create forecasting Jupyter Notebook `analytics/notebooks/03_Demand_Forecasting.ipynb`
 - [ ] Update PROJECT_TRACKER.md
-- [ ] Generate DAILY_REPORTS/DAY_07_REPORT.txt
+- [ ] Generate DAILY_REPORTS/DAY_09_REPORT.txt
 - [ ] Commit to Git
 
 ---
 
 # REQUIRED INPUTS
 
-Before starting Day 7, verify that:
+Before starting Day 9, verify that:
 
-- Day 6 Python ETL pipeline completed successfully (pipeline.py runs end-to-end)
-- data/processed/ directory contains feature-engineered CSVs
-- data/exports/ contains CSV, XLSX, Parquet, and Pickle formats
-- docs/DATA_DICTIONARY.md and docs/DATA_CLEANING_REPORT.md generated
-- logs/pipeline.log exists with detailed execution records
+- Clean, feature-engineered datasets exist in `data/processed/` ✅
+- EDA visualizations and insights are saved and documented ✅
+- Python virtual environment is active with `scikit-learn` and `statsmodels` ✅
 
 ---
 
 # EXPECTED DELIVERABLES
 
-At the end of Day 7, the following must exist:
+At the end of Day 9, the following must exist:
 
-- EDA analysis scripts or notebooks
-- At least 6 business insight charts
-- Business insights documented in a report
+- Model Training & Evaluation notebook in `analytics/notebooks/`
+- Executable Python script `analytics/scripts/train_forecast.py`
+- SQLite database `forecasts` table populated with future predictions
+- Forecasted CSV files in `data/processed/`
 - Updated PROJECT_TRACKER.md
-- DAILY_REPORTS/DAY_07_REPORT.txt
+- DAILY_REPORTS/DAY_09_REPORT.txt
 
 ---
 
 # VERIFICATION CHECKLIST
 
-Before marking Day 7 complete:
+Before marking Day 9 complete:
 
-- [ ] EDA notebook/scripts run without errors
-- [ ] Charts are properly labelled (titles, axes, legends)
-- [ ] Business questions from Phase 1 are being answered
-- [ ] At least 5 business insights documented
-- [ ] Visualizations saved to disk
+- [ ] Model training script executes without errors
+- [ ] Model predictions are saved to `forecasts` table in the database
+- [ ] Validation metrics (MAE, RMSE) are logged and reported
+- [ ] Recommended reorder quantities are populated for all active SKUs
+- [ ] Code adheres to clean architecture standards
 
 ---
 
@@ -99,8 +100,8 @@ Before marking Day 7 complete:
 After completing all verification items:
 
 1. Update PROJECT_TRACKER.md
-2. Generate DAY_07_REPORT.txt in DAILY_REPORTS/
-3. Update this file to Day 8
+2. Generate DAY_09_REPORT.txt in DAILY_REPORTS/
+3. Update this file to Day 10
 4. Commit changes to Git
 5. STOP and wait for user approval
 
@@ -110,32 +111,20 @@ Do not continue automatically.
 
 # PREVIOUS DAY (COMPLETED)
 
-**Phase:** Phase 3 – Data Extraction, Cleaning & Pipeline Engineering (Day 6)
+**Phase:** Phase 4 – Exploratory Data Analysis & Insights (Day 8)
 
 **Current Status:** COMPLETED
 
-- [x] Connect Python modules to the SQLite database (pipeline/utils.py)
-- [x] Query and extract all 8 tables into Pandas DataFrames (pipeline/extract.py)
-- [x] Perform automated Data Quality Profiling (pipeline/clean.py)
-- [x] Implement null value imputation and duplicate removal policies
-- [x] Correct data types (date strings to datetimes, numeric castings)
-- [x] Identify and handle outliers using IQR method (72 sales quantity values capped)
-- [x] Perform Feature Engineering — 20+ engineered columns across tables (pipeline/transform.py)
-  - Revenue, Profit, Profit Margin, Inventory Value
-  - Stock Status, Reorder Required, Safety Stock Flag
-  - Days Until Stockout, Inventory Turnover, Demand Category
-  - Rolling Sales 7d/30d, Average Daily Demand
-  - Week, Month, Quarter, Year, Day of Week, Weekend Indicator, Season
-- [x] Validate schema, primary keys, foreign keys, numeric bounds (pipeline/validate.py)
-- [x] Export clean datasets in CSV, XLSX, Parquet, Pickle formats (pipeline/export.py)
-- [x] Generate docs/DATA_DICTIONARY.md (159 lines, fully automated)
-- [x] Generate docs/DATA_CLEANING_REPORT.md (comprehensive pipeline run statistics)
-- [x] Create pipeline/pipeline.py — single command ETL orchestrator
-- [x] Install openpyxl, pyarrow, python-dotenv in analytics/venv
-- [x] Create requirements.txt in project root
-- [x] Update PROJECT_TRACKER.md
-- [x] Generate DAILY_REPORTS/DAY_06_REPORT.txt
-- [x] Commit all changes to Git
+- [x] Loaded processed CSVs from `data/processed/`
+- [x] Performed univariate and bivariate statistical analysis
+- [x] Created Sales Trend, Product Performance, Inventory Health, Supplier scattering, Profit Margins, and Seasonality visualizations
+- [x] Saved 6 PNG visualization assets to `analytics/charts/`
+- [x] Answered all 8 business questions from Phase 1
+- [x] Compiled 5 actionable business insights
+- [x] Created Jupyter Notebook `analytics/notebooks/02_Exploratory_Data_Analysis.ipynb`
+- [x] Created reproducible python execution script `analytics/scripts/run_eda.py`
+- [x] Updated PROJECT_TRACKER.md (overall progress 60%)
+- [x] Generated DAY_08_REPORT.txt
 
 ---
 
