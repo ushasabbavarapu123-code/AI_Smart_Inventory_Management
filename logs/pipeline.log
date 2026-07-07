@@ -1,0 +1,277 @@
+2026-07-07 18:44:56,161 - orchestrator - INFO - ================================================
+2026-07-07 18:44:56,163 - orchestrator - INFO - Initializing Data Pipeline Execution...
+2026-07-07 18:44:56,163 - orchestrator - INFO - ================================================
+2026-07-07 18:44:56,163 - extract - INFO - Starting Data Extraction phase...
+2026-07-07 18:44:56,166 - utils - INFO - Using database path from app/.env: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\inventory.db
+2026-07-07 18:44:56,167 - utils - INFO - Successfully connected to SQLite database at C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\inventory.db
+2026-07-07 18:44:56,172 - extract - INFO - Identified database tables for extraction: ['products', 'inventory', 'sales', 'forecasts', 'suppliers', 'purchase_orders', 'users', 'audit_logs']
+2026-07-07 18:44:56,172 - extract - INFO - Extracting table: 'products'
+2026-07-07 18:44:56,186 - extract - INFO - Table 'products' extraction profile:
+2026-07-07 18:44:56,186 - extract - INFO -   - Rows: 51
+2026-07-07 18:44:56,186 - extract - INFO -   - Columns: 7
+2026-07-07 18:44:56,186 - extract - INFO -   - Memory Usage: 0.0071 MB
+2026-07-07 18:44:56,186 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:44:56,186 - extract - INFO -   - Data Types: {'product_id': 'str', 'sku': 'str', 'name': 'str', 'category': 'str', 'unit_cost': 'float64', 'reorder_point': 'int64', 'created_at': 'str'}
+2026-07-07 18:44:56,189 - extract - INFO -   - Missing Values: {'product_id': 0, 'sku': 0, 'name': 0, 'category': 0, 'unit_cost': 0, 'reorder_point': 0, 'created_at': 0}
+2026-07-07 18:44:56,195 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\products.csv
+2026-07-07 18:44:56,195 - extract - INFO - Extracting table: 'inventory'
+2026-07-07 18:44:56,198 - extract - INFO - Table 'inventory' extraction profile:
+2026-07-07 18:44:56,199 - extract - INFO -   - Rows: 50
+2026-07-07 18:44:56,199 - extract - INFO -   - Columns: 5
+2026-07-07 18:44:56,199 - extract - INFO -   - Memory Usage: 0.0072 MB
+2026-07-07 18:44:56,199 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:44:56,199 - extract - INFO -   - Data Types: {'inventory_id': 'str', 'product_id': 'str', 'location': 'str', 'quantity': 'int64', 'last_updated': 'str'}
+2026-07-07 18:44:56,199 - extract - INFO -   - Missing Values: {'inventory_id': 0, 'product_id': 0, 'location': 0, 'quantity': 0, 'last_updated': 0}
+2026-07-07 18:44:56,201 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\inventory.csv
+2026-07-07 18:44:56,201 - extract - INFO - Extracting table: 'sales'
+2026-07-07 18:44:56,208 - extract - INFO - Table 'sales' extraction profile:
+2026-07-07 18:44:56,208 - extract - INFO -   - Rows: 906
+2026-07-07 18:44:56,208 - extract - INFO -   - Columns: 7
+2026-07-07 18:44:56,208 - extract - INFO -   - Memory Usage: 0.1477 MB
+2026-07-07 18:44:56,208 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:44:56,208 - extract - INFO -   - Data Types: {'sale_id': 'str', 'product_id': 'str', 'sale_date': 'str', 'quantity': 'int64', 'unit_price': 'float64', 'customer_type': 'str', 'created_at': 'str'}
+2026-07-07 18:44:56,208 - extract - INFO -   - Missing Values: {'sale_id': 0, 'product_id': 0, 'sale_date': 0, 'quantity': 0, 'unit_price': 0, 'customer_type': 0, 'created_at': 0}
+2026-07-07 18:44:56,215 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\sales.csv
+2026-07-07 18:44:56,215 - extract - INFO - Extracting table: 'forecasts'
+2026-07-07 18:44:56,218 - extract - INFO - Table 'forecasts' extraction profile:
+2026-07-07 18:44:56,219 - extract - INFO -   - Rows: 1
+2026-07-07 18:44:56,219 - extract - INFO -   - Columns: 8
+2026-07-07 18:44:56,219 - extract - INFO -   - Memory Usage: 0.0003 MB
+2026-07-07 18:44:56,219 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:44:56,220 - extract - INFO -   - Data Types: {'forecast_id': 'str', 'product_id': 'str', 'forecast_date': 'str', 'predicted_qty': 'int64', 'confidence_low': 'int64', 'confidence_high': 'int64', 'model_used': 'str', 'generated_at': 'str'}
+2026-07-07 18:44:56,220 - extract - INFO -   - Missing Values: {'forecast_id': 0, 'product_id': 0, 'forecast_date': 0, 'predicted_qty': 0, 'confidence_low': 0, 'confidence_high': 0, 'model_used': 0, 'generated_at': 0}
+2026-07-07 18:44:56,222 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\forecasts.csv
+2026-07-07 18:44:56,222 - extract - INFO - Extracting table: 'suppliers'
+2026-07-07 18:44:56,227 - extract - INFO - Table 'suppliers' extraction profile:
+2026-07-07 18:44:56,227 - extract - INFO -   - Rows: 10
+2026-07-07 18:44:56,227 - extract - INFO -   - Columns: 8
+2026-07-07 18:44:56,227 - extract - INFO -   - Memory Usage: 0.0020 MB
+2026-07-07 18:44:56,227 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:44:56,227 - extract - INFO -   - Data Types: {'supplier_id': 'str', 'name': 'str', 'contact_person': 'str', 'contact_email': 'str', 'contact_phone': 'str', 'lead_time_days': 'int64', 'rating': 'float64', 'created_at': 'str'}
+2026-07-07 18:44:56,227 - extract - INFO -   - Missing Values: {'supplier_id': 0, 'name': 0, 'contact_person': 0, 'contact_email': 0, 'contact_phone': 0, 'lead_time_days': 0, 'rating': 0, 'created_at': 0}
+2026-07-07 18:44:56,229 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\suppliers.csv
+2026-07-07 18:44:56,229 - extract - INFO - Extracting table: 'purchase_orders'
+2026-07-07 18:44:56,235 - extract - INFO - Table 'purchase_orders' extraction profile:
+2026-07-07 18:44:56,235 - extract - INFO -   - Rows: 105
+2026-07-07 18:44:56,235 - extract - INFO -   - Columns: 11
+2026-07-07 18:44:56,235 - extract - INFO -   - Memory Usage: 0.0311 MB
+2026-07-07 18:44:56,235 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:44:56,235 - extract - INFO -   - Data Types: {'po_id': 'str', 'supplier_id': 'str', 'product_id': 'str', 'quantity': 'int64', 'unit_cost': 'float64', 'order_date': 'str', 'expected_delivery': 'str', 'actual_delivery': 'str', 'status': 'str', 'notes': 'str', 'created_at': 'str'}
+2026-07-07 18:44:56,235 - extract - INFO -   - Missing Values: {'po_id': 0, 'supplier_id': 0, 'product_id': 0, 'quantity': 0, 'unit_cost': 0, 'order_date': 0, 'expected_delivery': 0, 'actual_delivery': 15, 'status': 0, 'notes': 0, 'created_at': 0}
+2026-07-07 18:44:56,238 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\purchase_orders.csv
+2026-07-07 18:44:56,238 - extract - INFO - Extracting table: 'users'
+2026-07-07 18:44:56,242 - extract - INFO - Table 'users' extraction profile:
+2026-07-07 18:44:56,243 - extract - INFO -   - Rows: 5
+2026-07-07 18:44:56,243 - extract - INFO -   - Columns: 8
+2026-07-07 18:44:56,243 - extract - INFO -   - Memory Usage: 0.0012 MB
+2026-07-07 18:44:56,243 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:44:56,243 - extract - INFO -   - Data Types: {'user_id': 'str', 'email': 'str', 'password_hash': 'str', 'full_name': 'str', 'role': 'str', 'is_active': 'int64', 'created_at': 'str', 'last_login': 'str'}
+2026-07-07 18:44:56,243 - extract - INFO -   - Missing Values: {'user_id': 0, 'email': 0, 'password_hash': 0, 'full_name': 0, 'role': 0, 'is_active': 0, 'created_at': 0, 'last_login': 4}
+2026-07-07 18:44:56,246 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\users.csv
+2026-07-07 18:44:56,246 - extract - INFO - Extracting table: 'audit_logs'
+2026-07-07 18:44:56,249 - extract - INFO - Table 'audit_logs' extraction profile:
+2026-07-07 18:44:56,249 - extract - INFO -   - Rows: 28
+2026-07-07 18:44:56,249 - extract - INFO -   - Columns: 9
+2026-07-07 18:44:56,249 - extract - INFO -   - Memory Usage: 0.0076 MB
+2026-07-07 18:44:56,249 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:44:56,249 - extract - INFO -   - Data Types: {'log_id': 'str', 'user_id': 'str', 'action': 'str', 'entity': 'str', 'entity_id': 'str', 'old_value': 'str', 'new_value': 'str', 'ip_address': 'str', 'timestamp': 'str'}
+2026-07-07 18:44:56,249 - extract - INFO -   - Missing Values: {'log_id': 0, 'user_id': 0, 'action': 0, 'entity': 0, 'entity_id': 0, 'old_value': 6, 'new_value': 0, 'ip_address': 13, 'timestamp': 0}
+2026-07-07 18:44:56,253 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\audit_logs.csv
+2026-07-07 18:44:56,256 - extract - INFO - Data Extraction phase completed successfully.
+2026-07-07 18:44:56,256 - clean - INFO - Starting Data Quality Profiling...
+2026-07-07 18:44:56,266 - clean - INFO - Data quality profile for 'products': {'missing_values': {}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:44:56,273 - clean - INFO - Data quality profile for 'inventory': {'missing_values': {}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:44:56,283 - clean - INFO - Data quality profile for 'sales': {'missing_values': {}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:44:56,289 - clean - INFO - Data quality profile for 'forecasts': {'missing_values': {}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:44:56,296 - clean - INFO - Data quality profile for 'suppliers': {'missing_values': {}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:44:56,307 - clean - INFO - Data quality profile for 'purchase_orders': {'missing_values': {'actual_delivery': 15}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:44:56,313 - clean - INFO - Data quality profile for 'users': {'missing_values': {'last_login': 4}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:44:56,324 - clean - INFO - Data quality profile for 'audit_logs': {'missing_values': {'old_value': 6, 'ip_address': 13}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:44:56,324 - clean - INFO - Data Quality Profiling completed.
+2026-07-07 18:44:56,324 - clean - INFO - Starting Data Cleaning process...
+2026-07-07 18:44:56,337 - clean - INFO - Column 'quantity': Capping 72 outliers to IQR bounds [-18.12, 40.88]
+2026-07-07 18:44:56,378 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\products.csv
+2026-07-07 18:44:56,384 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\inventory.csv
+2026-07-07 18:44:56,397 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\sales.csv
+2026-07-07 18:44:56,401 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\forecasts.csv
+2026-07-07 18:44:56,406 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\suppliers.csv
+2026-07-07 18:44:56,414 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\purchase_orders.csv
+2026-07-07 18:44:56,420 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\users.csv
+2026-07-07 18:44:56,424 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\audit_logs.csv
+2026-07-07 18:44:56,424 - clean - INFO - Data Cleaning process completed successfully.
+2026-07-07 18:44:56,424 - transform - INFO - Starting Feature Engineering & Transformation...
+2026-07-07 18:44:56,426 - transform - INFO - Historical sales date range: 2025-07-01 to 2026-06-30
+2026-07-07 18:44:56,438 - transform - INFO - Calculating rolling sales (7-day and 30-day)...
+2026-07-07 18:44:56,458 - transform - INFO - Calculated average daily demand per product.
+2026-07-07 18:44:56,458 - transform - INFO - Enriching Products table...
+2026-07-07 18:44:56,504 - transform - INFO - Enriching Sales table...
+2026-07-07 18:44:56,540 - transform - INFO - Enriching Inventory table...
+2026-07-07 18:44:56,558 - transform - INFO - Enriching Purchase Orders table...
+2026-07-07 18:44:56,569 - orchestrator - ERROR - ETL Data Pipeline failed: name 'forecasts' is not defined
+Traceback (most recent call last):
+  File "C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\pipeline\pipeline.py", line 293, in main
+    processed_dfs = transform_data(cleaned_dfs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\pipeline\transform.py", line 245, in transform_data
+    "forecasts": forecasts.copy(),
+                 ^^^^^^^^^
+NameError: name 'forecasts' is not defined
+2026-07-07 18:45:12,301 - orchestrator - INFO - ================================================
+2026-07-07 18:45:12,301 - orchestrator - INFO - Initializing Data Pipeline Execution...
+2026-07-07 18:45:12,303 - orchestrator - INFO - ================================================
+2026-07-07 18:45:12,303 - extract - INFO - Starting Data Extraction phase...
+2026-07-07 18:45:12,306 - utils - INFO - Using database path from app/.env: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\inventory.db
+2026-07-07 18:45:12,308 - utils - INFO - Successfully connected to SQLite database at C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\inventory.db
+2026-07-07 18:45:12,311 - extract - INFO - Identified database tables for extraction: ['products', 'inventory', 'sales', 'forecasts', 'suppliers', 'purchase_orders', 'users', 'audit_logs']
+2026-07-07 18:45:12,312 - extract - INFO - Extracting table: 'products'
+2026-07-07 18:45:12,323 - extract - INFO - Table 'products' extraction profile:
+2026-07-07 18:45:12,323 - extract - INFO -   - Rows: 51
+2026-07-07 18:45:12,323 - extract - INFO -   - Columns: 7
+2026-07-07 18:45:12,323 - extract - INFO -   - Memory Usage: 0.0071 MB
+2026-07-07 18:45:12,323 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:45:12,323 - extract - INFO -   - Data Types: {'product_id': 'str', 'sku': 'str', 'name': 'str', 'category': 'str', 'unit_cost': 'float64', 'reorder_point': 'int64', 'created_at': 'str'}
+2026-07-07 18:45:12,324 - extract - INFO -   - Missing Values: {'product_id': 0, 'sku': 0, 'name': 0, 'category': 0, 'unit_cost': 0, 'reorder_point': 0, 'created_at': 0}
+2026-07-07 18:45:12,329 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\products.csv
+2026-07-07 18:45:12,330 - extract - INFO - Extracting table: 'inventory'
+2026-07-07 18:45:12,334 - extract - INFO - Table 'inventory' extraction profile:
+2026-07-07 18:45:12,334 - extract - INFO -   - Rows: 50
+2026-07-07 18:45:12,334 - extract - INFO -   - Columns: 5
+2026-07-07 18:45:12,334 - extract - INFO -   - Memory Usage: 0.0072 MB
+2026-07-07 18:45:12,334 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:45:12,334 - extract - INFO -   - Data Types: {'inventory_id': 'str', 'product_id': 'str', 'location': 'str', 'quantity': 'int64', 'last_updated': 'str'}
+2026-07-07 18:45:12,334 - extract - INFO -   - Missing Values: {'inventory_id': 0, 'product_id': 0, 'location': 0, 'quantity': 0, 'last_updated': 0}
+2026-07-07 18:45:12,337 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\inventory.csv
+2026-07-07 18:45:12,337 - extract - INFO - Extracting table: 'sales'
+2026-07-07 18:45:12,343 - extract - INFO - Table 'sales' extraction profile:
+2026-07-07 18:45:12,343 - extract - INFO -   - Rows: 906
+2026-07-07 18:45:12,343 - extract - INFO -   - Columns: 7
+2026-07-07 18:45:12,343 - extract - INFO -   - Memory Usage: 0.1477 MB
+2026-07-07 18:45:12,343 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:45:12,343 - extract - INFO -   - Data Types: {'sale_id': 'str', 'product_id': 'str', 'sale_date': 'str', 'quantity': 'int64', 'unit_price': 'float64', 'customer_type': 'str', 'created_at': 'str'}
+2026-07-07 18:45:12,343 - extract - INFO -   - Missing Values: {'sale_id': 0, 'product_id': 0, 'sale_date': 0, 'quantity': 0, 'unit_price': 0, 'customer_type': 0, 'created_at': 0}
+2026-07-07 18:45:12,351 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\sales.csv
+2026-07-07 18:45:12,351 - extract - INFO - Extracting table: 'forecasts'
+2026-07-07 18:45:12,354 - extract - INFO - Table 'forecasts' extraction profile:
+2026-07-07 18:45:12,355 - extract - INFO -   - Rows: 1
+2026-07-07 18:45:12,355 - extract - INFO -   - Columns: 8
+2026-07-07 18:45:12,355 - extract - INFO -   - Memory Usage: 0.0003 MB
+2026-07-07 18:45:12,355 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:45:12,355 - extract - INFO -   - Data Types: {'forecast_id': 'str', 'product_id': 'str', 'forecast_date': 'str', 'predicted_qty': 'int64', 'confidence_low': 'int64', 'confidence_high': 'int64', 'model_used': 'str', 'generated_at': 'str'}
+2026-07-07 18:45:12,355 - extract - INFO -   - Missing Values: {'forecast_id': 0, 'product_id': 0, 'forecast_date': 0, 'predicted_qty': 0, 'confidence_low': 0, 'confidence_high': 0, 'model_used': 0, 'generated_at': 0}
+2026-07-07 18:45:12,357 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\forecasts.csv
+2026-07-07 18:45:12,358 - extract - INFO - Extracting table: 'suppliers'
+2026-07-07 18:45:12,362 - extract - INFO - Table 'suppliers' extraction profile:
+2026-07-07 18:45:12,362 - extract - INFO -   - Rows: 10
+2026-07-07 18:45:12,362 - extract - INFO -   - Columns: 8
+2026-07-07 18:45:12,362 - extract - INFO -   - Memory Usage: 0.0020 MB
+2026-07-07 18:45:12,362 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:45:12,362 - extract - INFO -   - Data Types: {'supplier_id': 'str', 'name': 'str', 'contact_person': 'str', 'contact_email': 'str', 'contact_phone': 'str', 'lead_time_days': 'int64', 'rating': 'float64', 'created_at': 'str'}
+2026-07-07 18:45:12,362 - extract - INFO -   - Missing Values: {'supplier_id': 0, 'name': 0, 'contact_person': 0, 'contact_email': 0, 'contact_phone': 0, 'lead_time_days': 0, 'rating': 0, 'created_at': 0}
+2026-07-07 18:45:12,365 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\suppliers.csv
+2026-07-07 18:45:12,365 - extract - INFO - Extracting table: 'purchase_orders'
+2026-07-07 18:45:12,369 - extract - INFO - Table 'purchase_orders' extraction profile:
+2026-07-07 18:45:12,370 - extract - INFO -   - Rows: 105
+2026-07-07 18:45:12,370 - extract - INFO -   - Columns: 11
+2026-07-07 18:45:12,370 - extract - INFO -   - Memory Usage: 0.0311 MB
+2026-07-07 18:45:12,370 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:45:12,370 - extract - INFO -   - Data Types: {'po_id': 'str', 'supplier_id': 'str', 'product_id': 'str', 'quantity': 'int64', 'unit_cost': 'float64', 'order_date': 'str', 'expected_delivery': 'str', 'actual_delivery': 'str', 'status': 'str', 'notes': 'str', 'created_at': 'str'}
+2026-07-07 18:45:12,370 - extract - INFO -   - Missing Values: {'po_id': 0, 'supplier_id': 0, 'product_id': 0, 'quantity': 0, 'unit_cost': 0, 'order_date': 0, 'expected_delivery': 0, 'actual_delivery': 15, 'status': 0, 'notes': 0, 'created_at': 0}
+2026-07-07 18:45:12,375 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\purchase_orders.csv
+2026-07-07 18:45:12,375 - extract - INFO - Extracting table: 'users'
+2026-07-07 18:45:12,380 - extract - INFO - Table 'users' extraction profile:
+2026-07-07 18:45:12,380 - extract - INFO -   - Rows: 5
+2026-07-07 18:45:12,380 - extract - INFO -   - Columns: 8
+2026-07-07 18:45:12,380 - extract - INFO -   - Memory Usage: 0.0012 MB
+2026-07-07 18:45:12,380 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:45:12,380 - extract - INFO -   - Data Types: {'user_id': 'str', 'email': 'str', 'password_hash': 'str', 'full_name': 'str', 'role': 'str', 'is_active': 'int64', 'created_at': 'str', 'last_login': 'str'}
+2026-07-07 18:45:12,380 - extract - INFO -   - Missing Values: {'user_id': 0, 'email': 0, 'password_hash': 0, 'full_name': 0, 'role': 0, 'is_active': 0, 'created_at': 0, 'last_login': 4}
+2026-07-07 18:45:12,382 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\users.csv
+2026-07-07 18:45:12,382 - extract - INFO - Extracting table: 'audit_logs'
+2026-07-07 18:45:12,389 - extract - INFO - Table 'audit_logs' extraction profile:
+2026-07-07 18:45:12,389 - extract - INFO -   - Rows: 28
+2026-07-07 18:45:12,389 - extract - INFO -   - Columns: 9
+2026-07-07 18:45:12,389 - extract - INFO -   - Memory Usage: 0.0076 MB
+2026-07-07 18:45:12,390 - extract - INFO -   - Duplicate Records: 0
+2026-07-07 18:45:12,390 - extract - INFO -   - Data Types: {'log_id': 'str', 'user_id': 'str', 'action': 'str', 'entity': 'str', 'entity_id': 'str', 'old_value': 'str', 'new_value': 'str', 'ip_address': 'str', 'timestamp': 'str'}
+2026-07-07 18:45:12,390 - extract - INFO -   - Missing Values: {'log_id': 0, 'user_id': 0, 'action': 0, 'entity': 0, 'entity_id': 0, 'old_value': 6, 'new_value': 0, 'ip_address': 13, 'timestamp': 0}
+2026-07-07 18:45:12,390 - extract - INFO - Saved raw snapshot to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\raw\audit_logs.csv
+2026-07-07 18:45:12,390 - extract - INFO - Data Extraction phase completed successfully.
+2026-07-07 18:45:12,390 - clean - INFO - Starting Data Quality Profiling...
+2026-07-07 18:45:12,401 - clean - INFO - Data quality profile for 'products': {'missing_values': {}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:45:12,410 - clean - INFO - Data quality profile for 'inventory': {'missing_values': {}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:45:12,418 - clean - INFO - Data quality profile for 'sales': {'missing_values': {}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:45:12,422 - clean - INFO - Data quality profile for 'forecasts': {'missing_values': {}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:45:12,431 - clean - INFO - Data quality profile for 'suppliers': {'missing_values': {}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:45:12,445 - clean - INFO - Data quality profile for 'purchase_orders': {'missing_values': {'actual_delivery': 15}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:45:12,458 - clean - INFO - Data quality profile for 'users': {'missing_values': {'last_login': 4}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:45:12,465 - clean - INFO - Data quality profile for 'audit_logs': {'missing_values': {'old_value': 6, 'ip_address': 13}, 'duplicates': 0, 'negative_values': {}, 'future_dates': 0, 'whitespace_issues': 0, 'mixed_casing': {}}
+2026-07-07 18:45:12,466 - clean - INFO - Data Quality Profiling completed.
+2026-07-07 18:45:12,466 - clean - INFO - Starting Data Cleaning process...
+2026-07-07 18:45:12,483 - clean - INFO - Column 'quantity': Capping 72 outliers to IQR bounds [-18.12, 40.88]
+2026-07-07 18:45:12,516 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\products.csv
+2026-07-07 18:45:12,518 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\inventory.csv
+2026-07-07 18:45:12,530 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\sales.csv
+2026-07-07 18:45:12,532 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\forecasts.csv
+2026-07-07 18:45:12,538 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\suppliers.csv
+2026-07-07 18:45:12,546 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\purchase_orders.csv
+2026-07-07 18:45:12,550 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\users.csv
+2026-07-07 18:45:12,554 - clean - INFO - Saved cleaned table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\cleaned\audit_logs.csv
+2026-07-07 18:45:12,557 - clean - INFO - Data Cleaning process completed successfully.
+2026-07-07 18:45:12,557 - transform - INFO - Starting Feature Engineering & Transformation...
+2026-07-07 18:45:12,560 - transform - INFO - Historical sales date range: 2025-07-01 to 2026-06-30
+2026-07-07 18:45:12,574 - transform - INFO - Calculating rolling sales (7-day and 30-day)...
+2026-07-07 18:45:12,594 - transform - INFO - Calculated average daily demand per product.
+2026-07-07 18:45:12,594 - transform - INFO - Enriching Products table...
+2026-07-07 18:45:12,626 - transform - INFO - Enriching Sales table...
+2026-07-07 18:45:12,643 - transform - INFO - Enriching Inventory table...
+2026-07-07 18:45:12,658 - transform - INFO - Enriching Purchase Orders table...
+2026-07-07 18:45:12,670 - transform - INFO - Saved processed table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\processed\products_processed.csv
+2026-07-07 18:45:12,675 - transform - INFO - Saved processed table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\processed\inventory_processed.csv
+2026-07-07 18:45:12,694 - transform - INFO - Saved processed table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\processed\sales_processed.csv
+2026-07-07 18:45:12,700 - transform - INFO - Saved processed table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\processed\suppliers_processed.csv
+2026-07-07 18:45:12,707 - transform - INFO - Saved processed table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\processed\purchase_orders_processed.csv
+2026-07-07 18:45:12,712 - transform - INFO - Saved processed table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\processed\forecasts_processed.csv
+2026-07-07 18:45:12,717 - transform - INFO - Saved processed table to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\processed\audit_logs_processed.csv
+2026-07-07 18:45:12,717 - transform - INFO - Feature Engineering & Transformation completed successfully.
+2026-07-07 18:45:12,718 - validate - INFO - Starting Data Validation phase...
+2026-07-07 18:45:12,718 - validate - INFO - Validating table 'products'...
+2026-07-07 18:45:12,721 - validate - INFO - Table 'products' validation passed successfully.
+2026-07-07 18:45:12,721 - validate - INFO - Validating table 'inventory'...
+2026-07-07 18:45:12,724 - validate - INFO - Table 'inventory' validation passed successfully.
+2026-07-07 18:45:12,724 - validate - INFO - Validating table 'sales'...
+2026-07-07 18:45:12,729 - validate - INFO - Table 'sales' validation passed successfully.
+2026-07-07 18:45:12,729 - validate - INFO - Validating table 'suppliers'...
+2026-07-07 18:45:12,731 - validate - INFO - Table 'suppliers' validation passed successfully.
+2026-07-07 18:45:12,731 - validate - INFO - Validating table 'purchase_orders'...
+2026-07-07 18:45:12,735 - validate - INFO - Table 'purchase_orders' validation passed successfully.
+2026-07-07 18:45:12,735 - validate - INFO - Validating table 'forecasts'...
+2026-07-07 18:45:12,736 - validate - INFO - Table 'forecasts' validation passed successfully.
+2026-07-07 18:45:12,736 - validate - INFO - Verifying Referential Integrity...
+2026-07-07 18:45:12,743 - validate - INFO - Referential integrity checks passed successfully.
+2026-07-07 18:45:12,743 - validate - INFO - Data Validation completed. Global Status: PASSED
+2026-07-07 18:45:12,743 - export - INFO - Starting Data Export phase...
+2026-07-07 18:45:12,747 - export - INFO - Target standard export directory: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\exports
+2026-07-07 18:45:12,747 - export - INFO - Target archive directory: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\data\exports\timestamped\20260707_184512
+2026-07-07 18:45:12,747 - export - INFO - Exporting table: 'products' (rows: 51)
+2026-07-07 18:45:17,925 - export - INFO - Successfully exported table 'products' in CSV, XLSX, Parquet, and Pickle formats.
+2026-07-07 18:45:17,925 - export - INFO - Exporting table: 'inventory' (rows: 50)
+2026-07-07 18:45:17,992 - export - INFO - Successfully exported table 'inventory' in CSV, XLSX, Parquet, and Pickle formats.
+2026-07-07 18:45:17,992 - export - INFO - Exporting table: 'sales' (rows: 906)
+2026-07-07 18:45:18,603 - export - INFO - Successfully exported table 'sales' in CSV, XLSX, Parquet, and Pickle formats.
+2026-07-07 18:45:18,603 - export - INFO - Exporting table: 'suppliers' (rows: 10)
+2026-07-07 18:45:18,650 - export - INFO - Successfully exported table 'suppliers' in CSV, XLSX, Parquet, and Pickle formats.
+2026-07-07 18:45:18,650 - export - INFO - Exporting table: 'purchase_orders' (rows: 105)
+2026-07-07 18:45:18,769 - export - INFO - Successfully exported table 'purchase_orders' in CSV, XLSX, Parquet, and Pickle formats.
+2026-07-07 18:45:18,769 - export - INFO - Exporting table: 'forecasts' (rows: 1)
+2026-07-07 18:45:18,826 - export - INFO - Successfully exported table 'forecasts' in CSV, XLSX, Parquet, and Pickle formats.
+2026-07-07 18:45:18,826 - export - INFO - Exporting table: 'audit_logs' (rows: 28)
+2026-07-07 18:45:18,881 - export - INFO - Successfully exported table 'audit_logs' in CSV, XLSX, Parquet, and Pickle formats.
+2026-07-07 18:45:18,881 - export - INFO - Data Export phase completed successfully.
+2026-07-07 18:45:18,883 - orchestrator - INFO - Generating DATA_DICTIONARY.md...
+2026-07-07 18:45:18,887 - orchestrator - INFO - DATA_DICTIONARY.md written to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\docs\DATA_DICTIONARY.md
+2026-07-07 18:45:18,887 - orchestrator - INFO - Generating DATA_CLEANING_REPORT.md...
+2026-07-07 18:45:18,888 - orchestrator - INFO - DATA_CLEANING_REPORT.md written to: C:\Users\ushas\OneDrive\Desktop\Smart_Inventory_Project\AI_Smart_Inventory_Management\docs\DATA_CLEANING_REPORT.md
+2026-07-07 18:45:18,889 - orchestrator - INFO - ================================================
+2026-07-07 18:45:18,889 - orchestrator - INFO - ETL Data Pipeline Completed Successfully!
+2026-07-07 18:45:18,889 - orchestrator - INFO - Total time elapsed: 6.5863 seconds
+2026-07-07 18:45:18,889 - orchestrator - INFO - ================================================

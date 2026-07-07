@@ -1,0 +1,11 @@
+supplier_id,name,contact_person,contact_email,contact_phone,lead_time_days,rating,created_at
+7949e3c9-1cd5-4a5b-86c6-443866735d6b,Supplier 1 (Sports),Contact Person 1,contact1@supplier1.com,+91 9876500001,10,4.6,2026-06-30T16:59:27.379356
+c6b571d1-db40-49b8-8fc4-96bc1aad1f37,Supplier 2 (Sports),Contact Person 2,contact2@supplier2.com,+91 9876500002,9,4.6,2026-06-30T16:59:27.379356
+fa107f84-d76c-420c-9fb4-5305b83863b3,Supplier 3 (Sports),Contact Person 3,contact3@supplier3.com,+91 9876500003,14,4.4,2026-06-30T16:59:27.379356
+15ffd929-3b28-41af-a12f-94fa51fd8728,Supplier 4 (Apparel),Contact Person 4,contact4@supplier4.com,+91 9876500004,6,3.5,2026-06-30T16:59:27.379356
+0310ff53-cc73-48e5-9beb-cff9862db384,Supplier 5 (Food),Contact Person 5,contact5@supplier5.com,+91 9876500005,8,4.8,2026-06-30T16:59:27.379356
+e95e9d6a-6b83-44b6-a556-f154ef27e9f6,Supplier 6 (Sports),Contact Person 6,contact6@supplier6.com,+91 9876500006,5,3.8,2026-06-30T16:59:27.379356
+812df8ec-d270-4566-b51e-105426390e1d,Supplier 7 (Food),Contact Person 7,contact7@supplier7.com,+91 9876500007,5,4.4,2026-06-30T16:59:27.379356
+7b41de90-a439-4ce2-bea8-f933a44c034e,Supplier 8 (Food),Contact Person 8,contact8@supplier8.com,+91 9876500008,8,4.5,2026-06-30T16:59:27.379356
+283240a6-7582-42d8-8f97-4e662ff920af,Supplier 9 (Apparel),Contact Person 9,contact9@supplier9.com,+91 9876500009,12,3.8,2026-06-30T16:59:27.379356
+dfe0cb7f-f21d-4f83-8f17-bb18ee8cf0c1,Supplier 10 (Home),Contact Person 10,contact10@supplier10.com,+91 9876500010,13,3.6,2026-06-30T16:59:27.379356

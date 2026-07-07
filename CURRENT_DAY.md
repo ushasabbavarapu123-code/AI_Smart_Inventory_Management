@@ -8,17 +8,17 @@
 
 **Current Phase:** Phase 3 – Data Extraction, Cleaning & Pipeline Engineering
 
-**Current Day:** Day 6
+**Current Day:** Day 7
 
 **Roadmap Version:** Data Analytics Python Project Roadmap v1.0
 
-**Last Updated:** 2026-06-30 18:00
+**Last Updated:** 2026-07-07 18:47
 
 ---
 
 # CURRENT OBJECTIVE
 
-Design and execute the Python data pipeline to extract raw transaction logs from the SQLite database, clean anomalies (handling missing values, type corrections, outlier pruning), perform core feature engineering (historical lags, rolling windows), export the cleaned dataset for model consumption, and create the Data Dictionary.
+Continue building the Python data analytics pipeline. Day 7 focuses on Exploratory Data Analysis (EDA) — analyzing the cleaned and feature-engineered datasets to generate business insights, trend analyses, and visualizations using Matplotlib and Plotly.
 
 Only complete the activities assigned for the current day.
 
@@ -30,61 +30,67 @@ Do NOT implement any work scheduled for future days.
 
 ## Phase
 
-Phase 3 – Data Extraction, Cleaning & Pipeline Engineering (Day 6)
+Phase 3 – Data Extraction, Cleaning & Pipeline Engineering (Day 7)
 
 ---
 
 ## Objective
 
-Establish Python database connectors, extract operational tables into pandas DataFrames, and develop cleaning workflows to standardize data types, handle missing records, and resolve anomalies.
+Perform Exploratory Data Analysis on the cleaned datasets. Produce charts, insights, and a structured EDA notebook covering sales trends, inventory health, supplier performance, and product-level analytics.
 
 ---
 
 ## Today's Key Activities
 
-- [ ] Connect Python modules to the SQLite database
-- [ ] Query and extract Products, Inventory, Sales, and Suppliers tables into Pandas
-- [ ] Implement null value imputation and duplicate removal policies
-- [ ] Correct data types (date strings to datetimes, numeric castings)
-- [ ] Identify and handle outliers (negative values, extreme sales volumes)
-- [ ] Define feature engineering requirements (lagged demand, rolling statistics)
-- [ ] Draft a comprehensive Data Dictionary documentation
-- [ ] Update `PROJECT_TRACKER.md`
-- [ ] Generate `DAILY_REPORTS/DAY_06_REPORT.txt`
+- [ ] Load processed CSVs from data/processed/
+- [ ] Perform univariate and bivariate statistical analysis
+- [ ] Create Sales Trend visualizations (daily, monthly, quarterly)
+- [ ] Create Product Performance charts (top/bottom products)
+- [ ] Create Inventory Health charts (stock status distribution)
+- [ ] Create Supplier Performance analysis
+- [ ] Create Demand Category distribution analysis
+- [ ] Create Profit Margin analysis by category
+- [ ] Generate minimum 5 Business Insights from the data
+- [ ] Save all charts to analytics/notebooks/ or dedicated charts/ folder
+- [ ] Update PROJECT_TRACKER.md
+- [ ] Generate DAILY_REPORTS/DAY_07_REPORT.txt
 - [ ] Commit to Git
 
 ---
 
 # REQUIRED INPUTS
 
-Before starting Day 6, verify that:
+Before starting Day 7, verify that:
 
-- Day 5 Backend API completion is fully verified (all 12 Jest/Supertest integration tests pass)
-- Local sqlite3 database contains seeded Operational records
-- Git repository contains all Day 5 commits
+- Day 6 Python ETL pipeline completed successfully (pipeline.py runs end-to-end)
+- data/processed/ directory contains feature-engineered CSVs
+- data/exports/ contains CSV, XLSX, Parquet, and Pickle formats
+- docs/DATA_DICTIONARY.md and docs/DATA_CLEANING_REPORT.md generated
+- logs/pipeline.log exists with detailed execution records
 
 ---
 
 # EXPECTED DELIVERABLES
 
-At the end of Day 6, the following must exist:
+At the end of Day 7, the following must exist:
 
-- Python extraction and cleaning scripts / notebook drafts
-- Initial data dictionary documentation
-- Updated `PROJECT_TRACKER.md`
-- `DAILY_REPORTS/DAY_06_REPORT.txt`
+- EDA analysis scripts or notebooks
+- At least 6 business insight charts
+- Business insights documented in a report
+- Updated PROJECT_TRACKER.md
+- DAILY_REPORTS/DAY_07_REPORT.txt
 
 ---
 
 # VERIFICATION CHECKLIST
 
-Before marking Day 6 complete:
+Before marking Day 7 complete:
 
-- [ ] Python connector retrieves sample rows from the products, sales, and inventory tables
-- [ ] Extraction script successfully loads tabular data into pandas DataFrame objects
-- [ ] Null values and duplicates are resolved according to project rules
-- [ ] Output clean data structures preserve columns and integrity
-- [ ] Data dictionary accurately describes data columns and types
+- [ ] EDA notebook/scripts run without errors
+- [ ] Charts are properly labelled (titles, axes, legends)
+- [ ] Business questions from Phase 1 are being answered
+- [ ] At least 5 business insights documented
+- [ ] Visualizations saved to disk
 
 ---
 
@@ -92,12 +98,11 @@ Before marking Day 6 complete:
 
 After completing all verification items:
 
-1. Update `PROJECT_TRACKER.md`
-2. Generate `DAY_06_REPORT.txt` in DAILY_REPORTS/
-3. Append a Day 6 email draft to `DAILY_REPORTS/email_drafts/DAILY_EMAIL_DRAFTS.txt`
-4. Update this file to Day 7
-5. Commit changes to Git
-6. STOP and wait for user approval
+1. Update PROJECT_TRACKER.md
+2. Generate DAY_07_REPORT.txt in DAILY_REPORTS/
+3. Update this file to Day 8
+4. Commit changes to Git
+5. STOP and wait for user approval
 
 Do not continue automatically.
 
@@ -105,20 +110,31 @@ Do not continue automatically.
 
 # PREVIOUS DAY (COMPLETED)
 
-**Phase:** Phase 2 – App Development, Database & Core APIs (Day 5)
+**Phase:** Phase 3 – Data Extraction, Cleaning & Pipeline Engineering (Day 6)
 
 **Current Status:** COMPLETED
 
-- [x] Implement full JWT authentication middleware
-- [x] Create Sales routes, controllers, and models with transactional inventory decrement
-- [x] Create Purchase Orders routes, controllers, and models with status-based inventory increment
-- [x] Implement Python forecasting script forecast.py (ARIMA + Moving Average fallback) and integrate as Node child process
-- [x] Implement Dashboard summary API calculating operational metrics
-- [x] Write automated Jest/Supertest suite with 12/12 passing integration tests
-- [x] Replace ESM uuid package with native Node crypto.randomUUID()
-- [x] Update `PROJECT_TRACKER.md`
-- [x] Generate `DAILY_REPORTS/DAY_05_REPORT.txt`
-- [x] Append Day 5 email draft to `DAILY_EMAIL_DRAFTS.txt`
+- [x] Connect Python modules to the SQLite database (pipeline/utils.py)
+- [x] Query and extract all 8 tables into Pandas DataFrames (pipeline/extract.py)
+- [x] Perform automated Data Quality Profiling (pipeline/clean.py)
+- [x] Implement null value imputation and duplicate removal policies
+- [x] Correct data types (date strings to datetimes, numeric castings)
+- [x] Identify and handle outliers using IQR method (72 sales quantity values capped)
+- [x] Perform Feature Engineering — 20+ engineered columns across tables (pipeline/transform.py)
+  - Revenue, Profit, Profit Margin, Inventory Value
+  - Stock Status, Reorder Required, Safety Stock Flag
+  - Days Until Stockout, Inventory Turnover, Demand Category
+  - Rolling Sales 7d/30d, Average Daily Demand
+  - Week, Month, Quarter, Year, Day of Week, Weekend Indicator, Season
+- [x] Validate schema, primary keys, foreign keys, numeric bounds (pipeline/validate.py)
+- [x] Export clean datasets in CSV, XLSX, Parquet, Pickle formats (pipeline/export.py)
+- [x] Generate docs/DATA_DICTIONARY.md (159 lines, fully automated)
+- [x] Generate docs/DATA_CLEANING_REPORT.md (comprehensive pipeline run statistics)
+- [x] Create pipeline/pipeline.py — single command ETL orchestrator
+- [x] Install openpyxl, pyarrow, python-dotenv in analytics/venv
+- [x] Create requirements.txt in project root
+- [x] Update PROJECT_TRACKER.md
+- [x] Generate DAILY_REPORTS/DAY_06_REPORT.txt
 - [x] Commit all changes to Git
 
 ---
@@ -127,14 +143,14 @@ Do not continue automatically.
 
 Every time the project is continued:
 
-1. Read `CURRENT_DAY.md`
-2. Read `PROJECT_GUIDE.md`
-3. Open `PROJECT_TRACKER.md`
+1. Read CURRENT_DAY.md
+2. Read PROJECT_GUIDE.md
+3. Open PROJECT_TRACKER.md
 4. Execute only today's roadmap activities
 5. Verify all deliverables
 6. Update the tracker
 7. Generate the daily report
-8. Update `CURRENT_DAY.md`
+8. Update CURRENT_DAY.md
 9. Stop
 
 Never skip days.

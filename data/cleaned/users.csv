@@ -1,0 +1,6 @@
+user_id,email,password_hash,full_name,role,is_active,created_at,last_login
+86c5112d-74cb-4ba8-818b-bedb93b474e5,admin@smartinventory.com,$2b$10$eFytJDGtjbThpOaW/gTte.N.gR2B4OIQyE3l062wXG/5W7N9pC5O2,Alice Admin,Admin,1,2026-06-30T16:59:27.379Z,
+905ff118-4b04-4781-9ab3-1ec803c4652d,manager@smartinventory.com,$2b$10$eFytJDGtjbThpOaW/gTte.N.gR2B4OIQyE3l062wXG/5W7N9pC5O2,Bob Manager,Manager,1,2026-06-30T16:59:27.379Z,2026-06-30T13:04:06.905Z
+0c579af2-e1f1-47bc-ad3d-11b1edb0a44e,planner@smartinventory.com,$2b$10$eFytJDGtjbThpOaW/gTte.N.gR2B4OIQyE3l062wXG/5W7N9pC5O2,Charlie Planner,Planner,1,2026-06-30T16:59:27.379Z,
+2e7baa97-6629-4cc6-be6e-d49e6083aad9,analyst@smartinventory.com,$2b$10$eFytJDGtjbThpOaW/gTte.N.gR2B4OIQyE3l062wXG/5W7N9pC5O2,David Analyst,Analyst,1,2026-06-30T16:59:27.379Z,
+31920732-5968-4185-9d95-1bdea258b492,staff@smartinventory.com,$2b$10$eFytJDGtjbThpOaW/gTte.N.gR2B4OIQyE3l062wXG/5W7N9pC5O2,Emily Staff,Planner,1,2026-06-30T16:59:27.379Z,
