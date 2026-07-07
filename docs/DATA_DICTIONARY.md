@@ -5,15 +5,15 @@ This document provides technical schemas, definitions, and business rules for th
 *Generated automatically by the ETL data pipeline.*
 
 ## Table: `audit_logs`
-Contains 1 rows and 9 columns.
+Contains 28 rows and 9 columns.
 
 | Column Name | Data Type | Nullable | Example Value | Business Definition & Rules |
 | :--- | :--- | :--- | :--- | :--- |
 | `log_id` | String (UUID) | No | `l1m2n3o4-e3f4-4a5b-6c7d-8e9f0a1b2c3d` | Unique identifier for audit log entry. |
+| `user_id` | String (UUID) | No | `u1v2w3x4-e3f4-4a5b-6c7d-8e9f0a1b2c3d` | Unique identifier for the user account. |
 | `action` | String | No | `CREATE_SALE` | Action description. |
 | `entity` | String | No | `sales` | Database entity/table name affected. |
 | `entity_id` | String (UUID) | No | `a8b9c0d1...` | Record ID of the affected entity. |
-| `user_id` | String (UUID) | No | `u1v2w3x4-e3f4-4a5b-6c7d-8e9f0a1b2c3d` | Unique identifier for the user account. |
 | `old_value` | String | Yes | `{'quantity': 50}` | Serialized values before change. |
 | `new_value` | String | Yes | `{'quantity': 48}` | Serialized values after change. |
 | `ip_address` | String | Yes | `127.0.0.1` | Client IP address. |
@@ -38,14 +38,14 @@ Contains 1 rows and 8 columns.
 ---
 
 ## Table: `inventory`
-Contains 2 rows and 13 columns.
+Contains 50 rows and 13 columns.
 
 | Column Name | Data Type | Nullable | Example Value | Business Definition & Rules |
 | :--- | :--- | :--- | :--- | :--- |
 | `inventory_id` | String (UUID) | No | `d9c3b1a2-e3f4-4a5b-6c7d-8e9f0a1b2c3d` | Unique identifier for the inventory record. |
 | `product_id` | String (UUID) | No | `f3b20c91-d824-4fca-8600-0e12361254ff` | Unique identifier for the product record. |
-| `quantity` | int64 | No | `15` | Self-explanatory operational or engineered feature column. |
 | `location` | String | No | `Warehouse-A` | Physical storage location. |
+| `quantity` | int64 | No | `201` | Self-explanatory operational or engineered feature column. |
 | `last_updated` | Datetime | No | `2026-07-01T15:30:00Z` | Timestamp of last stock update. |
 | `unit_cost` | Float | No | `750.00` | Cost price per unit from supplier. |
 | `reorder_point` | Integer | No | `15` | Stock threshold to trigger reorder. |
@@ -59,7 +59,7 @@ Contains 2 rows and 13 columns.
 ---
 
 ## Table: `products`
-Contains 2 rows and 21 columns.
+Contains 51 rows and 21 columns.
 
 | Column Name | Data Type | Nullable | Example Value | Business Definition & Rules |
 | :--- | :--- | :--- | :--- | :--- |
@@ -88,14 +88,14 @@ Contains 2 rows and 21 columns.
 ---
 
 ## Table: `purchase_orders`
-Contains 1 rows and 18 columns.
+Contains 105 rows and 18 columns.
 
 | Column Name | Data Type | Nullable | Example Value | Business Definition & Rules |
 | :--- | :--- | :--- | :--- | :--- |
 | `po_id` | String (UUID) | No | `c8d9e0f1-e3f4-4a5b-6c7d-8e9f0a1b2c3d` | Unique identifier for the purchase order. |
 | `supplier_id` | String (UUID) | No | `b4a3c2d1-e3f4-4a5b-6c7d-8e9f0a1b2c3d` | Unique identifier for the supplier record. |
 | `product_id` | String (UUID) | No | `f3b20c91-d824-4fca-8600-0e12361254ff` | Unique identifier for the product record. |
-| `quantity` | int64 | No | `20` | Self-explanatory operational or engineered feature column. |
+| `quantity` | int64 | No | `90` | Self-explanatory operational or engineered feature column. |
 | `unit_cost` | Float | No | `750.00` | Cost price per unit from supplier. |
 | `order_date` | Date (YYYY-MM-DD) | No | `2026-06-15` | Date when the order was placed. |
 | `expected_delivery` | Date (YYYY-MM-DD) | No | `2026-06-22` | Date order is expected to arrive. |
@@ -114,14 +114,14 @@ Contains 1 rows and 18 columns.
 ---
 
 ## Table: `sales`
-Contains 3 rows and 20 columns.
+Contains 906 rows and 20 columns.
 
 | Column Name | Data Type | Nullable | Example Value | Business Definition & Rules |
 | :--- | :--- | :--- | :--- | :--- |
 | `sale_id` | String (UUID) | No | `a8b9c0d1-e2f3-4a5b-6c7d-8e9f0a1b2c3d` | Unique identifier for the sale transaction. |
 | `product_id` | String (UUID) | No | `f3b20c91-d824-4fca-8600-0e12361254ff` | Unique identifier for the product record. |
 | `sale_date` | Date (YYYY-MM-DD) | No | `2026-07-02` | Date of the sale transaction. |
-| `quantity` | int64 | No | `2` | Self-explanatory operational or engineered feature column. |
+| `quantity` | float64 | No | `8.0` | Self-explanatory operational or engineered feature column. |
 | `unit_price` | Float | No | `999.99` | Selling price per unit. |
 | `customer_type` | String | No | `Retail` | Segment of customer: Retail or Wholesale. |
 | `created_at` | Datetime | No | `2026-06-01T12:00:00Z` | Timestamp of record creation. |
@@ -142,7 +142,7 @@ Contains 3 rows and 20 columns.
 ---
 
 ## Table: `suppliers`
-Contains 1 rows and 8 columns.
+Contains 10 rows and 8 columns.
 
 | Column Name | Data Type | Nullable | Example Value | Business Definition & Rules |
 | :--- | :--- | :--- | :--- | :--- |

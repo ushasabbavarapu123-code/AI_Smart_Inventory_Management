@@ -1,6 +1,6 @@
 # Data Validation Report
 
-**Execution Timestamp:** 2026-07-07 19:51:59
+**Execution Timestamp:** 2026-07-07 19:59:33
 **Overall Validation Status:** ✅ PASSED
 
 ## 1. Summary of Checks
@@ -16,9 +16,9 @@ This report lists automated sanity and rules checking applied to finalized featu
 ## 2. Table-by-Table Status
 | Table Name | Rows Validated | Status | Details of Errors / Warnings |
 | :--- | :--- | :--- | :--- |
-| `products` | 2 | Passed ✅ | None (Warnings: Could not parse dates in 'created_at': Invalid comparison between dtype=datetime64[us, UTC] and Timestamp) |
-| `inventory` | 2 | Passed ✅ | None (Warnings: Could not parse dates in 'last_updated': Invalid comparison between dtype=datetime64[us, UTC] and Timestamp) |
-| `sales` | 3 | Passed ✅ | None (Warnings: Could not parse dates in 'created_at': Invalid comparison between dtype=datetime64[us, UTC] and Timestamp) |
-| `suppliers` | 1 | Passed ✅ | None (Warnings: Could not parse dates in 'created_at': Invalid comparison between dtype=datetime64[us, UTC] and Timestamp) |
-| `purchase_orders` | 1 | Passed ✅ | None (Warnings: Could not parse dates in 'created_at': Invalid comparison between dtype=datetime64[us, UTC] and Timestamp) |
+| `products` | 51 | Passed ✅ | None |
+| `inventory` | 50 | Passed ✅ | None (Warnings: Could not parse dates in 'last_updated': Invalid comparison between dtype=datetime64[us, UTC] and Timestamp) |
+| `sales` | 906 | Passed ✅ | None |
+| `suppliers` | 10 | Passed ✅ | None |
+| `purchase_orders` | 105 | Passed ✅ | None |
 | `forecasts` | 1 | Passed ✅ | None (Warnings: Could not parse dates in 'generated_at': Invalid comparison between dtype=datetime64[us, UTC] and Timestamp) |
