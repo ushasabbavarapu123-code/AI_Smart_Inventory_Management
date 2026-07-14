@@ -2,7 +2,7 @@
 
 > **Enterprise AI Full Stack + Data Analytics + Machine Learning Project**
 
-![Status](https://img.shields.io/badge/Project-In%20Progress-blue)
+![Status](https://img.shields.io/badge/Project-Completed-success)
 ![Roadmap](https://img.shields.io/badge/Roadmap-15%20Days-success)
 ![Methodology](https://img.shields.io/badge/Methodology-Agile%20%2B%20DALC-orange)
 
