@@ -175,12 +175,33 @@ function createTables(resolve, reject) {
     db.run(`CREATE INDEX IF NOT EXISTS idx_po_product_id ON purchase_orders (product_id)`);
     db.run(`CREATE INDEX IF NOT EXISTS idx_po_status ON purchase_orders (status)`);
     db.run(`CREATE INDEX IF NOT EXISTS idx_users_email ON users (email)`);
-    db.run(`CREATE INDEX IF NOT EXISTS idx_users_role ON users (role)`, (err) => {
+    db.run(`CREATE INDEX IF NOT EXISTS idx_users_role ON users (role)`);
+
+    // Create Views
+    db.run(`
+      CREATE VIEW IF NOT EXISTS v_inventory_status AS
+      SELECT 
+        p.product_id,
+        p.sku,
+        p.name AS product_name,
+        p.category,
+        p.unit_cost,
+        p.reorder_point,
+        i.inventory_id,
+        i.location,
+        i.quantity AS stock_qty,
+        CASE 
+          WHEN i.quantity <= p.reorder_point THEN 'Low Stock'
+          ELSE 'In Stock'
+        END AS stock_status
+      FROM products p
+      LEFT JOIN inventory i ON p.product_id = i.product_id;
+    `, (err) => {
       if (err) {
-        console.error('Error creating schemas:', err.message);
+        console.error('Error creating views:', err.message);
         return reject(err);
       }
-      console.log('Database tables and indexes created/verified.');
+      console.log('Database tables, indexes, and views created/verified.');
       resolve();
     });
   });

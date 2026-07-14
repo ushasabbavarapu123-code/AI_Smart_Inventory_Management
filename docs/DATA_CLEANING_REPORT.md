@@ -1,6 +1,6 @@
 # Data Cleaning & Pipeline Report
 
-**Execution Timestamp:** 2026-07-14 19:22:50
+**Execution Timestamp:** 2026-07-14 19:33:21
 
 **Pipeline Status:** PASSED
 
@@ -10,13 +10,13 @@ This automated pipeline extracts relational datasets from the SQLite inventory d
 ### Pipeline Phase Execution Times
 | Pipeline Phase | Elapsed Time |
 | :--- | :--- |
-| Extraction | 0.0170 seconds |
-| Profiling | 0.0403 seconds |
-| Cleaning | 0.0719 seconds |
-| Feature Engineering | 0.0612 seconds |
-| Validation | 0.0114 seconds |
-| Export | 0.0159 seconds |
-| **Total Pipeline Time** | **0.2177 seconds** |
+| Extraction | 0.0109 seconds |
+| Profiling | 0.0203 seconds |
+| Cleaning | 0.0618 seconds |
+| Feature Engineering | 0.0554 seconds |
+| Validation | 0.0000 seconds |
+| Export | 0.0164 seconds |
+| **Total Pipeline Time** | **0.1647 seconds** |
 
 ## 2. Extraction & Quality Profiling Summary
 | Table Name | Raw Row Count | Duplicates Detected | Missing Fields Count | Anomalies Found |

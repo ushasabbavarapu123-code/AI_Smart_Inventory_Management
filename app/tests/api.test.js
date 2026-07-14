@@ -120,6 +120,79 @@ describe('Smart Inventory API Tests', () => {
     });
   });
 
+  // --- INVENTORY CRUD ---
+  describe('Inventory API CRUD Tests', () => {
+    let testInventoryId;
+
+    it('should fetch all inventory records', async () => {
+      const res = await request(app)
+        .get('/api/inventory')
+        .set('Authorization', `Bearer ${token}`);
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(Array.isArray(res.body.data)).toBe(true);
+      expect(res.body.data.length).toBeGreaterThan(0);
+    });
+
+    it('should fail to create a new inventory record with invalid payload', async () => {
+      const res = await request(app)
+        .post('/api/inventory')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ product_id: '', quantity: -10 });
+      expect(res.statusCode).toBe(400);
+      expect(res.body.success).toBe(false);
+    });
+
+    it('should successfully create a new inventory record', async () => {
+      const res = await request(app)
+        .post('/api/inventory')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          product_id: testProductId,
+          location: 'Warehouse-B',
+          quantity: 15,
+          reason: 'Initial setup'
+        });
+      expect(res.statusCode).toBe(201);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data).toHaveProperty('inventory_id');
+      testInventoryId = res.body.data.inventory_id;
+    });
+
+    it('should fetch inventory record by ID', async () => {
+      const res = await request(app)
+        .get(`/api/inventory/${testInventoryId}`)
+        .set('Authorization', `Bearer ${token}`);
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data.inventory_id).toBe(testInventoryId);
+    });
+
+    it('should successfully update inventory quantity and location', async () => {
+      const res = await request(app)
+        .put(`/api/inventory/${testInventoryId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({
+          product_id: testProductId,
+          location: 'Warehouse-C',
+          quantity: 25,
+          reason: 'Stock count update'
+        });
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data.location).toBe('Warehouse-C');
+      expect(res.body.data.quantity).toBe(25);
+    });
+
+    it('should successfully delete inventory record', async () => {
+      const res = await request(app)
+        .delete(`/api/inventory/${testInventoryId}`)
+        .set('Authorization', `Bearer ${token}`);
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+    });
+  });
+
   // --- PURCHASE ORDERS & INVENTORY INCREMENT ---
   describe('Purchase Orders CRUD & Automatic Increment', () => {
     it('should successfully create a new PO with Pending status', async () => {
