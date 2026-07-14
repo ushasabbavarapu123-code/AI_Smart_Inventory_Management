@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Smart Inventory Management — Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg-deep:    #050d1a;
+      --bg-card:    #0d1f35;
+      --bg-glass:   rgba(13,31,53,0.85);
+      --border:     rgba(6,182,212,0.18);
+      --cyan:       #06b6d4;
+      --cyan-dim:   rgba(6,182,212,0.15);
+      --violet:     #8b5cf6;
+      --violet-dim: rgba(139,92,246,0.15);
+      --emerald:    #10b981;
+      --emerald-dim:rgba(16,185,129,0.15);
+      --amber:      #f59e0b;
+      --rose:       #f43f5e;
+      --text-hi:    #f1f5f9;
+      --text-mid:   #94a3b8;
+      --text-lo:    #475569;
+      --gradient:   linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+    }
+
+    html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg-deep); font-family: 'Poppins', sans-serif; }
+
+    /* ── Slideshow Wrapper ── */
+    .deck { position: relative; width: 100vw; height: 100vh; }
+
+    /* ── Slide ── */
+    .slide {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 48px 64px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.55s ease, transform 0.55s ease;
+      transform: translateY(28px);
+    }
+    .slide.active {
+      opacity: 1; pointer-events: all;
+      transform: translateY(0);
+    }
+
+    /* ── Background Grid ── */
+    .slide::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(6,182,212,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6,182,212,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    /* ── Nav Bar ── */
+    .nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: 64px;
+      background: rgba(5,13,26,0.92);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; z-index: 100;
+    }
+    .nav-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--text-lo); border: none; cursor: pointer;
+      transition: all 0.3s; padding: 0;
+    }
+    .nav-dot.active { background: var(--cyan); transform: scale(1.5); }
+    .nav-btn {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      background: var(--bg-glass); border: 1px solid var(--border);
+      color: var(--text-hi); width: 44px; height: 44px; border-radius: 50%;
+      cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
+      transition: all 0.25s; z-index: 100; backdrop-filter: blur(8px);
+    }
+    .nav-btn:hover { background: var(--cyan-dim); border-color: var(--cyan); }
+    .nav-btn.prev { left: 16px; }
+    .nav-btn.next { right: 16px; }
+    .slide-counter {
+      position: fixed; top: 20px; right: 24px;
+      font-size: 12px; color: var(--text-mid); font-weight: 500;
+      background: var(--bg-glass); padding: 6px 14px; border-radius: 20px;
+      border: 1px solid var(--border); backdrop-filter: blur(8px); z-index: 100;
+    }
+
+    /* ── Badge ── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1.2px; padding: 5px 14px; border-radius: 20px;
+      margin-bottom: 18px;
+    }
+    .badge-cyan  { background: var(--cyan-dim);   color: var(--cyan);    border: 1px solid rgba(6,182,212,0.3); }
+    .badge-violet{ background: var(--violet-dim); color: var(--violet);  border: 1px solid rgba(139,92,246,0.3);}
+    .badge-emerald{background: var(--emerald-dim);color: var(--emerald); border: 1px solid rgba(16,185,129,0.3);}
+    .badge-amber { background: rgba(245,158,11,0.12); color: var(--amber); border: 1px solid rgba(245,158,11,0.3);}
+    .badge-rose  { background: rgba(244,63,94,0.12); color: var(--rose);  border: 1px solid rgba(244,63,94,0.3); }
+
+    /* ── Heading Gradient ── */
+    .grad { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px 28px;
+    }
+    .card-cyan   { border-color: rgba(6,182,212,0.35); }
+    .card-violet { border-color: rgba(139,92,246,0.35); }
+    .card-emerald{ border-color: rgba(16,185,129,0.35); }
+    .card-amber  { border-color: rgba(245,158,11,0.35); }
+
+    /* ── Grid ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; width: 100%; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; width: 100%; }
+
+    /* ── Typography ── */
+    .slide-title { font-size: 2.6rem; font-weight: 800; color: var(--text-hi); line-height: 1.15; text-align: center; margin-bottom: 10px; }
+    .slide-subtitle { font-size: 1.08rem; color: var(--text-mid); text-align: center; margin-bottom: 32px; max-width: 700px; line-height: 1.6; }
+    .section-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-lo); margin-bottom: 8px; }
+    .h3 { font-size: 1.15rem; font-weight: 700; color: var(--text-hi); margin-bottom: 8px; }
+    .body-sm { font-size: 0.88rem; color: var(--text-mid); line-height: 1.6; }
+
+    /* ── KPI Stat ── */
+    .kpi { text-align: center; }
+    .kpi-num { font-size: 2.4rem; font-weight: 800; line-height: 1; }
+    .kpi-label { font-size: 0.78rem; color: var(--text-mid); margin-top: 5px; text-transform: uppercase; letter-spacing: 0.8px; }
+
+    /* ── Table ── */
+    .table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+    .table th { background: rgba(6,182,212,0.1); color: var(--cyan); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.8px; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+    .table td { padding: 10px 14px; color: var(--text-mid); border-bottom: 1px solid rgba(51,65,85,0.4); }
+    .table tr.winner td { color: var(--text-hi); }
+    .table tr.winner td:first-child { color: var(--amber); font-weight: 700; }
+    .table .badge-winner { background: rgba(245,158,11,0.15); color: var(--amber); padding: 2px 10px; border-radius: 10px; font-size: 0.72rem; font-weight: 700; }
+
+    /* ── Timeline ── */
+    .timeline { display: flex; gap: 0; width: 100%; position: relative; }
+    .timeline::before { content:''; position:absolute; top:24px; left:0; right:0; height:2px; background: var(--border); z-index:0; }
+    .tl-item { flex:1; text-align:center; position:relative; z-index:1; }
+    .tl-dot { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 10px; font-size:1rem; font-weight:700; border:2px solid transparent; }
+    .tl-dot.done   { background: var(--emerald-dim); border-color: var(--emerald); color: var(--emerald); }
+    .tl-dot.active { background: var(--cyan-dim);    border-color: var(--cyan);    color: var(--cyan); }
+    .tl-dot.next   { background: var(--bg-card);     border-color: var(--border);  color: var(--text-lo); }
+    .tl-label { font-size: 0.72rem; font-weight: 600; color: var(--text-mid); }
+    .tl-days  { font-size: 0.65rem; color: var(--text-lo); margin-top:2px; }
+
+    /* ── Progress Bar ── */
+    .progress-bar { height: 6px; background: rgba(51,65,85,0.5); border-radius: 4px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 4px; }
+
+    /* ── Tech Stack Pill ── */
+    .tech-pill { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:999px; font-size:0.78rem; font-weight:600; margin:4px; }
+
+    /* ── Arch Box ── */
+    .arch-layer { display:flex; align-items:center; gap:12px; padding:14px 20px; border-radius:12px; margin-bottom:10px; }
+    .arch-icon { font-size:1.6rem; min-width:36px; text-align:center; }
+    .arch-arrow { text-align:center; color: var(--text-lo); font-size:1.2rem; }
+
+    /* ── Feature List ── */
+    .feat-item { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid rgba(51,65,85,0.3); }
+    .feat-item:last-child { border-bottom:none; }
+    .feat-icon { font-size:1.1rem; min-width:24px; }
+    .feat-text { font-size:0.85rem; color:var(--text-mid); line-height:1.5; }
+    .feat-text strong { color:var(--text-hi); display:block; margin-bottom:2px; }
+
+    /* ── Animations ── */
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(6,182,212,0.4); }
+      70%  { box-shadow: 0 0 0 14px rgba(6,182,212,0); }
+      100% { box-shadow: 0 0 0 0 rgba(6,182,212,0); }
+    }
+    .pulse { animation: pulse-ring 2s infinite; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+    .float { animation: float 3s ease-in-out infinite; }
+
+    /* ── Slide 1: Title ── */
+    .title-logo { font-size: 4.5rem; margin-bottom: 16px; }
+    .title-headline { font-size: 3.2rem; font-weight: 900; text-align:center; line-height: 1.1; margin-bottom: 16px; }
+    .title-tagline { font-size: 1.15rem; color: var(--text-mid); text-align:center; margin-bottom: 40px; max-width: 680px; }
+    .title-tags { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; }
+    .title-meta { display:flex; gap:32px; }
+    .meta-item { text-align:center; }
+    .meta-num { font-size: 1.5rem; font-weight: 800; }
+    .meta-label { font-size: 0.72rem; color: var(--text-lo); text-transform:uppercase; letter-spacing:0.8px; }
+
+    /* ── Glow orbs ── */
+    .orb {
+      position:absolute; border-radius:50%;
+      filter:blur(80px); pointer-events:none; z-index:0;
+    }
+
+    /* Slide content above orbs */
+    .slide > * { position:relative; z-index:1; }
+
+    /* ── Wide content ── */
+    .w-full { width: 100%; max-width: 1100px; }
+    .w-800  { width: 100%; max-width: 800px; }
+
+  </style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- ─────────────────────────────────────────── -->
+  <!-- SLIDE 1: TITLE                              -->
+  <!-- ─────────────────────────────────────────── -->
+  <div class="slide active" id="slide-1">
+    <div class="orb" style="width:500px;height:500px;background:rgba(6,182,212,0.07);top:-150px;left:-150px;"></div>
+    <div class="orb" style="width:400px;height:400px;background:rgba(139,92,246,0.07);bottom:-100px;right:-100px;"></div>
+
+    <div class="title-logo float">🤖</div>
+    <div class="badge badge-cyan">Enterprise AI Project</div>
+    <h1 class="title-headline">
+      AI Smart Inventory<br /><span class="grad">Management & Forecasting</span>
+    </h1>
+    <p class="title-tagline">
+      An end-to-end enterprise platform combining Full Stack Development, Data Analytics,
+      and Machine Learning to eliminate stockouts, reduce overstock, and drive intelligent replenishment.
+    </p>
+    <div class="title-tags">
+      <span class="tech-pill" style="background:rgba(6,182,212,0.12);color:#06b6d4;border:1px solid rgba(6,182,212,0.3);">Node.js + Express</span>
+      <span class="tech-pill" style="background:rgba(139,92,246,0.12);color:#8b5cf6;border:1px solid rgba(139,92,246,0.3);">Python + scikit-learn</span>
+      <span class="tech-pill" style="background:rgba(16,185,129,0.12);color:#10b981;border:1px solid rgba(16,185,129,0.3);">SQLite + WAL</span>
+      <span class="tech-pill" style="background:rgba(245,158,11,0.12);color:#f59e0b;border:1px solid rgba(245,158,11,0.3);">Chart.js + HTML5</span>
+      <span class="tech-pill" style="background:rgba(244,63,94,0.12);color:#f43f5e;border:1px solid rgba(244,63,94,0.3);">JWT Auth</span>
+    </div>
+    <div class="title-meta">
+      <div class="meta-item">
+        <div class="meta-num grad">15</div>
+        <div class="meta-label">Day Roadmap</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-num" style="color:var(--emerald)">86%</div>
+        <div class="meta-label">Completed</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-num" style="color:var(--violet)">50+</div>
+        <div class="meta-label">API Endpoints</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-num" style="color:var(--amber)">5</div>
+        <div class="meta-label">ML Models</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────── -->
+  <!-- SLIDE 2: BUSINESS PROBLEM                   -->
+  <!-- ─────────────────────────────────────────── -->
+  <div class="slide" id="slide-2">
+    <div class="orb" style="width:350px;height:350px;background:rgba(244,63,94,0.06);top:-80px;right:50px;"></div>
+    <div class="badge badge-rose">Business Problem</div>
+    <h1 class="slide-title">Why Inventory Management <span class="grad">Fails</span></h1>
+    <p class="slide-subtitle">Retail and warehouse businesses lose billions annually due to poor demand visibility and reactive inventory decisions.</p>
+
+    <div class="grid-3 w-full" style="max-width:960px;">
+      <div class="card card-cyan">
+        <div style="font-size:2.2rem;margin-bottom:12px;">📦</div>
+        <div class="h3" style="color:var(--cyan)">Overstocking</div>
+        <p class="body-sm">Excess capital tied up in slow-moving stock. Warehousing costs, obsolescence risk, and cash flow strain compound over time.</p>
+      </div>
+      <div class="card card-violet">
+        <div style="font-size:2.2rem;margin-bottom:12px;">🚨</div>
+        <div class="h3" style="color:var(--violet)">Stockouts</div>
+        <p class="body-sm">Lost sales, damaged supplier trust, and poor customer experience. A single stockout event can permanently redirect buyers to competitors.</p>
+      </div>
+      <div class="card card-amber">
+        <div style="font-size:2.2rem;margin-bottom:12px;">🔍</div>
+        <div class="h3" style="color:var(--amber)">No Visibility</div>
+        <p class="body-sm">Manual spreadsheets and static reorder rules cannot adapt to seasonal shifts, promotions, or supplier delays in real time.</p>
+      </div>
+    </div>
+
+    <div class="card w-full" style="max-width:960px;margin-top:20px;background:rgba(244,63,94,0.06);border-color:rgba(244,63,94,0.3);">
+      <div style="display:flex;gap:32px;justify-content:space-around;text-align:center;">
+        <div class="kpi">
+          <div class="kpi-num" style="color:var(--rose)">$1.8T</div>
+          <div class="kpi-label">Annual inventory distortion losses globally</div>
+        </div>
+        <div style="width:1px;background:var(--border);"></div>
+        <div class="kpi">
+          <div class="kpi-num" style="color:var(--amber)">34%</div>
+          <div class="kpi-label">Of retailers ship orders late due to poor forecasting</div>
+        </div>
+        <div style="width:1px;background:var(--border);"></div>
+        <div class="kpi">
+          <div class="kpi-num" style="color:var(--violet)">8-10%</div>
+          <div class="kpi-label">Revenue lost per year from unmanaged stockouts</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────── -->
+  <!-- SLIDE 3: SOLUTION ARCHITECTURE              -->
+  <!-- ─────────────────────────────────────────── -->
+  <div class="slide" id="slide-3">
+    <div class="orb" style="width:300px;height:300px;background:rgba(6,182,212,0.07);bottom:100px;left:100px;"></div>
+    <div class="badge badge-cyan">System Architecture</div>
+    <h1 class="slide-title">Full Stack <span class="grad">+ AI Pipeline</span></h1>
+    <p class="slide-subtitle">Three-tier enterprise architecture connecting a responsive UI, a secure REST API, and a Python ML engine into a unified platform.</p>
+
+    <div class="grid-2 w-full" style="max-width:1000px;align-items:start;">
+      <div>
+        <div class="arch-layer card card-cyan" style="background:rgba(6,182,212,0.08);">
+          <div class="arch-icon">🖥️</div>
+          <div>
+            <div class="h3" style="color:var(--cyan)">Frontend Layer</div>
+            <div class="body-sm">HTML5 · CSS3 · Vanilla JS · Chart.js<br/>9 interactive pages · JWT client auth · Responsive layout</div>
+          </div>
+        </div>
+        <div style="text-align:center;font-size:1.4rem;color:var(--text-lo);padding:4px 0;">↕️</div>
+        <div class="arch-layer card card-violet" style="background:rgba(139,92,246,0.08);">
+          <div class="arch-icon">⚙️</div>
+          <div>
+            <div class="h3" style="color:var(--violet)">Backend API Layer</div>
+            <div class="body-sm">Node.js · Express · JWT Middleware<br/>7 secured route groups · bcrypt · Error handling</div>
+          </div>
+        </div>
+        <div style="text-align:center;font-size:1.4rem;color:var(--text-lo);padding:4px 0;">↕️</div>
+        <div class="arch-layer card card-emerald" style="background:rgba(16,185,129,0.08);">
+          <div class="arch-icon">🗄️</div>
+          <div>
+            <div class="h3" style="color:var(--emerald)">Database Layer</div>
+            <div class="body-sm">SQLite · WAL Mode · 8 tables · 15 indexes<br/>Foreign keys · Parameterized queries · 1000+ records</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="arch-layer card card-amber" style="background:rgba(245,158,11,0.08);">
+          <div class="arch-icon">🧠</div>
+          <div>
+            <div class="h3" style="color:var(--amber)">Python ML Engine</div>
+            <div class="body-sm">Pandas · NumPy · scikit-learn · statsmodels<br/>ARIMA · Random Forest · XGBoost · Feature Engineering</div>
+          </div>
+        </div>
+        <div style="text-align:center;font-size:1.4rem;color:var(--text-lo);padding:4px 0;">↕️</div>
+        <div class="arch-layer card" style="background:rgba(6,182,212,0.05);">
+          <div class="arch-icon">🔗</div>
+          <div>
+            <div class="h3" style="color:var(--text-hi)">Integration Bridge</div>
+            <div class="body-sm">Node.js <code style="color:var(--cyan);font-family:'Fira Code'">child_process.spawn</code><br/>Python venv → JSON output → DB save → API response</div>
+          </div>
+        </div>
+        <div style="text-align:center;font-size:1.4rem;color:var(--text-lo);padding:4px 0;">↕️</div>
+        <div class="arch-layer card" style="background:rgba(139,92,246,0.05);">
+          <div class="arch-icon">🧪</div>
+          <div>
+            <div class="h3" style="color:var(--text-hi)">Testing Layer</div>
+            <div class="body-sm">Jest + Supertest (40 tests) · pytest (10 tests)<br/>SQL injection audit · Input validation · Error handling</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────── -->
+  <!-- SLIDE 4: 15-DAY JOURNEY                     -->
+  <!-- ─────────────────────────────────────────── -->
+  <div class="slide" id="slide-4">
+    <div class="orb" style="width:350px;height:350px;background:rgba(139,92,246,0.07);top:-80px;right:-80px;"></div>
+    <div class="badge badge-violet">Agile + DALC Methodology</div>
+    <h1 class="slide-title">The <span class="grad">15-Day</span> Enterprise Journey</h1>
+    <p class="slide-subtitle">Following the Data Analytics Life Cycle across 8 phases — from blank canvas to production-ready AI platform.</p>
+
+    <div class="w-full" style="max-width:1050px;">
+      <div class="timeline" style="margin-bottom:28px;">
+        <div class="tl-item">
+          <div class="tl-dot done">✓</div>
+          <div class="tl-label">Setup</div>
+          <div class="tl-days">Day 1</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✓</div>
+          <div class="tl-label">Design</div>
+          <div class="tl-days">Day 2</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✓</div>
+          <div class="tl-label">Backend API</div>
+          <div class="tl-days">Days 3–5</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✓</div>
+          <div class="tl-label">Pipeline</div>
+          <div class="tl-days">Days 6–7</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✓</div>
+          <div class="tl-label">EDA</div>
+          <div class="tl-days">Day 8</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✓</div>
+          <div class="tl-label">ML Models</div>
+          <div class="tl-days">Day 9</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✓</div>
+          <div class="tl-label">Dashboard</div>
+          <div class="tl-days">Days 10–11</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✓</div>
+          <div class="tl-label">Testing</div>
+          <div class="tl-days">Day 12</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot done">✓</div>
+          <div class="tl-label">Docs</div>
+          <div class="tl-days">Day 13</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot active pulse">14</div>
+          <div class="tl-label" style="color:var(--cyan)">Presentation</div>
+          <div class="tl-days" style="color:var(--cyan)">Today</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot next">15</div>
+          <div class="tl-label">Live Demo</div>
+          <div class="tl-days">Day 15</div>
+        </div>
+      </div>
+
+      <div class="grid-4">
+        <div class="card card-cyan">
+          <div class="kpi">
+            <div class="kpi-num" style="color:var(--cyan); font-size:1.8rem;">9/9</div>
+            <div class="kpi-label">Phases Complete</div>
+          </div>
+        </div>
+        <div class="card card-emerald">
+          <div class="kpi">
+            <div class="kpi-num" style="color:var(--emerald); font-size:1.8rem;">50+</div>
+            <div class="kpi-label">Files Created</div>
+          </div>
+        </div>
+        <div class="card card-violet">
+          <div class="kpi">
+            <div class="kpi-num" style="color:var(--violet); font-size:1.8rem;">1000+</div>
+            <div class="kpi-label">DB Records</div>
+          </div>
+        </div>
+        <div class="card card-amber">
+          <div class="kpi">
+            <div class="kpi-num" style="color:var(--amber); font-size:1.8rem;">100%</div>
+            <div class="kpi-label">Tests Passing</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────── -->
+  <!-- SLIDE 5: ML FORECASTING RESULTS             -->
+  <!-- ─────────────────────────────────────────── -->
+  <div class="slide" id="slide-5">
+    <div class="orb" style="width:300px;height:300px;background:rgba(245,158,11,0.07);bottom:100px;right:80px;"></div>
+    <div class="badge badge-amber">Machine Learning Results</div>
+    <h1 class="slide-title">AI Demand <span class="grad">Forecasting Engine</span></h1>
+    <p class="slide-subtitle">Evaluated 5 regression and time-series models on a 60-day temporal hold-out validation set.</p>
+
+    <div class="grid-2 w-full" style="max-width:1050px;align-items:start;">
+      <div class="card" style="overflow:hidden;">
+        <div class="section-label">Model Performance Comparison</div>
+        <table class="table">
+          <thead>
+            <tr><th>Model</th><th>MAE</th><th>RMSE</th><th>R²</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr class="winner">
+              <td>🏆 Random Forest (Tuned)</td><td>1.2525</td><td><strong style="color:var(--amber)">3.8378</strong></td><td>+0.0037</td>
+              <td><span class="badge-winner">Champion</span></td>
+            </tr>
+            <tr><td>Linear Regression</td><td>1.1769</td><td>3.8461</td><td>-0.0007</td><td style="color:var(--text-lo)">Baseline</td></tr>
+            <tr><td>Random Forest (Base)</td><td>1.5175</td><td>3.9560</td><td>-0.0587</td><td style="color:var(--text-lo)">Overfit</td></tr>
+            <tr><td>Gradient Boosting</td><td>1.7261</td><td>4.0259</td><td>-0.0964</td><td style="color:var(--text-lo)">High Var.</td></tr>
+            <tr><td>XGBoost</td><td>1.9908</td><td>4.1547</td><td>-0.1677</td><td style="color:var(--text-lo)">High Var.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="card card-amber" style="margin-bottom:16px;">
+          <div class="h3">🎯 Why Tuned Random Forest Won</div>
+          <p class="body-sm" style="margin-bottom:10px;">Selected by lowest <strong style="color:var(--amber)">RMSE = 3.8378</strong> — RMSE penalizes large errors more heavily than MAE, directly preventing catastrophic stockout events.</p>
+          <div style="margin-top:10px;">
+            <div style="font-size:0.78rem;color:var(--text-lo);margin-bottom:4px;">Hyperparameters</div>
+            <div style="font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--cyan);background:rgba(6,182,212,0.07);padding:10px 14px;border-radius:8px;line-height:1.8;">
+              n_estimators = 150<br/>max_depth = 6<br/>min_samples_leaf = 6<br/>max_features = "sqrt"
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="h3">📊 Top Feature Importances</div>
+          <div style="margin-top:10px;">
+            <div style="margin-bottom:8px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px;font-size:0.78rem;"><span style="color:var(--text-mid)">rolling_std_30</span><span style="color:var(--cyan)">16.57%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:80%;background:linear-gradient(90deg,var(--cyan),var(--violet));"></div></div>
+            </div>
+            <div style="margin-bottom:8px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px;font-size:0.78rem;"><span style="color:var(--text-mid)">rolling_mean_14</span><span style="color:var(--violet)">12.23%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:59%;background:var(--violet);"></div></div>
+            </div>
+            <div style="margin-bottom:8px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px;font-size:0.78rem;"><span style="color:var(--text-mid)">rolling_mean_30</span><span style="color:var(--emerald)">11.04%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:53%;background:var(--emerald);"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:3px;font-size:0.78rem;"><span style="color:var(--text-mid)">rolling_std_7</span><span style="color:var(--amber)">9.53%</span></div>
+              <div class="progress-bar"><div class="progress-fill" style="width:46%;background:var(--amber);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────── -->
+  <!-- SLIDE 6: DASHBOARD FEATURES                 -->
+  <!-- ─────────────────────────────────────────── -->
+  <div class="slide" id="slide-6">
+    <div class="orb" style="width:300px;height:300px;background:rgba(16,185,129,0.07);top:-60px;left:-60px;"></div>
+    <div class="badge badge-emerald">Interactive Dashboard</div>
+    <h1 class="slide-title">9 Pages, <span class="grad">Zero Compromise</span></h1>
+    <p class="slide-subtitle">A fully responsive dark-mode UI with real-time data, Chart.js visualizations, and JWT-secured access control.</p>
+
+    <div class="grid-2 w-full" style="max-width:1050px;align-items:start;">
+      <div>
+        <div class="feat-item">
+          <div class="feat-icon">🔐</div>
+          <div class="feat-text"><strong>Login & JWT Auth</strong>bcrypt password verification, 8h JWT tokens, auto-redirect on expiry, 5 role-based users</div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">📊</div>
+          <div class="feat-text"><strong>Dashboard (6 Live Charts)</strong>Revenue trend, category distribution, top products, monthly sales, inventory heatmap, supplier metrics</div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">📦</div>
+          <div class="feat-text"><strong>Products Management</strong>Full CRUD — create, view, update, delete products with category, SKU, cost, reorder point</div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">🏭</div>
+          <div class="feat-text"><strong>Inventory Control</strong>Real-time stock levels, warehouse-level tracking, reorder alerts, stock adjustment with audit trail</div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">💰</div>
+          <div class="feat-text"><strong>Sales Recording</strong>Transaction log, customer type tracking, date-range browsing, 914+ historical records</div>
+        </div>
+      </div>
+      <div>
+        <div class="feat-item">
+          <div class="feat-icon">🚚</div>
+          <div class="feat-text"><strong>Supplier Directory</strong>Lead time tracking, star ratings, contact management, full CRUD operations</div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">🛒</div>
+          <div class="feat-text"><strong>Purchase Orders</strong>Create POs, track status (Pending→Sent→Received), mark deliveries, 4 lifecycle states</div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">🔮</div>
+          <div class="feat-text"><strong>Forecasting Engine</strong>Trigger Python ARIMA model via API, view 30-day predictions with 95% confidence intervals</div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">📋</div>
+          <div class="feat-text"><strong>Reports Module</strong>4 report types (Inventory, Sales, Forecast, Supplier) with CSV / Excel / PDF export</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────── -->
+  <!-- SLIDE 7: BUSINESS INSIGHTS                  -->
+  <!-- ─────────────────────────────────────────── -->
+  <div class="slide" id="slide-7">
+    <div class="orb" style="width:320px;height:320px;background:rgba(6,182,212,0.07);bottom:-60px;right:60px;"></div>
+    <div class="badge badge-cyan">Business Intelligence</div>
+    <h1 class="slide-title">Actionable <span class="grad">Insights & Recommendations</span></h1>
+    <p class="slide-subtitle">Derived from EDA, feature importance analysis, and supply chain optimization modelling across 50 SKUs and 914 transactions.</p>
+
+    <div class="grid-2 w-full" style="max-width:1050px;align-items:start;">
+      <div>
+        <div class="card card-cyan" style="margin-bottom:16px;">
+          <div class="h3">📐 Dynamic Safety Stock & Reorder Points</div>
+          <p class="body-sm" style="margin-bottom:10px;">Replace static reorder rules with formula-driven dynamic values:</p>
+          <div style="font-family:'Fira Code',monospace;font-size:0.75rem;color:var(--cyan);background:rgba(6,182,212,0.07);padding:10px 14px;border-radius:8px;line-height:1.8;">
+            SS = Z × σ_demand × √(Lead Time)<br/>
+            ROP = (Avg Daily Demand × Lead Time) + SS
+          </div>
+          <p class="body-sm" style="margin-top:10px;">➡ Maintains a <strong style="color:var(--emerald)">95% service level (Z=1.645)</strong>, cutting stockout risk while reducing holding costs.</p>
+        </div>
+        <div class="card card-violet">
+          <div class="h3">📈 Volatility-Based Stock Buffers</div>
+          <p class="body-sm">Products with high <code style="color:var(--violet);font-family:'Fira Code'">rolling_std_30</code> scores (Electronics, seasonal apparel) need 25–40% higher safety stock multipliers to absorb demand spikes.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card card-emerald" style="margin-bottom:16px;">
+          <div class="h3">🤝 Supplier Performance Optimization</div>
+          <p class="body-sm">Prioritize suppliers with:</p>
+          <div style="margin-top:10px;display:flex;gap:12px;">
+            <div style="flex:1;background:rgba(16,185,129,0.08);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:1.4rem;font-weight:800;color:var(--emerald);">&lt; 7</div>
+              <div style="font-size:0.72rem;color:var(--text-mid);">Lead time (days)</div>
+            </div>
+            <div style="flex:1;background:rgba(16,185,129,0.08);border-radius:10px;padding:12px;text-align:center;">
+              <div style="font-size:1.4rem;font-weight:800;color:var(--emerald);">&gt; 4.0</div>
+              <div style="font-size:0.72rem;color:var(--text-mid);">Rating score (/5)</div>
+            </div>
+          </div>
+          <p class="body-sm" style="margin-top:10px;">➡ Reduces ROP lead time factor → leaner, cost-efficient inventory buffers.</p>
+        </div>
+        <div class="card card-amber">
+          <div class="h3">🔄 Continuous Forecasting Loop</div>
+          <p class="body-sm">Schedule weekly model retraining with <code style="color:var(--amber);font-family:'Fira Code'">model_optimization.py</code> to capture seasonal shifts, promotion effects, and post-event demand corrections — maintaining forecast accuracy over time.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────── -->
+  <!-- SLIDE 8: TECHNICAL EXCELLENCE               -->
+  <!-- ─────────────────────────────────────────── -->
+  <div class="slide" id="slide-8">
+    <div class="orb" style="width:280px;height:280px;background:rgba(139,92,246,0.07);top:-50px;left:100px;"></div>
+    <div class="badge badge-violet">Engineering Quality</div>
+    <h1 class="slide-title">Built to <span class="grad">Enterprise Standards</span></h1>
+    <p class="slide-subtitle">Security-first architecture, comprehensive automated testing, and production-grade data pipeline engineering.</p>
+
+    <div class="grid-3 w-full" style="max-width:1050px;">
+      <div class="card card-violet">
+        <div style="font-size:2rem;margin-bottom:12px;">🧪</div>
+        <div class="h3" style="color:var(--violet)">40 Backend Tests</div>
+        <p class="body-sm" style="margin-bottom:14px;">Jest + Supertest covering API integration, input validation schemas, and central error handler logic.</p>
+        <div style="font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--emerald);background:rgba(16,185,129,0.07);padding:8px 12px;border-radius:6px;">
+          ✓ api.test.js (28 tests)<br/>
+          ✓ validation.test.js (8 tests)<br/>
+          ✓ errorHandler.test.js (4 tests)
+        </div>
+      </div>
+      <div class="card card-emerald">
+        <div style="font-size:2rem;margin-bottom:12px;">🐍</div>
+        <div class="h3" style="color:var(--emerald)">10 Pipeline Tests</div>
+        <p class="body-sm" style="margin-bottom:14px;">pytest suite covering the complete data engineering pipeline — extract, clean, transform, validate, export, and e2e orchestration.</p>
+        <div style="font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--emerald);background:rgba(16,185,129,0.07);padding:8px 12px;border-radius:6px;">
+          ✓ test_extract.py<br/>
+          ✓ test_clean.py<br/>
+          ✓ test_transform.py + 3 more
+        </div>
+      </div>
+      <div class="card card-cyan">
+        <div style="font-size:2rem;margin-bottom:12px;">🔒</div>
+        <div class="h3" style="color:var(--cyan)">Security Hardened</div>
+        <p class="body-sm" style="margin-bottom:14px;">Comprehensive security audit completed with zero vulnerabilities.</p>
+        <div style="font-family:'Fira Code',monospace;font-size:0.72rem;color:var(--cyan);background:rgba(6,182,212,0.07);padding:8px 12px;border-radius:6px;">
+          ✓ 100% parameterized SQL<br/>
+          ✓ JWT auth middleware<br/>
+          ✓ bcrypt password hashing<br/>
+          ✓ Input validation schemas
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-4 w-full" style="max-width:1050px;margin-top:18px;">
+      <div class="card" style="text-align:center;background:rgba(6,182,212,0.05);">
+        <div style="font-size:1.6rem;font-weight:800;color:var(--cyan);">8</div>
+        <div class="body-sm">DB Tables with FK constraints</div>
+      </div>
+      <div class="card" style="text-align:center;background:rgba(139,92,246,0.05);">
+        <div style="font-size:1.6rem;font-weight:800;color:var(--violet);">15</div>
+        <div class="body-sm">Performance Indexes</div>
+      </div>
+      <div class="card" style="text-align:center;background:rgba(16,185,129,0.05);">
+        <div style="font-size:1.6rem;font-weight:800;color:var(--emerald);">14</div>
+        <div class="body-sm">ML features engineered</div>
+      </div>
+      <div class="card" style="text-align:center;background:rgba(245,158,11,0.05);">
+        <div style="font-size:1.6rem;font-weight:800;color:var(--amber);">WAL</div>
+        <div class="body-sm">SQLite concurrency mode</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────── -->
+  <!-- SLIDE 9: KPI IMPACT SUMMARY                 -->
+  <!-- ─────────────────────────────────────────── -->
+  <div class="slide" id="slide-9">
+    <div class="orb" style="width:400px;height:400px;background:rgba(16,185,129,0.06);bottom:-120px;left:-80px;"></div>
+    <div class="badge badge-emerald">Platform KPIs</div>
+    <h1 class="slide-title">Measurable <span class="grad">Business Impact</span></h1>
+    <p class="slide-subtitle">Live metrics from the production database demonstrating the platform's real data management capability.</p>
+
+    <div class="grid-3 w-full" style="max-width:1050px;margin-bottom:20px;">
+      <div class="card card-cyan" style="text-align:center;padding:32px 20px;">
+        <div class="kpi-num" style="font-size:3rem;color:var(--cyan);">$16.4M</div>
+        <div class="kpi-label" style="margin-top:8px;">Live Inventory Value</div>
+        <p class="body-sm" style="margin-top:10px;font-size:0.78rem;">Computed in real-time from 50 SKUs × unit cost × stock level</p>
+      </div>
+      <div class="card card-violet" style="text-align:center;padding:32px 20px;">
+        <div class="kpi-num" style="font-size:3rem;color:var(--violet);">914</div>
+        <div class="kpi-label" style="margin-top:8px;">Sales Transactions</div>
+        <p class="body-sm" style="margin-top:10px;font-size:0.78rem;">12 months of historical data across 5 product categories</p>
+      </div>
+      <div class="card card-emerald" style="text-align:center;padding:32px 20px;">
+        <div class="kpi-num" style="font-size:3rem;color:var(--emerald);">3.84</div>
+        <div class="kpi-label" style="margin-top:8px;">Forecast RMSE (Units)</div>
+        <p class="body-sm" style="margin-top:10px;font-size:0.78rem;">Champion model accuracy — Random Forest Tuned, 30-day horizon</p>
+      </div>
+    </div>
+
+    <div class="grid-4 w-full" style="max-width:1050px;">
+      <div class="card" style="text-align:center;">
+        <div style="font-size:1.5rem;font-weight:800;color:var(--amber);">50</div>
+        <div class="body-sm">Active SKUs tracked</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:1.5rem;font-weight:800;color:var(--cyan);">10</div>
+        <div class="body-sm">Rated suppliers</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:1.5rem;font-weight:800;color:var(--violet);">113</div>
+        <div class="body-sm">Purchase orders logged</div>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:1.5rem;font-weight:800;color:var(--emerald);">0%</div>
+        <div class="body-sm">Current stockout rate</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────────────────── -->
+  <!-- SLIDE 10: LIVE DEMO & NEXT STEPS            -->
+  <!-- ─────────────────────────────────────────── -->
+  <div class="slide" id="slide-10">
+    <div class="orb" style="width:500px;height:500px;background:rgba(6,182,212,0.06);top:-180px;right:-150px;"></div>
+    <div class="orb" style="width:350px;height:350px;background:rgba(139,92,246,0.06);bottom:-100px;left:-100px;"></div>
+    <div class="badge badge-cyan">Day 15 — Live Demo</div>
+    <h1 class="slide-title">Ready for <span class="grad">Stakeholder Presentation</span></h1>
+    <p class="slide-subtitle">Full demonstration walkthrough guide for the Day 15 live demo session.</p>
+
+    <div class="grid-2 w-full" style="max-width:1050px;align-items:start;">
+      <div class="card card-cyan">
+        <div class="h3">🎬 Demo Walkthrough Order</div>
+        <div style="counter-reset: demo-step; margin-top:12px;">
+          <div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);">
+            <div style="width:24px;height:24px;border-radius:50%;background:var(--cyan-dim);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:var(--cyan);flex-shrink:0;">1</div>
+            <div class="body-sm"><strong style="color:var(--text-hi)">Login</strong> — admin@smartinventory.com</div>
+          </div>
+          <div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);">
+            <div style="width:24px;height:24px;border-radius:50%;background:var(--cyan-dim);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:var(--cyan);flex-shrink:0;">2</div>
+            <div class="body-sm"><strong style="color:var(--text-hi)">Dashboard</strong> — Show KPIs and 6 live Chart.js charts</div>
+          </div>
+          <div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);">
+            <div style="width:24px;height:24px;border-radius:50%;background:var(--cyan-dim);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:var(--cyan);flex-shrink:0;">3</div>
+            <div class="body-sm"><strong style="color:var(--text-hi)">Products</strong> — Create a new product live (CRUD demo)</div>
+          </div>
+          <div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);">
+            <div style="width:24px;height:24px;border-radius:50%;background:var(--cyan-dim);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:var(--cyan);flex-shrink:0;">4</div>
+            <div class="body-sm"><strong style="color:var(--text-hi)">Inventory</strong> — Adjust stock, show reorder alerts</div>
+          </div>
+          <div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);">
+            <div style="width:24px;height:24px;border-radius:50%;background:var(--cyan-dim);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:var(--cyan);flex-shrink:0;">5</div>
+            <div class="body-sm"><strong style="color:var(--text-hi)">Forecasts</strong> — Trigger Python ML model, show confidence chart</div>
+          </div>
+          <div style="display:flex;gap:12px;padding:8px 0;">
+            <div style="width:24px;height:24px;border-radius:50%;background:var(--cyan-dim);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:var(--cyan);flex-shrink:0;">6</div>
+            <div class="body-sm"><strong style="color:var(--text-hi)">Reports</strong> — Generate Inventory Report → Export CSV/PDF</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card card-emerald" style="margin-bottom:16px;">
+          <div class="h3">✅ Repository Deliverables</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;">
+            <div class="body-sm" style="display:flex;gap:6px;align-items:center;"><span style="color:var(--emerald)">✓</span> Functional REST API</div>
+            <div class="body-sm" style="display:flex;gap:6px;align-items:center;"><span style="color:var(--emerald)">✓</span> Seeded SQLite DB</div>
+            <div class="body-sm" style="display:flex;gap:6px;align-items:center;"><span style="color:var(--emerald)">✓</span> 9-Page Frontend</div>
+            <div class="body-sm" style="display:flex;gap:6px;align-items:center;"><span style="color:var(--emerald)">✓</span> Python ML Pipeline</div>
+            <div class="body-sm" style="display:flex;gap:6px;align-items:center;"><span style="color:var(--emerald)">✓</span> 50 Jest Tests</div>
+            <div class="body-sm" style="display:flex;gap:6px;align-items:center;"><span style="color:var(--emerald)">✓</span> Data Dictionary</div>
+            <div class="body-sm" style="display:flex;gap:6px;align-items:center;"><span style="color:var(--emerald)">✓</span> EDA Notebooks</div>
+            <div class="body-sm" style="display:flex;gap:6px;align-items:center;"><span style="color:var(--emerald)">✓</span> Pro README</div>
+          </div>
+        </div>
+        <div class="card" style="background:var(--gradient);border:none;text-align:center;padding:28px;">
+          <div style="font-size:2.2rem;margin-bottom:10px;">🚀</div>
+          <div style="font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:6px;">Ready for Day 15</div>
+          <div style="font-size:0.82rem;color:rgba(255,255,255,0.8);">Live Demo & Stakeholder Presentation</div>
+          <div style="margin-top:14px;font-family:'Fira Code',monospace;font-size:0.78rem;color:rgba(255,255,255,0.9);background:rgba(0,0,0,0.2);padding:8px 14px;border-radius:8px;">
+            http://localhost:5000
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end .deck -->
+
+<!-- ── Navigation Controls ── -->
+<button class="nav-btn prev" id="btn-prev" onclick="changeSlide(-1)">‹</button>
+<button class="nav-btn next" id="btn-next" onclick="changeSlide(1)">›</button>
+<div class="slide-counter" id="counter">1 / 10</div>
+
+<nav class="nav">
+  <button class="nav-dot active" id="dot-0" onclick="goToSlide(0)"></button>
+  <button class="nav-dot" id="dot-1" onclick="goToSlide(1)"></button>
+  <button class="nav-dot" id="dot-2" onclick="goToSlide(2)"></button>
+  <button class="nav-dot" id="dot-3" onclick="goToSlide(3)"></button>
+  <button class="nav-dot" id="dot-4" onclick="goToSlide(4)"></button>
+  <button class="nav-dot" id="dot-5" onclick="goToSlide(5)"></button>
+  <button class="nav-dot" id="dot-6" onclick="goToSlide(6)"></button>
+  <button class="nav-dot" id="dot-7" onclick="goToSlide(7)"></button>
+  <button class="nav-dot" id="dot-8" onclick="goToSlide(8)"></button>
+  <button class="nav-dot" id="dot-9" onclick="goToSlide(9)"></button>
+</nav>
+
+<script>
+  const TOTAL = 10;
+  let current = 0;
+
+  function goToSlide(n) {
+    document.querySelectorAll('.slide').forEach((s,i) => {
+      s.classList.toggle('active', i === n);
+    });
+    document.querySelectorAll('.nav-dot').forEach((d,i) => {
+      d.classList.toggle('active', i === n);
+    });
+    document.getElementById('counter').textContent = `${n + 1} / ${TOTAL}`;
+    document.getElementById('btn-prev').style.opacity = n === 0 ? '0.3' : '1';
+    document.getElementById('btn-next').style.opacity = n === TOTAL - 1 ? '0.3' : '1';
+    current = n;
+  }
+
+  function changeSlide(dir) {
+    const next = Math.max(0, Math.min(TOTAL - 1, current + dir));
+    goToSlide(next);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') changeSlide(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    changeSlide(-1);
+  });
+
+  // Touch/swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend',   e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+  });
+
+  goToSlide(0);
+</script>
+</body>
+</html>
