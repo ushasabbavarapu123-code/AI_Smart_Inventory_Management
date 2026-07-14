@@ -1,20 +1,20 @@
 # Pipeline Performance Comparison
 
-*Generated automatically at 2026-07-07 19:59:33*
+*Generated automatically at 2026-07-09 20:07:18*
 
 This report outlines the before vs after execution times of the pipeline after implementing performance optimizations (caching, vectorizations, map overrides, minimized duplication).
 
 ## Execution Timings Comparison
 | Pipeline Phase | Before (Day 6 Baseline) | After (Day 7 Optimized) | Absolute Speedup | Relative Speedup |
 | :--- | :--- | :--- | :--- | :--- |
-| Extraction | 0.5500s | 0.0365s | 0.5135s | 93.4% |
-| Profiling | 0.4000s | 0.0500s | 0.3500s | 87.5% |
-| Cleaning | 0.6500s | 0.1245s | 0.5255s | 80.8% |
-| Feature Engineering | 3.8000s | 0.1387s | 3.6613s | 96.3% |
-| Validation | 0.3500s | 0.0204s | 0.3296s | 94.2% |
-| Export | 0.6500s | 1.0486s | -0.3986s | -61.3% |
+| Extraction | 0.5500s | 0.0296s | 0.5204s | 94.6% |
+| Profiling | 0.4000s | 0.1425s | 0.2575s | 64.4% |
+| Cleaning | 0.6500s | 0.1911s | 0.4589s | 70.6% |
+| Feature Engineering | 3.8000s | 0.2395s | 3.5605s | 93.7% |
+| Validation | 0.3500s | 0.0660s | 0.2840s | 81.1% |
+| Export | 0.6500s | 0.0496s | 0.6004s | 92.4% |
 | Documentation | 0.1900s | 0.0000s | 0.1900s | 100.0% |
-| **Total Pipeline Time** | **6.5900s** | **1.4188s** | **5.1712s** | **78.5%** |
+| **Total Pipeline Time** | **6.5900s** | **0.7182s** | **5.8718s** | **89.1%** |
 
 ## Optimizations Applied
 - **Vectorized String Trimming:** Replaced row-by-row string strip iterations with fast vectorized Pandas `.str.strip()` which also natively preserves `NaN` columns.

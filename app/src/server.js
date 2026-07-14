@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 const { initDatabase } = require('./database');
 
@@ -19,6 +20,10 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from public folder
+app.use(express.static(path.join(__dirname, '../public')));
+app.use('/docs', express.static(path.join(__dirname, '../../docs')));
 
 // Basic health check endpoint (public)
 app.get('/api/health', (req, res) => {

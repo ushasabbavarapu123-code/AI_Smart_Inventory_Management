@@ -1,0 +1,71 @@
+/* Sales Page Styles */
+.sales-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.sales-kpi {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+}
+
+.sales-kpi .kpi-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.sales-kpi .kpi-val {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.sales-kpi .kpi-lbl {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.date-filter-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.date-filter-row input[type="date"] {
+  padding: 8px 12px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+}
+
+.date-filter-row input[type="date"]:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+@media (max-width: 1024px) {
+  .sales-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .sales-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}

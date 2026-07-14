@@ -1,0 +1,40 @@
+{
+  "model_name": "Random Forest (Tuned)",
+  "training_date": "2026-07-09 15:05:47 UTC",
+  "version": "1.0.0",
+  "metrics": {
+    "model": "Random Forest (Tuned)",
+    "MAE": 1.2525,
+    "MSE": 14.7285,
+    "RMSE": 3.8378,
+    "R2": 0.0037,
+    "MAPE": 6755535087.6111
+  },
+  "features_used": [
+    "lag_1",
+    "lag_7",
+    "lag_14",
+    "lag_30",
+    "rolling_mean_7",
+    "rolling_mean_14",
+    "rolling_mean_30",
+    "rolling_std_7",
+    "rolling_std_14",
+    "rolling_std_30",
+    "day_of_week",
+    "month",
+    "quarter",
+    "is_weekend"
+  ],
+  "best_hyperparameters": {
+    "n_estimators": 150,
+    "min_samples_split": 2,
+    "min_samples_leaf": 6,
+    "max_features": "sqrt",
+    "max_depth": 6
+  },
+  "model_file": "best_forecasting_model.pkl",
+  "framework": "scikit-learn",
+  "python_version": "3.12.6",
+  "description": "Champion demand forecasting model selected after comparing Linear Regression, Gradient Boosting, Random Forest (baseline), and Random Forest (tuned) on MAE, RMSE, R\u00b2, and MAPE."
+}

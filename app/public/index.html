@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - AI Smart Inventory Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="login-body">
+  <div class="login-card">
+    <div class="login-header animate-fade-in stagger-1">
+      <div class="login-logo text-primary">
+        📦
+      </div>
+      <h2>AI Smart Inventory</h2>
+      <p>Enter details to log in to dashboard</p>
+    </div>
+
+    <div id="login-alert-container" class="animate-fade-in stagger-2"></div>
+
+    <form id="login-form" class="animate-fade-in stagger-3">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" class="form-control" placeholder="name@smartinventory.com" required value="admin@smartinventory.com">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="••••••••" required value="admin">
+      </div>
+
+      <button type="submit" id="btn-login-submit" class="btn btn-primary btn-block animate-fade-in stagger-4" style="margin-top: 24px;">Log In</button>
+    </form>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    // Local login page logic
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const alertContainer = document.getElementById('login-alert-container');
+      const submitBtn = document.getElementById('btn-login-submit');
+
+      alertContainer.innerHTML = '';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Authenticating...';
+
+      try {
+        const response = await apiFetch('/auth/login', {
+          method: 'POST',
+          body: JSON.stringify({ email, password })
+        });
+
+        if (response.success && response.data) {
+          setAuth(response.data.access_token, response.data.user);
+          showToast('Login successful', 'success');
+          window.location.href = '/dashboard.html';
+        }
+      } catch (err) {
+        alertContainer.innerHTML = `
+          <div class="alert alert-danger">
+            ${err.message || 'Login failed. Please check credentials.'}
+          </div>
+        `;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Log In';
+      }
+    });
+  </script>
+</body>
+</html>

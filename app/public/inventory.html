@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventory - AI Smart Inventory Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/inventory.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Layout -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon text-white">📦</div>
+        <span class="brand-text">Smart Inventory</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li>
+          <a href="/dashboard.html">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/products.html">
+            <span class="nav-icon">📦</span>
+            <span class="nav-label">Products</span>
+          </a>
+        </li>
+        <li>
+          <a href="/inventory.html">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Inventory</span>
+          </a>
+        </li>
+        <li>
+          <a href="/sales.html">
+            <span class="nav-icon">💰</span>
+            <span class="nav-label">Sales</span>
+          </a>
+        </li>
+        <li>
+          <a href="/suppliers.html">
+            <span class="nav-icon">🚚</span>
+            <span class="nav-label">Suppliers</span>
+          </a>
+        </li>
+        <li>
+          <a href="/purchase-orders.html">
+            <span class="nav-icon">📝</span>
+            <span class="nav-label">Purchase Orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="/forecasts.html">
+            <span class="nav-icon">🤖</span>
+            <span class="nav-label">Forecasting</span>
+          </a>
+        </li>
+        <li>
+          <a href="/reports.html">
+            <span class="nav-icon">📑</span>
+            <span class="nav-label">Reports</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="user-avatar" id="ui-avatar">U</div>
+        <div class="user-info">
+          <span class="user-name" id="ui-username">Guest User</span>
+          <span class="user-role" id="ui-userrole">Planner</span>
+        </div>
+        <button id="btn-global-logout" class="btn-logout" title="Log Out">
+          🚪
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Top Navbar -->
+      <nav class="top-navbar">
+        <div class="navbar-left">
+          <button id="btn-sidebar-toggle" class="btn-sidebar-toggle" title="Toggle Sidebar">☰</button>
+          <button id="btn-mobile-sidebar" class="btn-sidebar-toggle" style="display: none;" title="Toggle Sidebar">☰</button>
+          <div class="navbar-search">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search SKU, location...">
+          </div>
+        </div>
+        <div class="navbar-right">
+          <span class="navbar-date" id="navbar-date">Tuesday, July 14, 2026</span>
+          <button class="navbar-btn" title="Notifications">
+            🔔
+            <span class="badge-dot"></span>
+          </button>
+          <div class="navbar-profile">
+            <div class="profile-avatar" id="navbar-profile-avatar">U</div>
+            <div class="profile-info">
+              <span class="profile-name" id="navbar-profile-name">Guest User</span>
+              <span class="profile-role" id="navbar-profile-role">Planner</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Content Header -->
+        <header class="content-header animate-fade-in-up stagger-1">
+          <div class="content-title">
+            <h1>Warehouse Stock Inventory</h1>
+            <p>Monitor current counts, reserved units, safety stock, and run stock adjustments</p>
+          </div>
+        </header>
+
+        <!-- Alert Container -->
+        <div id="inventory-alert-container"></div>
+
+        <!-- Inventory KPI Summary widgets -->
+        <div class="inventory-summary animate-fade-in-up stagger-2">
+          <div class="inv-summary-card">
+            <div class="inv-val text-primary" id="kpi-inv-total-items">—</div>
+            <div class="inv-label">Total Quantity in Stock</div>
+          </div>
+          <div class="inv-summary-card">
+            <div class="inv-val text-success" id="kpi-inv-total-value">—</div>
+            <div class="inv-label">Inventory Valuation ($)</div>
+          </div>
+          <div class="inv-summary-card">
+            <div class="inv-val text-warning" id="kpi-inv-low-stock">—</div>
+            <div class="inv-label">Low Stock Indicators</div>
+          </div>
+          <div class="inv-summary-card">
+            <div class="inv-val text-info" id="kpi-inv-healthy">—</div>
+            <div class="inv-label">Healthy Stock Items</div>
+          </div>
+        </div>
+
+        <!-- Filters Control Row -->
+        <div class="filter-bar animate-fade-in-up stagger-3">
+          <div class="filter-group">
+            <input type="text" id="search-input" class="form-control" placeholder="Search by SKU, product name..." oninput="filterInventory()">
+            <select id="status-filter" class="form-control" onchange="filterInventory()">
+              <option value="">All Stock Statuses</option>
+              <option value="healthy">Healthy Stock</option>
+              <option value="low">Low Stock Warning</option>
+              <option value="stockout">Out of Stock (Stockout)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Inventory Table Card -->
+        <div class="table-card card animate-fade-in-up stagger-4">
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>SKU</th>
+                  <th>Product Name</th>
+                  <th>Location</th>
+                  <th>Current Qty</th>
+                  <th>Reserved Stock</th>
+                  <th>Available Stock</th>
+                  <th>Safety Stock</th>
+                  <th>Valuation</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="inventory-table-body">
+                <tr>
+                  <td colspan="10" class="text-muted text-center" style="padding: 32px;">Loading inventory records...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination container -->
+          <div class="pagination" id="pagination-container"></div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <div>AI Smart Inventory Management & Demand Forecasting System &copy; 2026. Custom Fiori Enterprise Styling.</div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Adjustment Form Modal -->
+  <div class="modal-overlay" id="adjustment-modal">
+    <div class="modal-container animate-fade-in-up">
+      <div class="modal-header">
+        <h3 class="modal-title">Adjust Inventory Levels</h3>
+        <button class="btn-close" onclick="closeAdjustmentModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="adjustment-form">
+          <input type="hidden" id="adjust-inventory-id">
+          
+          <div class="form-group">
+            <label>Product Item</label>
+            <input type="text" id="adjust-prod-name" class="form-control" disabled>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="adjust-qty">Adjusted Quantity</label>
+              <input type="number" id="adjust-qty" class="form-control" min="0" required placeholder="0">
+            </div>
+            
+            <div class="form-group">
+              <label for="adjust-location">Warehouse Location</label>
+              <input type="text" id="adjust-location" class="form-control" required placeholder="Warehouse-A">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="adjust-reason">Reason for Stock Adjustment</label>
+            <textarea id="adjust-reason" class="form-control" required placeholder="Describe reason (e.g. damaged stock writeoff, visual count check discrepancy)"></textarea>
+          </div>
+          
+          <div class="modal-footer" style="padding: 16px 0 0; border: none;">
+            <button type="button" class="btn btn-secondary" onclick="closeAdjustmentModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Adjustment</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/inventory.js"></script>
+</body>
+</html>

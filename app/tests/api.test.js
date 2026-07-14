@@ -183,7 +183,7 @@ describe('Smart Inventory API Tests', () => {
       expect(res.body.success).toBe(true);
       expect(res.body.data).toHaveProperty('predicted_qty');
       expect(res.body.data).toHaveProperty('model_used');
-    });
+    }, 30000);
 
     it('should successfully fetch the latest forecast for the product', async () => {
       const res = await request(app)

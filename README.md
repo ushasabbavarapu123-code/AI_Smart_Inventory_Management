@@ -210,6 +210,103 @@ node src/verify_db.js
 
 ---
 
+## 🤖 Machine Learning Workflow
+
+The demand forecasting pipeline is implemented in Python using scikit-learn. It follows a structured ML lifecycle:
+
+### Forecasting Process
+
+```
+Raw Sales Data
+      │
+      ▼
+Daily SKU Aggregation  ←──  Calendar Gap Filling (zeros)
+      │
+      ▼
+Feature Engineering
+  • Lag features: lag_1, lag_7, lag_14, lag_30
+  • Rolling averages: 7, 14, 30 days
+  • Rolling volatility: std_7, std_14, std_30
+  • Calendar: day_of_week, month, quarter, is_weekend
+      │
+      ▼
+Temporal Train/Validation Split
+  (Last 60 days = validation hold-out)
+      │
+      ▼
+Model Training (5 algorithms)
+  1. Linear Regression
+  2. Gradient Boosting
+  3. Random Forest (Baseline)
+  4. Random Forest (Tuned via RandomizedSearchCV)
+  5. XGBoost (if installed)
+      │
+      ▼
+Evaluation: MAE, MSE, RMSE, R²
+      │
+      ▼
+Champion Selection (lowest RMSE)
+      │
+      ▼
+30-Day Recursive Forecasting per SKU
+      │
+      ▼
+Safety Stock & Reorder Points → SQLite + CSV
+```
+
+### Model Selection Results
+
+| Model | MAE | RMSE | R² | Status |
+|-------|-----|------|----|--------|
+| Random Forest (Tuned) | 1.2525 | 3.8378 | 0.0037 | ✅ Champion |
+| Linear Regression | 1.1769 | 3.8461 | -0.0007 | Runner-up |
+| Random Forest (Baseline) | 1.5175 | 3.9560 | -0.0587 | |
+| Gradient Boosting | 1.7261 | 4.0259 | -0.0964 | |
+| XGBoost | 1.9908 | 4.1547 | -0.1677 | |
+
+**Champion**: `Random Forest (Tuned)` — n_estimators=150, max_depth=6, min_samples_leaf=6
+
+### Top Features by Importance
+1. `rolling_std_30` — 16.57% (30-day demand volatility)
+2. `rolling_mean_14` — 12.23% (14-day average demand)
+3. `rolling_mean_30` — 11.04% (30-day average demand)
+4. `rolling_std_7` — 9.53% (short-term volatility)
+5. `day_of_week` — 8.39% (weekly demand cycles)
+
+### Retraining Instructions
+
+```bash
+# Activate the Python virtual environment
+cd AI_Smart_Inventory_Management
+analytics\venv\Scripts\activate
+
+# Step 1: Run model optimization (trains all models, selects champion)
+python analytics/scripts/model_optimization.py
+
+# Step 2: Generate 30-day forecasts using champion model
+python analytics/scripts/train_forecast.py
+
+# Step 3: Open the interactive optimization notebook
+jupyter notebook analytics/notebooks/05_Model_Optimization.ipynb
+```
+
+### Model Artifacts
+
+| Artifact | Path | Description |
+|---------|------|-------------|
+| Champion model | `models/best_forecasting_model.pkl` | Serialized joblib model |
+| Metadata | `models/model_metadata.json` | Training info, metrics, features |
+| Actual vs Predicted | `reports/figures/actual_vs_predicted.png` | Prediction accuracy chart |
+| Residual Plot | `reports/figures/residual_plot.png` | Error distribution vs predictions |
+| Error Histogram | `reports/figures/error_distribution.png` | Prediction error histogram |
+| Feature Importance | `reports/figures/feature_importance.png` | Feature ranking chart |
+| Model Comparison | `reports/figures/model_comparison.png` | Side-by-side metric comparison |
+| Model Report | `docs/MODEL_REPORT.md` | Full ML model documentation |
+| Evaluation Report | `docs/MODEL_EVALUATION.md` | Metrics, observations, limitations |
+| Feature Analysis | `docs/FEATURE_IMPORTANCE.md` | Business interpretation of features |
+
+---
+
 # 🌐 API Documentation & Database Reference
 
 ## 1. API Overview
@@ -1234,6 +1331,97 @@ analytics\venv\Scripts\pytest tests\test_pipeline.py -v
 
 ---
 
+# 📊 Phase 4 – Exploratory Data Analysis & Insights
+
+## Overview
+Day 8 introduced comprehensive EDA across the cleaned and feature-engineered datasets. The pipeline evaluates statistical properties, generates publication-quality visualization assets across 5 business domains (sales, products, inventory, suppliers, forecasts), and addresses the core Phase 1 business questions.
+
+## Key Visualizations & Deliverables
+- **Notebooks**: `analytics/notebooks/02_Exploratory_Data_Analysis.ipynb` & `analytics/notebooks/03_Business_Insights.ipynb`
+- **Script**: `analytics/scripts/run_eda_complete.py`
+- **Output Directories**: `analytics/visuals/` divided into sub-folders (`sales/`, `products/`, `inventory/`, `suppliers/`, `forecasts/`) holding 36 distinct charts.
+- **Reports**:
+  - `analytics/reports/EDA_SUMMARY.md` — Statistical characteristics, distribution descriptions, and data patterns.
+  - `analytics/reports/BUSINESS_INSIGHTS.md` — Answers to all 8 core business questions and 10 executive-level insights.
+  - `analytics/reports/CHART_CATALOG.md` — Indexed listing of all 36 visualizations.
+
+---
+
+# 🔮 Phase 5 – Model Building & Forecasting
+
+## Overview
+Day 9 introduced an automated demand forecasting and safety stock modeling pipeline (`train_forecast.py`). The pipeline loads processed sales, aggregates them to daily series, handles missing dates, splits the history temporally, trains and evaluates predictive models, and exports the final 30-day ahead forecasts.
+
+## Model Comparisons (Temporal Validation)
+- **Baseline (SMA-30)**: Daily demand predicted by a trailing 30-day simple moving average.
+- **Champion (Random Forest Regressor)**: Fits an ensemble on lag features (`lag_1`, `lag_7`, `lag_14`, `lag_30`), rolling window features (mean and std over 7, 14, 30 days), and calendar indicators.
+- **Evaluation Metrics**: Models are compared on MAE and RMSE across a 60-day validation set. Random Forest was selected as the champion model.
+
+## Calculations
+- **Safety Stock**: `Safety Stock = Z × σ_daily × √lead_time_days` where $Z = 1.645$ (95% service level) and $\sigma$ is the standard deviation of forecasted daily demand.
+- **Reorder Point**: `Reorder Point = avg_daily_demand × lead_time_days + Safety Stock`
+- **Reorder Quantity**: `Reorder Quantity = avg_daily_demand × lead_time_days × 2 + Safety Stock`
+
+## Running the Training and Forecasting Script
+```bash
+# Run training, comparison, safety stock calculations, DB updates, and CSV exports
+python analytics/scripts/train_forecast.py
+```
+
+## Outputs & Deliverables
+- **Forecasting Notebook**: `analytics/notebooks/04_Demand_Forecasting.ipynb`
+- **Forecast Pipeline Script**: `analytics/scripts/train_forecast.py`
+- **Database Table**: Writes forecasts back to the SQLite `forecasts` table.
+- **Processed Exports**:
+  - `data/processed/forecasts_processed.csv` — Summary 30-day forecast and safety stock parameters for all 50 active SKUs.
+  - `data/processed/daily_forecasts.csv` — Daily prediction horizon rows (1,500 total rows).
+
+---
+
+# 🎨 Phase 6 – Integrated Dashboard & Frontend UI (Days 10–11)
+
+## Overview
+Phase 6 delivered a premium, highly responsive browser dashboard and management console (Multi-Page Application) integrated directly with backend REST endpoints and forecasting scripts.
+
+## Core Pages & Features
+- **Dashboard UI (`dashboard.html`)**: Features 8 high-level KPI metric cards and 6 interactive Chart.js visualizations covering sales volume, categorization distributions, low-stock warnings, and historical trends.
+- **Product CRUD (`products.html`)**: Features paginated catalog tabular view, SKU search and categories filters, CSV data exports, and bulk CSV uploads.
+- **Live Inventory (`inventory.html`)**: Tracks reserved, available, safety stock, and valuations. Features a stock adjustment form with audit tracking.
+- **Sales Transaction Ledger (`sales.html`)**: Enables recording transactions with real-time stock decrement hooks.
+- **Suppliers Console (`suppliers.html`)**: Toggleable grid/table views showing ratings, person-of-contacts, and lead times.
+- **Purchase Orders (`purchase-orders.html`)**: Tracks PO lifecycles. Restores inventory quantities automatically upon transitioning PO to "Received" status.
+- **Forecasting Dashboard (`forecasts.html`)**: Graphs predictive demand confidence intervals and provides interactive triggers to spawn the Python forecasting script.
+- **Documentation Viewer (`reports.html`)**: Compiles system design markdown files directly into the browser viewport and exports tables to PDF/Excel via CDN libraries.
+
+---
+
+# 🛡️ Phase 6 – Verification, Automated Testing & Security Audits (Day 12)
+
+## Overview
+Day 12 focused on auditing system safety and expanding the Jest test suite with unit tests for error handling and input validation.
+
+## Audits & Testing Accomplishments
+- **SQL Injection Audit**: Confirmed 100% parameterization compliance across all backend model layers. All SQLite commands use `?` parameter placeholders. Dynamic column updates are whitelisted against strict string tables.
+- **Validation Unit Testing (`validation.test.js`)**: Created a full unit test suite mocking Request/Response states to assert correct input boundaries across all 8 validation middleware schemas.
+- **Central Error Handling Unit Testing (`errorHandler.test.js`)**: Asserts that status code overrides are respected, Console logs errors correctly, and fallbacks default to 500 JSON envelopes.
+- **Flaky Timeout Remediation**: Increased forecasting test timeouts in `api.test.js` to `30000ms` to avoid failure during heavy statsmodels ARIMA fitting.
+- **Result**: The complete test suite runs cleanly, confirming **40/40 tests passing**.
+
+---
+
+# 📦 Phase 7 – Packaging, README & Business Storytelling (Day 13)
+
+## Overview
+Phase 7 finalized repository packaging configurations, updated core documentation specifications, and detailed time-series forecasting comparisons.
+
+## Deliverables
+- **Business Recommendations**: Compiled [BUSINESS_STORYTELLING.md](file:///c:/Users/ushas/OneDrive/Desktop/Smart_Inventory_Project/AI_Smart_Inventory_Management/docs/BUSINESS_STORYTELLING.md) evaluating all 5 trained models (Champion: Tuned Random Forest with RMSE of 3.8378) and outlining dynamic ROP replenishment policies.
+- **Database Alignment**: Summarized database normalization and index triggers in `DATABASE_DESIGN.md`.
+- **System Architecture**: Added detailed routing and request lifecycles to `PROJECT_ARCHITECTURE.md`.
+- **Verified Packaging**: Verified dependency compliance in `requirements.txt` and `package.json`.
+
+---
+
 # 📈 Project Workflow
 
 Every development session follows the same process:
@@ -1257,6 +1445,7 @@ Project documentation includes:
 - `CURRENT_DAY.md` – Current execution day controller
 - `DAILY_REPORT_TEMPLATE.md` – Daily reporting
 - `docs/` – Business, architecture, database, API, testing, deployment documentation
+- `docs/BUSINESS_STORYTELLING.md` – Model comparison metrics and operational recommendations
 
 ---
 
@@ -1271,9 +1460,9 @@ By the end of the project, the repository should contain:
 - EDA Notebook
 - Interactive Dashboard
 - Demand Forecasting Model
-- Insights Report
+- Insights Report & Storytelling Summaries
 - Presentation Deck
-- Complete Documentation
+- Complete Documentation & Unit Test Suites
 
 ---
 
@@ -1323,4 +1512,4 @@ Data Analytics • AI • Full Stack Development
 
 ---
 
-**Status:** 🚀 Phase 3 Complete (Days 1–7 verified) | Day 8 (Exploratory Data Analysis) Next
+**Status:** 🚀 Phase 7 Complete (Days 1–13 verified) | Day 14 (Final Presentation & Business Storytelling Deck) Next

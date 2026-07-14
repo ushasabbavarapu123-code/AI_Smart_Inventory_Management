@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Purchase Orders - AI Smart Inventory Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/purchase-orders.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Layout -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon text-white">📦</div>
+        <span class="brand-text">Smart Inventory</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li>
+          <a href="/dashboard.html">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/products.html">
+            <span class="nav-icon">📦</span>
+            <span class="nav-label">Products</span>
+          </a>
+        </li>
+        <li>
+          <a href="/inventory.html">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Inventory</span>
+          </a>
+        </li>
+        <li>
+          <a href="/sales.html">
+            <span class="nav-icon">💰</span>
+            <span class="nav-label">Sales</span>
+          </a>
+        </li>
+        <li>
+          <a href="/suppliers.html">
+            <span class="nav-icon">🚚</span>
+            <span class="nav-label">Suppliers</span>
+          </a>
+        </li>
+        <li>
+          <a href="/purchase-orders.html">
+            <span class="nav-icon">📝</span>
+            <span class="nav-label">Purchase Orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="/forecasts.html">
+            <span class="nav-icon">🤖</span>
+            <span class="nav-label">Forecasting</span>
+          </a>
+        </li>
+        <li>
+          <a href="/reports.html">
+            <span class="nav-icon">📑</span>
+            <span class="nav-label">Reports</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="user-avatar" id="ui-avatar">U</div>
+        <div class="user-info">
+          <span class="user-name" id="ui-username">Guest User</span>
+          <span class="user-role" id="ui-userrole">Planner</span>
+        </div>
+        <button id="btn-global-logout" class="btn-logout" title="Log Out">
+          🚪
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Top Navbar -->
+      <nav class="top-navbar">
+        <div class="navbar-left">
+          <button id="btn-sidebar-toggle" class="btn-sidebar-toggle" title="Toggle Sidebar">☰</button>
+          <button id="btn-mobile-sidebar" class="btn-sidebar-toggle" style="display: none;" title="Toggle Sidebar">☰</button>
+          <div class="navbar-search">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search orders...">
+          </div>
+        </div>
+        <div class="navbar-right">
+          <span class="navbar-date" id="navbar-date">Tuesday, July 14, 2026</span>
+          <button class="navbar-btn" title="Notifications">
+            🔔
+            <span class="badge-dot"></span>
+          </button>
+          <div class="navbar-profile">
+            <div class="profile-avatar" id="navbar-profile-avatar">U</div>
+            <div class="profile-info">
+              <span class="profile-name" id="navbar-profile-name">Guest User</span>
+              <span class="profile-role" id="navbar-profile-role">Planner</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Content Header -->
+        <header class="content-header animate-fade-in-up stagger-1">
+          <div class="content-title">
+            <h1>Purchase Orders Fulfillments</h1>
+            <p>Create purchase orders to replenish stock levels and follow status timelines</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-primary" onclick="openPOModal()">📝 Create Purchase Order</button>
+          </div>
+        </header>
+
+        <!-- Alert Container -->
+        <div id="po-alert-container"></div>
+
+        <!-- PO Timeline Status Summary Cards -->
+        <div class="po-status-summary animate-fade-in-up stagger-2">
+          <div class="po-status-card selected" data-status="" onclick="selectStatusFilter('')">
+            <div class="po-count text-primary">—</div>
+            <div class="po-label">All Purchase Orders</div>
+          </div>
+          <div class="po-status-card" data-status="Pending" onclick="selectStatusFilter('Pending')">
+            <div class="po-count text-warning" id="count-po-pending">—</div>
+            <div class="po-label">⌛ Pending Orders</div>
+          </div>
+          <div class="po-status-card" data-status="Sent" onclick="selectStatusFilter('Sent')">
+            <div class="po-count text-info" id="count-po-sent">—</div>
+            <div class="po-label">📨 Sent to Supplier</div>
+          </div>
+          <div class="po-status-card" data-status="Received" onclick="selectStatusFilter('Received')">
+            <div class="po-count text-success" id="count-po-received">—</div>
+            <div class="po-label">✅ Received / Stocked</div>
+          </div>
+          <div class="po-status-card" data-status="Cancelled" onclick="selectStatusFilter('Cancelled')">
+            <div class="po-count text-danger" id="count-po-cancelled">—</div>
+            <div class="po-label">❌ Cancelled / Void</div>
+          </div>
+        </div>
+
+        <!-- Purchase Orders Table Card -->
+        <div class="table-card card animate-fade-in-up stagger-3">
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Order Date</th>
+                  <th>Supplier</th>
+                  <th>Product SKU</th>
+                  <th>Product Name</th>
+                  <th>Qty Ordered</th>
+                  <th>Unit Cost</th>
+                  <th>Expected Delivery</th>
+                  <th>Timeline Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="po-table-body">
+                <tr>
+                  <td colspan="9" class="text-muted text-center" style="padding: 32px;">Loading purchase orders...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <div>AI Smart Inventory Management & Demand Forecasting System &copy; 2026. Custom Fiori Enterprise Styling.</div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Create PO Modal -->
+  <div class="modal-overlay" id="po-modal">
+    <div class="modal-container animate-fade-in-up">
+      <div class="modal-header">
+        <h3 class="modal-title">Create Purchase Order</h3>
+        <button class="btn-close" onclick="closePOModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="po-form">
+          <div class="form-group">
+            <label for="po-supplier-id">Supplier Company</label>
+            <select id="po-supplier-id" class="form-control" required>
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="po-product-id">Target Product</label>
+            <select id="po-product-id" class="form-control" required onchange="handleProductChange()">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="po-qty">Order Quantity</label>
+              <input type="number" id="po-qty" class="form-control" min="1" required placeholder="100">
+            </div>
+
+            <div class="form-group">
+              <label for="po-cost">Unit Cost ($)</label>
+              <input type="number" id="po-cost" class="form-control" step="0.01" min="0.01" required placeholder="0.00">
+              <small style="color: var(--text-muted); margin-top: 4px; display: block;" id="po-cost-helper"></small>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="po-expected">Expected Delivery Date</label>
+            <input type="date" id="po-expected" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="po-notes">Order Notes / Instructions</label>
+            <textarea id="po-notes" class="form-control" placeholder="Write additional PO terms or delivery requirements..."></textarea>
+          </div>
+
+          <div class="modal-footer" style="padding: 16px 0 0; border: none;">
+            <button type="button" class="btn btn-secondary" onclick="closePOModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Publish Order</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/purchase-orders.js"></script>
+</body>
+</html>

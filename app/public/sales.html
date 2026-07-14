@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales - AI Smart Inventory Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/sales.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Layout -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon text-white">📦</div>
+        <span class="brand-text">Smart Inventory</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li>
+          <a href="/dashboard.html">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/products.html">
+            <span class="nav-icon">📦</span>
+            <span class="nav-label">Products</span>
+          </a>
+        </li>
+        <li>
+          <a href="/inventory.html">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Inventory</span>
+          </a>
+        </li>
+        <li>
+          <a href="/sales.html">
+            <span class="nav-icon">💰</span>
+            <span class="nav-label">Sales</span>
+          </a>
+        </li>
+        <li>
+          <a href="/suppliers.html">
+            <span class="nav-icon">🚚</span>
+            <span class="nav-label">Suppliers</span>
+          </a>
+        </li>
+        <li>
+          <a href="/purchase-orders.html">
+            <span class="nav-icon">📝</span>
+            <span class="nav-label">Purchase Orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="/forecasts.html">
+            <span class="nav-icon">🤖</span>
+            <span class="nav-label">Forecasting</span>
+          </a>
+        </li>
+        <li>
+          <a href="/reports.html">
+            <span class="nav-icon">📑</span>
+            <span class="nav-label">Reports</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="user-avatar" id="ui-avatar">U</div>
+        <div class="user-info">
+          <span class="user-name" id="ui-username">Guest User</span>
+          <span class="user-role" id="ui-userrole">Planner</span>
+        </div>
+        <button id="btn-global-logout" class="btn-logout" title="Log Out">
+          🚪
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Top Navbar -->
+      <nav class="top-navbar">
+        <div class="navbar-left">
+          <button id="btn-sidebar-toggle" class="btn-sidebar-toggle" title="Toggle Sidebar">☰</button>
+          <button id="btn-mobile-sidebar" class="btn-sidebar-toggle" style="display: none;" title="Toggle Sidebar">☰</button>
+          <div class="navbar-search">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search invoices...">
+          </div>
+        </div>
+        <div class="navbar-right">
+          <span class="navbar-date" id="navbar-date">Tuesday, July 14, 2026</span>
+          <button class="navbar-btn" title="Notifications">
+            🔔
+            <span class="badge-dot"></span>
+          </button>
+          <div class="navbar-profile">
+            <div class="profile-avatar" id="navbar-profile-avatar">U</div>
+            <div class="profile-info">
+              <span class="profile-name" id="navbar-profile-name">Guest User</span>
+              <span class="profile-role" id="navbar-profile-role">Planner</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Content Header -->
+        <header class="content-header animate-fade-in-up stagger-1">
+          <div class="content-title">
+            <h1>Sales Outflows & Invoices</h1>
+            <p>Log retail/wholesale sales and track historical outbound quantities</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-primary" onclick="openSaleModal()">💰 Record Sale Transaction</button>
+          </div>
+        </header>
+
+        <!-- Alert Container -->
+        <div id="sales-alert-container"></div>
+
+        <!-- Sales KPI Grid -->
+        <div class="sales-kpi-grid animate-fade-in-up stagger-2">
+          <div class="sales-kpi">
+            <div class="kpi-icon-wrap bg-success text-success">💵</div>
+            <div class="kpi-val text-success" id="kpi-sales-total">—</div>
+            <div class="kpi-lbl">Total Sales Revenue</div>
+          </div>
+          <div class="sales-kpi">
+            <div class="kpi-icon-wrap bg-primary text-primary">📦</div>
+            <div class="kpi-val text-primary" id="kpi-sales-qty">—</div>
+            <div class="kpi-lbl">Units Sold</div>
+          </div>
+          <div class="sales-kpi">
+            <div class="kpi-icon-wrap bg-accent text-accent">💳</div>
+            <div class="kpi-val text-accent" id="kpi-sales-count">—</div>
+            <div class="kpi-lbl">Transactions Logged</div>
+          </div>
+          <div class="sales-kpi">
+            <div class="kpi-icon-wrap bg-warning text-warning">📊</div>
+            <div class="kpi-val text-warning" id="kpi-sales-aov">—</div>
+            <div class="kpi-lbl">Average Order Value</div>
+          </div>
+        </div>
+
+        <!-- Dashboard Grid with Chart & Table -->
+        <div class="dashboard-grid animate-fade-in-up stagger-3">
+          <!-- Sales Revenue Line Chart -->
+          <div class="chart-card card">
+            <div class="card-header">
+              <h3 class="card-title">Timeline Sales Revenue ($)</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="salesRevenueChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filters card -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🔍 Filter Transactions</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="search-input">Product SKU or Name</label>
+                <input type="text" id="search-input" class="form-control" placeholder="Type to search..." oninput="filterSales()">
+              </div>
+              <div class="form-group">
+                <label for="customer-filter">Customer Channel Type</label>
+                <select id="customer-filter" class="form-control" onchange="filterSales()">
+                  <option value="">All Channels</option>
+                  <option value="Retail">Retail</option>
+                  <option value="Wholesale">Wholesale</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="start-date-filter">Start Date</label>
+                  <input type="date" id="start-date-filter" class="form-control" onchange="filterSales()">
+                </div>
+                <div class="form-group">
+                  <label for="end-date-filter">End Date</label>
+                  <input type="date" id="end-date-filter" class="form-control" onchange="filterSales()">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sales Invoices Table -->
+        <div class="table-card card animate-fade-in-up stagger-4">
+          <div class="card-header">
+            <h3 class="card-title">Invoice Transaction History</h3>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Sale Date</th>
+                  <th>Product SKU</th>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Unit Price</th>
+                  <th>Customer Channel</th>
+                  <th>Total Invoice Value</th>
+                </tr>
+              </thead>
+              <tbody id="sales-table-body">
+                <tr>
+                  <td colspan="7" class="text-muted text-center" style="padding: 32px;">Loading invoice records...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination container -->
+          <div class="pagination" id="pagination-container"></div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <div>AI Smart Inventory Management & Demand Forecasting System &copy; 2026. Custom Fiori Enterprise Styling.</div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Record Sale Modal -->
+  <div class="modal-overlay" id="sale-modal">
+    <div class="modal-container animate-fade-in-up">
+      <div class="modal-header">
+        <h3 class="modal-title">Record Sale Invoice</h3>
+        <button class="btn-close" onclick="closeSaleModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="sale-form">
+          <div class="form-group">
+            <label for="sale-product-id">Select Catalog Product</label>
+            <select id="sale-product-id" class="form-control" required onchange="handleProductChange()">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sale-qty">Sold Quantity</label>
+              <input type="number" id="sale-qty" class="form-control" min="1" required placeholder="1">
+            </div>
+            
+            <div class="form-group">
+              <label for="sale-price">Sale Price ($/unit)</label>
+              <input type="number" id="sale-price" class="form-control" step="0.01" min="0.01" required placeholder="0.00">
+              <small style="color: var(--text-muted); margin-top: 4px; display: block;" id="sale-cost-helper"></small>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sale-date">Sale Transaction Date</label>
+              <input type="date" id="sale-date" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label for="sale-cust-type">Customer Channel Type</label>
+              <select id="sale-cust-type" class="form-control" required>
+                <option value="Retail">Retail</option>
+                <option value="Wholesale">Wholesale</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="modal-footer" style="padding: 16px 0 0; border: none;">
+            <button type="button" class="btn btn-secondary" onclick="closeSaleModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Log Invoice</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/sales.js"></script>
+</body>
+</html>

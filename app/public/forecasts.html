@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demand Forecasting - AI Smart Inventory Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/forecast.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Layout -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon text-white">📦</div>
+        <span class="brand-text">Smart Inventory</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li>
+          <a href="/dashboard.html">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/products.html">
+            <span class="nav-icon">📦</span>
+            <span class="nav-label">Products</span>
+          </a>
+        </li>
+        <li>
+          <a href="/inventory.html">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Inventory</span>
+          </a>
+        </li>
+        <li>
+          <a href="/sales.html">
+            <span class="nav-icon">💰</span>
+            <span class="nav-label">Sales</span>
+          </a>
+        </li>
+        <li>
+          <a href="/suppliers.html">
+            <span class="nav-icon">🚚</span>
+            <span class="nav-label">Suppliers</span>
+          </a>
+        </li>
+        <li>
+          <a href="/purchase-orders.html">
+            <span class="nav-icon">📝</span>
+            <span class="nav-label">Purchase Orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="/forecasts.html">
+            <span class="nav-icon">🤖</span>
+            <span class="nav-label">Forecasting</span>
+          </a>
+        </li>
+        <li>
+          <a href="/reports.html">
+            <span class="nav-icon">📑</span>
+            <span class="nav-label">Reports</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="user-avatar" id="ui-avatar">U</div>
+        <div class="user-info">
+          <span class="user-name" id="ui-username">Guest User</span>
+          <span class="user-role" id="ui-userrole">Planner</span>
+        </div>
+        <button id="btn-global-logout" class="btn-logout" title="Log Out">
+          🚪
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Top Navbar -->
+      <nav class="top-navbar">
+        <div class="navbar-left">
+          <button id="btn-sidebar-toggle" class="btn-sidebar-toggle" title="Toggle Sidebar">☰</button>
+          <button id="btn-mobile-sidebar" class="btn-sidebar-toggle" style="display: none;" title="Toggle Sidebar">☰</button>
+          <div class="navbar-search">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search forecasts...">
+          </div>
+        </div>
+        <div class="navbar-right">
+          <span class="navbar-date" id="navbar-date">Tuesday, July 14, 2026</span>
+          <button class="navbar-btn" title="Notifications">
+            🔔
+            <span class="badge-dot"></span>
+          </button>
+          <div class="navbar-profile">
+            <div class="profile-avatar" id="navbar-profile-avatar">U</div>
+            <div class="profile-info">
+              <span class="profile-name" id="navbar-profile-name">Guest User</span>
+              <span class="profile-role" id="navbar-profile-role">Planner</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Content Header -->
+        <header class="content-header animate-fade-in-up stagger-1">
+          <div class="content-title">
+            <h1>🤖 AI Demand Forecasting</h1>
+            <p>Predict outbound product demands using Random Forest & Moving Average machine learning pipeline scripts</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-primary" onclick="openForecastModal()">🧠 Run ML Pipeline</button>
+          </div>
+        </header>
+
+        <!-- Alert Container -->
+        <div id="forecast-alert-container"></div>
+
+        <!-- Controls Row -->
+        <div class="forecast-controls animate-fade-in-up stagger-2">
+          <select id="forecast-product-selector" class="form-control product-select">
+            <option value="">All Products (Aggregate Category Demand)</option>
+            <!-- Populated dynamically -->
+          </select>
+          
+          <div class="confidence-band">
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <span class="band-color" style="background-color: #06b6d4;"></span>
+              <span>Predicted Qty</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 4px; margin-left: 10px;">
+              <span class="band-color" style="background-color: rgba(239, 68, 68, 0.4);"></span>
+              <span>Upper Conf. Band (95%)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 4px; margin-left: 10px;">
+              <span class="band-color" style="background-color: rgba(34, 197, 94, 0.4);"></span>
+              <span>Lower Conf. Band (95%)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Model Metrics Grid -->
+        <div class="forecast-metrics-grid animate-fade-in-up stagger-3">
+          <div class="forecast-metric-card">
+            <div class="metric-icon">🌲</div>
+            <div class="metric-val text-primary" id="metric-rf-mae">—</div>
+            <div class="metric-label">Random Forest MAE</div>
+          </div>
+          <div class="forecast-metric-card">
+            <div class="metric-icon">📊</div>
+            <div class="metric-val text-accent" id="metric-ma-mae">—</div>
+            <div class="metric-label">Moving Average MAE</div>
+          </div>
+          <div class="forecast-metric-card">
+            <div class="metric-icon">🎯</div>
+            <div class="metric-val text-success" id="metric-accuracy">—</div>
+            <div class="metric-label">Forecast Accuracy</div>
+          </div>
+          <div class="forecast-metric-card">
+            <div class="metric-icon">🛡️</div>
+            <div class="metric-val text-warning" id="metric-safety-stock">—</div>
+            <div class="metric-label">Suggested Safety Stock</div>
+          </div>
+          <div class="forecast-metric-card">
+            <div class="metric-icon">📉</div>
+            <div class="metric-val text-danger" id="metric-reorder-point">—</div>
+            <div class="metric-label">Optimal Reorder Point</div>
+          </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="dashboard-grid animate-fade-in-up stagger-4">
+          <div class="chart-card grid-full">
+            <div class="card-header">
+              <h3 class="card-title">Machine Learning Future Stock Demand Graph</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="forecastChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Forecasts Table -->
+        <div class="table-card card animate-fade-in-up stagger-5">
+          <div class="card-header">
+            <h3 class="card-title">Saved ML Model Forecast Runs</h3>
+          </div>
+          <div class="table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Product SKU</th>
+                  <th>Product Name</th>
+                  <th>Forecast Target Date</th>
+                  <th>Predicted Demand Qty</th>
+                  <th>Confidence Interval [95%]</th>
+                  <th>Model Algorithm</th>
+                  <th>Generated Timestamp</th>
+                </tr>
+              </thead>
+              <tbody id="forecast-table-body">
+                <tr>
+                  <td colspan="7" class="text-muted text-center" style="padding: 32px;">Loading forecasts logs...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <div>AI Smart Inventory Management & Demand Forecasting System &copy; 2026. Custom Fiori Enterprise Styling.</div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Run ML Forecast Modal -->
+  <div class="modal-overlay" id="forecast-modal">
+    <div class="modal-container animate-fade-in-up">
+      <div class="modal-header">
+        <h3 class="modal-title">Trigger ML Demand Forecast</h3>
+        <button class="btn-close" onclick="closeForecastModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="forecast-form">
+          <div class="form-group">
+            <label for="fore-product-id">Target Product SKU</label>
+            <select id="fore-product-id" class="form-control" required>
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="fore-horizon">Horizon Days (Prediction Timeline)</label>
+            <input type="number" id="fore-horizon" class="form-control" min="1" max="90" required value="30">
+            <small style="color: var(--text-muted); margin-top: 4px; display: block;">Typically set between 7 to 90 days. Default is 30 days.</small>
+          </div>
+          
+          <div class="modal-footer" style="padding: 16px 0 0; border: none;">
+            <button type="button" class="btn btn-secondary" onclick="closeForecastModal()">Cancel</button>
+            <button type="submit" id="btn-submit-forecast" class="btn btn-primary">Run Model Pipeline</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/forecast.js"></script>
+</body>
+</html>

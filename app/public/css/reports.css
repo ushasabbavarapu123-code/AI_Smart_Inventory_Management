@@ -1,0 +1,96 @@
+/* Reports Page Styles */
+.report-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.report-type-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.report-type-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.report-type-card.selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(37,99,235,0.2);
+}
+
+.report-type-card .report-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.report-type-card h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.report-type-card p {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.export-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.report-preview {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  min-height: 400px;
+}
+
+.report-preview h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin-top: 12px;
+}
+
+.report-table th {
+  background: rgba(51,65,85,0.3);
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.report-table td {
+  padding: 10px 14px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid rgba(51,65,85,0.3);
+}
+
+.report-table tbody tr:hover {
+  background: rgba(51,65,85,0.15);
+}

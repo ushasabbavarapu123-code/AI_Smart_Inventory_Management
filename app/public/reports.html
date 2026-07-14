@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports & Documentation - AI Smart Inventory Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/reports.css">
+  
+  <!-- SheetJS Excel Export Library -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- jsPDF PDF Export Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Layout -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon text-white">📦</div>
+        <span class="brand-text">Smart Inventory</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li>
+          <a href="/dashboard.html">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/products.html">
+            <span class="nav-icon">📦</span>
+            <span class="nav-label">Products</span>
+          </a>
+        </li>
+        <li>
+          <a href="/inventory.html">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Inventory</span>
+          </a>
+        </li>
+        <li>
+          <a href="/sales.html">
+            <span class="nav-icon">💰</span>
+            <span class="nav-label">Sales</span>
+          </a>
+        </li>
+        <li>
+          <a href="/suppliers.html">
+            <span class="nav-icon">🚚</span>
+            <span class="nav-label">Suppliers</span>
+          </a>
+        </li>
+        <li>
+          <a href="/purchase-orders.html">
+            <span class="nav-icon">📝</span>
+            <span class="nav-label">Purchase Orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="/forecasts.html">
+            <span class="nav-icon">🤖</span>
+            <span class="nav-label">Forecasting</span>
+          </a>
+        </li>
+        <li>
+          <a href="/reports.html">
+            <span class="nav-icon">📑</span>
+            <span class="nav-label">Reports</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="user-avatar" id="ui-avatar">U</div>
+        <div class="user-info">
+          <span class="user-name" id="ui-username">Guest User</span>
+          <span class="user-role" id="ui-userrole">Planner</span>
+        </div>
+        <button id="btn-global-logout" class="btn-logout" title="Log Out">
+          🚪
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Top Navbar -->
+      <nav class="top-navbar">
+        <div class="navbar-left">
+          <button id="btn-sidebar-toggle" class="btn-sidebar-toggle" title="Toggle Sidebar">☰</button>
+          <button id="btn-mobile-sidebar" class="btn-sidebar-toggle" style="display: none;" title="Toggle Sidebar">☰</button>
+          <div class="navbar-search">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search files...">
+          </div>
+        </div>
+        <div class="navbar-right">
+          <span class="navbar-date" id="navbar-date">Tuesday, July 14, 2026</span>
+          <button class="navbar-btn" title="Notifications">
+            🔔
+            <span class="badge-dot"></span>
+          </button>
+          <div class="navbar-profile">
+            <div class="profile-avatar" id="navbar-profile-avatar">U</div>
+            <div class="profile-info">
+              <span class="profile-name" id="navbar-profile-name">Guest User</span>
+              <span class="profile-role" id="navbar-profile-role">Planner</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Content Header -->
+        <header class="content-header animate-fade-in-up stagger-1">
+          <div class="content-title">
+            <h1>📑 Reports & Documentation</h1>
+            <p>Generate summary tables, view system markdown documentation, and export to PDF/Excel/CSV</p>
+          </div>
+        </header>
+
+        <!-- Generate Reports Card Grid -->
+        <div class="report-cards-grid animate-fade-in-up stagger-2">
+          <div class="report-type-card" onclick="generateReport('Inventory')">
+            <div class="report-icon">📊</div>
+            <h3>Inventory Balance</h3>
+            <p>Valuation, stock statuses, safety levels</p>
+          </div>
+          <div class="report-type-card" onclick="generateReport('Sales')">
+            <div class="report-icon">💰</div>
+            <h3>Sales Performance</h3>
+            <p>Revenue sums, channel splits, total invoicing</p>
+          </div>
+          <div class="report-type-card" onclick="generateReport('Forecast')">
+            <div class="report-icon">🤖</div>
+            <h3>ML Demand Forecasts</h3>
+            <p>Future quantities, upper/lower bounds</p>
+          </div>
+          <div class="report-type-card" onclick="generateReport('Supplier')">
+            <div class="report-icon">🚚</div>
+            <h3>Suppliers Directory</h3>
+            <p>Lead times, vendor rankings, details</p>
+          </div>
+        </div>
+
+        <div class="dashboard-grid animate-fade-in-up stagger-3">
+          <!-- Documentation Index Side List -->
+          <div class="table-card" style="padding: 20px; min-height: 400px; margin-bottom: 0;">
+            <h3 class="card-title" style="margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">Documentation Index</h3>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+              <li><button class="btn btn-secondary btn-block" onclick="loadDocumentation('DATA_CLEANING_REPORT.md')" style="text-align: left;">🧹 Data Cleaning Report</button></li>
+              <li><button class="btn btn-secondary btn-block" onclick="loadDocumentation('DATA_PROFILE_REPORT.md')" style="text-align: left;">📊 Data Profile Report</button></li>
+              <li><button class="btn btn-secondary btn-block" onclick="loadDocumentation('DATABASE_DESIGN.md')" style="text-align: left;">💾 Database Schema Design</button></li>
+              <li><button class="btn btn-secondary btn-block" onclick="loadDocumentation('API_SPECIFICATION.md')" style="text-align: left;">⚙️ API Route Specification</button></li>
+              <li><button class="btn btn-secondary btn-block" onclick="loadDocumentation('BUSINESS_REQUIREMENTS.md')" style="text-align: left;">📋 Business Requirements</button></li>
+              <li><button class="btn btn-secondary btn-block" onclick="loadDocumentation('PROJECT_ARCHITECTURE.md')" style="text-align: left;">🏗️ Project Architecture</button></li>
+              <li><button class="btn btn-secondary btn-block" onclick="loadDocumentation('SYSTEM_DESIGN.md')" style="text-align: left;">💻 System Design</button></li>
+              <li><button class="btn btn-secondary btn-block" onclick="loadDocumentation('performance_comparison.md')" style="text-align: left;">⚡ Model Comparison Metrics</button></li>
+            </ul>
+          </div>
+
+          <!-- Report Preview/Viewer container -->
+          <div class="report-content" id="report-viewer" style="min-height: 400px;">
+            <div style="text-align: center; padding-top: 100px; color: var(--text-secondary);">
+              <span style="font-size: 48px; display: block; margin-bottom: 16px;">📄</span>
+              <p>Select a report category card above to compile live tables or select a markdown documentation link from the list on the left to read resources.</p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <div>AI Smart Inventory Management & Demand Forecasting System &copy; 2026. Custom Fiori Enterprise Styling.</div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/reports.js"></script>
+</body>
+</html>

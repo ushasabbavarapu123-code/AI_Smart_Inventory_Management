@@ -1,6 +1,6 @@
 # Data Cleaning & Pipeline Report
 
-**Execution Timestamp:** 2026-07-07 19:59:33
+**Execution Timestamp:** 2026-07-09 20:07:18
 
 **Pipeline Status:** PASSED
 
@@ -10,25 +10,25 @@ This automated pipeline extracts relational datasets from the SQLite inventory d
 ### Pipeline Phase Execution Times
 | Pipeline Phase | Elapsed Time |
 | :--- | :--- |
-| Extraction | 0.0365 seconds |
-| Profiling | 0.0500 seconds |
-| Cleaning | 0.1245 seconds |
-| Feature Engineering | 0.1387 seconds |
-| Validation | 0.0204 seconds |
-| Export | 1.0486 seconds |
-| **Total Pipeline Time** | **1.4188 seconds** |
+| Extraction | 0.0296 seconds |
+| Profiling | 0.1425 seconds |
+| Cleaning | 0.1911 seconds |
+| Feature Engineering | 0.2395 seconds |
+| Validation | 0.0660 seconds |
+| Export | 0.0496 seconds |
+| **Total Pipeline Time** | **0.7182 seconds** |
 
 ## 2. Extraction & Quality Profiling Summary
 | Table Name | Raw Row Count | Duplicates Detected | Missing Fields Count | Anomalies Found |
 | :--- | :--- | :--- | :--- | :--- |
-| products | 51 | 0 | 0 | 0 |
-| inventory | 50 | 0 | 0 | 0 |
-| sales | 906 | 0 | 0 | 0 |
+| products | 2 | 0 | 0 | 0 |
+| suppliers | 1 | 0 | 0 | 0 |
+| inventory | 2 | 0 | 0 | 0 |
+| sales | 3 | 0 | 0 | 0 |
+| purchase_orders | 1 | 0 | 0 | 0 |
 | forecasts | 1 | 0 | 0 | 0 |
-| suppliers | 10 | 0 | 0 | 0 |
-| purchase_orders | 105 | 0 | 15 | 0 |
-| users | 5 | 0 | 4 | 0 |
-| audit_logs | 28 | 0 | 19 | 0 |
+| users | 1 | 0 | 0 | 0 |
+| audit_logs | 1 | 0 | 2 | 0 |
 
 ## 3. Cleaning & Data Standardizations
 The following data corrections were applied dynamically:
@@ -41,7 +41,6 @@ The following data corrections were applied dynamically:
 ### Cleaning Execution Metrics
 | Cleaning Metric / Table | Rows Modified / Removed | Details |
 | :--- | :--- | :--- |
-| Outliers Capped: `sales_quantity_capped` | 72 | Values clipped to [Q1 - 1.5*IQR, Q3 + 1.5*IQR]. |
 
 ## 4. Feature Engineering Summary
 The transformation engine appended the following calculated columns:
@@ -70,7 +69,4 @@ The finalized processed tables were exported:
 
 | Export Type | Output Paths |
 | :--- | :--- |
-| .CSV | `products.csv`<br>`products.csv`<br>`inventory.csv`<br>`inventory.csv`<br>`sales.csv`<br>`sales.csv`<br>`suppliers.csv`<br>`suppliers.csv`<br>`purchase_orders.csv`<br>`purchase_orders.csv`<br>`forecasts.csv`<br>`forecasts.csv`<br>`audit_logs.csv`<br>`audit_logs.csv` |
-| .XLSX | `products.xlsx`<br>`products.xlsx`<br>`inventory.xlsx`<br>`inventory.xlsx`<br>`sales.xlsx`<br>`sales.xlsx`<br>`suppliers.xlsx`<br>`suppliers.xlsx`<br>`purchase_orders.xlsx`<br>`purchase_orders.xlsx`<br>`forecasts.xlsx`<br>`forecasts.xlsx`<br>`audit_logs.xlsx`<br>`audit_logs.xlsx` |
-| .PARQUET | `products.parquet`<br>`products.parquet`<br>`inventory.parquet`<br>`inventory.parquet`<br>`sales.parquet`<br>`sales.parquet`<br>`suppliers.parquet`<br>`suppliers.parquet`<br>`purchase_orders.parquet`<br>`purchase_orders.parquet`<br>`forecasts.parquet`<br>`forecasts.parquet`<br>`audit_logs.parquet`<br>`audit_logs.parquet` |
-| .PKL | `products.pkl`<br>`products.pkl`<br>`inventory.pkl`<br>`inventory.pkl`<br>`sales.pkl`<br>`sales.pkl`<br>`suppliers.pkl`<br>`suppliers.pkl`<br>`purchase_orders.pkl`<br>`purchase_orders.pkl`<br>`forecasts.pkl`<br>`forecasts.pkl`<br>`audit_logs.pkl`<br>`audit_logs.pkl` |
+| .CSV | `products.csv`<br>`inventory.csv`<br>`sales.csv`<br>`suppliers.csv`<br>`purchase_orders.csv`<br>`forecasts.csv`<br>`audit_logs.csv` |

@@ -1,0 +1,132 @@
+{
+  "all_metrics": [
+    {
+      "model": "Linear Regression",
+      "MAE": 1.1769,
+      "MSE": 14.7928,
+      "RMSE": 3.8461,
+      "R2": -0.0007,
+      "MAPE": 5939123548.4764
+    },
+    {
+      "model": "Gradient Boosting",
+      "MAE": 1.7261,
+      "MSE": 16.2076,
+      "RMSE": 4.0259,
+      "R2": -0.0964,
+      "MAPE": 11737060810.6858
+    },
+    {
+      "model": "Random Forest (Baseline)",
+      "MAE": 1.5175,
+      "MSE": 15.6499,
+      "RMSE": 3.956,
+      "R2": -0.0587,
+      "MAPE": 9505273796.1177
+    },
+    {
+      "model": "Random Forest (Tuned)",
+      "MAE": 1.2525,
+      "MSE": 14.7285,
+      "RMSE": 3.8378,
+      "R2": 0.0037,
+      "MAPE": 6755535087.6111
+    },
+    {
+      "model": "XGBoost",
+      "MAE": 1.9908,
+      "MSE": 17.2615,
+      "RMSE": 4.1547,
+      "R2": -0.1677,
+      "MAPE": 14464886172.8655
+    }
+  ],
+  "champion": {
+    "model": "Random Forest (Tuned)",
+    "MAE": 1.2525,
+    "MSE": 14.7285,
+    "RMSE": 3.8378,
+    "R2": 0.0037,
+    "MAPE": 6755535087.6111
+  },
+  "best_params": {
+    "n_estimators": 150,
+    "min_samples_split": 2,
+    "min_samples_leaf": 6,
+    "max_features": "sqrt",
+    "max_depth": 6
+  },
+  "feature_importance": [
+    {
+      "rank": 1,
+      "feature": "rolling_std_30",
+      "importance": 0.16573
+    },
+    {
+      "rank": 2,
+      "feature": "rolling_mean_14",
+      "importance": 0.122263
+    },
+    {
+      "rank": 3,
+      "feature": "rolling_mean_30",
+      "importance": 0.11038
+    },
+    {
+      "rank": 4,
+      "feature": "rolling_std_7",
+      "importance": 0.095342
+    },
+    {
+      "rank": 5,
+      "feature": "rolling_std_14",
+      "importance": 0.095321
+    },
+    {
+      "rank": 6,
+      "feature": "rolling_mean_7",
+      "importance": 0.08567
+    },
+    {
+      "rank": 7,
+      "feature": "day_of_week",
+      "importance": 0.083857
+    },
+    {
+      "rank": 8,
+      "feature": "month",
+      "importance": 0.081624
+    },
+    {
+      "rank": 9,
+      "feature": "lag_1",
+      "importance": 0.040512
+    },
+    {
+      "rank": 10,
+      "feature": "quarter",
+      "importance": 0.03476
+    },
+    {
+      "rank": 11,
+      "feature": "lag_7",
+      "importance": 0.026106
+    },
+    {
+      "rank": 12,
+      "feature": "lag_30",
+      "importance": 0.023201
+    },
+    {
+      "rank": 13,
+      "feature": "lag_14",
+      "importance": 0.018327
+    },
+    {
+      "rank": 14,
+      "feature": "is_weekend",
+      "importance": 0.016906
+    }
+  ],
+  "run_date": "2026-07-09 15:05:47 UTC"
+}

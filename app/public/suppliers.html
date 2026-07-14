@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suppliers - AI Smart Inventory Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/suppliers.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Layout -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon text-white">📦</div>
+        <span class="brand-text">Smart Inventory</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li>
+          <a href="/dashboard.html">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/products.html">
+            <span class="nav-icon">📦</span>
+            <span class="nav-label">Products</span>
+          </a>
+        </li>
+        <li>
+          <a href="/inventory.html">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Inventory</span>
+          </a>
+        </li>
+        <li>
+          <a href="/sales.html">
+            <span class="nav-icon">💰</span>
+            <span class="nav-label">Sales</span>
+          </a>
+        </li>
+        <li>
+          <a href="/suppliers.html">
+            <span class="nav-icon">🚚</span>
+            <span class="nav-label">Suppliers</span>
+          </a>
+        </li>
+        <li>
+          <a href="/purchase-orders.html">
+            <span class="nav-icon">📝</span>
+            <span class="nav-label">Purchase Orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="/forecasts.html">
+            <span class="nav-icon">🤖</span>
+            <span class="nav-label">Forecasting</span>
+          </a>
+        </li>
+        <li>
+          <a href="/reports.html">
+            <span class="nav-icon">📑</span>
+            <span class="nav-label">Reports</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="user-avatar" id="ui-avatar">U</div>
+        <div class="user-info">
+          <span class="user-name" id="ui-username">Guest User</span>
+          <span class="user-role" id="ui-userrole">Planner</span>
+        </div>
+        <button id="btn-global-logout" class="btn-logout" title="Log Out">
+          🚪
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+      <!-- Top Navbar -->
+      <nav class="top-navbar">
+        <div class="navbar-left">
+          <button id="btn-sidebar-toggle" class="btn-sidebar-toggle" title="Toggle Sidebar">☰</button>
+          <button id="btn-mobile-sidebar" class="btn-sidebar-toggle" style="display: none;" title="Toggle Sidebar">☰</button>
+          <div class="navbar-search">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search suppliers...">
+          </div>
+        </div>
+        <div class="navbar-right">
+          <span class="navbar-date" id="navbar-date">Tuesday, July 14, 2026</span>
+          <button class="navbar-btn" title="Notifications">
+            🔔
+            <span class="badge-dot"></span>
+          </button>
+          <div class="navbar-profile">
+            <div class="profile-avatar" id="navbar-profile-avatar">U</div>
+            <div class="profile-info">
+              <span class="profile-name" id="navbar-profile-name">Guest User</span>
+              <span class="profile-role" id="navbar-profile-role">Planner</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Content Header -->
+        <header class="content-header animate-fade-in-up stagger-1">
+          <div class="content-title">
+            <h1>Supplier Directory & Ratings</h1>
+            <p>Maintain supplier contact cards, reorder lead times, and perform rating edits</p>
+          </div>
+          <div class="header-actions">
+            <div class="view-toggle" style="margin-right: 10px;">
+              <button id="btn-view-grid" class="active" title="Grid View">🎴 Grid</button>
+              <button id="btn-view-table" title="Table View">📋 List</button>
+            </div>
+            <button class="btn btn-primary" onclick="openSupplierModal('add')">➕ Add Supplier</button>
+          </div>
+        </header>
+
+        <!-- Alert Container -->
+        <div id="supplier-alert-container"></div>
+
+        <!-- Suppliers dynamic container -->
+        <div id="suppliers-container">
+          <!-- Grid View Container -->
+          <div class="supplier-cards-grid" id="suppliers-grid">
+            <div class="text-muted text-center" style="grid-column: 1/-1; padding: 32px;">Loading suppliers profiles...</div>
+          </div>
+
+          <!-- Table View Card (Hidden by default) -->
+          <div class="table-card card hidden animate-fade-in" id="suppliers-table-card">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Supplier Name</th>
+                    <th>Contact Person</th>
+                    <th>Email Address</th>
+                    <th>Phone Number</th>
+                    <th>Avg Lead Time</th>
+                    <th>Rating</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="suppliers-table-body">
+                  <tr>
+                    <td colspan="7" class="text-muted text-center" style="padding: 24px;">No records</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <div>AI Smart Inventory Management & Demand Forecasting System &copy; 2026. Custom Fiori Enterprise Styling.</div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Add/Edit Supplier Modal -->
+  <div class="modal-overlay" id="supplier-modal">
+    <div class="modal-container animate-fade-in-up">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Add Supplier</h3>
+        <button class="btn-close" onclick="closeSupplierModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="supplier-form">
+          <input type="hidden" id="edit-supplier-id">
+          
+          <div class="form-group">
+            <label for="sup-name">Supplier Company Name</label>
+            <input type="text" id="sup-name" class="form-control" required placeholder="e.g. Acme Components Inc.">
+          </div>
+          
+          <div class="form-group">
+            <label for="sup-contact">Contact Person</label>
+            <input type="text" id="sup-contact" class="form-control" placeholder="e.g. John Doe">
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sup-email">Contact Email</label>
+              <input type="email" id="sup-email" class="form-control" placeholder="e.g. contact@acme.com">
+            </div>
+            
+            <div class="form-group">
+              <label for="sup-phone">Contact Phone</label>
+              <input type="text" id="sup-phone" class="form-control" placeholder="e.g. +1 555-0199">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sup-lead">Lead Time (Days)</label>
+              <input type="number" id="sup-lead" class="form-control" min="1" required placeholder="5">
+            </div>
+            
+            <div class="form-group">
+              <label for="sup-rating">Performance Rating (1.0 - 5.0)</label>
+              <input type="number" id="sup-rating" class="form-control" step="0.1" min="1.0" max="5.0" placeholder="4.5">
+            </div>
+          </div>
+          
+          <div class="modal-footer" style="padding: 16px 0 0; border: none;">
+            <button type="button" class="btn btn-secondary" onclick="closeSupplierModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Profile</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/suppliers.js"></script>
+</body>
+</html>
