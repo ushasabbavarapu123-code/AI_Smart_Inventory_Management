@@ -36,6 +36,11 @@ app.use(helmet({
 app.use(cors());
 app.use(express.json());
 
+// Serve root directly to dashboard.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/dashboard.html'));
+});
+
 // Serve static files from public folder
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/docs', express.static(path.join(__dirname, '../../docs')));
